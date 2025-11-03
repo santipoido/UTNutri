@@ -1,17 +1,20 @@
 header{
+    width: 100%;
+    background-color: #f9fbf8;
     border-bottom: 1px solid rgb(224,224,224);
-    height: 10vh;
-     display: flex;
-    align-items: center; /* centra verticalmente */
+    padding: 10px 10px;
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    font-family: 'Inter';
 }
 
 nav{
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    font-family: Inter;
 }
 
 .contenedor-logo{

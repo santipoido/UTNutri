@@ -1,1 +1,34 @@
-<p>form-pacientes works!</p>
+<div class="container">
+  <div class="texto-container">
+    <h1>Agregar Nuevo Paciente</h1>
+    <p>Complete el formulario para agregar un nuevo paciente.</p>
+  </div>
+
+  <div class="form-container">
+    <form>
+      <label for="nombre-completo">Nombre completo</label>
+      <input type="text" name="nombre-completo" id="nombre-completo" formControlName="nombre" placeholder="ej. Juan Pérez" />
+
+      <label for="genero">Género</label>
+      <div class="grupo-genero">
+        <select id="genero" formControlName="genero">
+          <option value="" selected disabled>Seleccione género</option>
+          <!--@for (genero of generos; track $index){
+            <option [value]="genero">{{ genero }}</option>
+        }-->
+        </select>
+      </div>
+
+      <label for="correo">Correo electrónico</label>
+      <input type="email" name="correo" id="correo"  formControlName="correo" placeholder="ej. juan.perez@correo.com">
+
+      <label for="telefono">Número de teléfono</label>
+      <input type="tel" name="telefono" id="telefono" formControlName="telefono" placeholder="ej. 555-123-4567">
+
+      <label for="fecha-nacimiento">Fecha de nacimiento</label>
+      <input type="date" name="fecha-nacimiento" formControlName="fechaNacimiento" id="fecha-nacimiento">
+
+      <button class="btn-enviar">Agregar Paciente</button>
+    </form>
+  </div>
+</div>
