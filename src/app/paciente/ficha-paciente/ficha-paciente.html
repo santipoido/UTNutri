@@ -1,1 +1,69 @@
-<p>ficha-paciente works!</p>
+@let paciente = this.paciente(); @if (paciente) {
+<div class="paciente-card">
+  <div class="paciente-header">
+    <div class="paciente-info">
+      <h2 class="paciente-nombre">{{ paciente.nombre }}</h2>
+      @if (pacienteDesde()) {
+              <p class="paciente-fecha">Paciente desde {{ pacienteDesde() }}</p>
+      } @else {
+        <p class="paciente-fecha-sin-fecha">No hay registros</p>
+      }
+    </div>
+    <div class="peso-box">
+      <p class="peso-titulo">Peso Actual</p>
+      @if (ultimoPesoKg()) {
+      <p class="peso-valor">{{ ultimoPesoKg() }}kg</p>
+      } @else {
+        <p class="peso-valor-sin-peso">No hay registros</p>
+      }
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="paciente-datos">
+    <div class="dato">
+      <p class="dato-titulo">Fecha nacimiento</p>
+      <p class="dato-valor">{{ paciente.fechaNacimiento }}</p>
+    </div>
+    <div class="dato">
+      <p class="dato-titulo">Género</p>
+      <p class="dato-valor">{{ paciente.genero }}</p>
+    </div>
+    <div class="dato">
+      <p class="dato-titulo">Teléfono</p>
+      <p class="dato-valor">{{ paciente.telefono }}</p>
+    </div>
+    <div class="dato">
+      <p class="dato-titulo">Correo Electrónico</p>
+      <p class="dato-valor">{{ paciente.correo }}</p>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="acciones">
+    <button class="btn agregar" (click)="irAgregarConsulta(paciente.id!)">
+      <span>+</span> Agregar consulta
+    </button>
+    <button class="btn editar">
+      <svg id="svg-editar" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+        <g id="SVGRepo_iconCarrier">
+          <path
+            d="M14.6716 6.763L5.58013 15.8544L5.41376 18.8492L8.40856 18.6829L17.5 9.59142M14.6716 6.763L16.0204 5.41421C16.8014 4.63316 18.0677 4.63316 18.8488 5.41421V5.41421C19.6298 6.19526 19.6298 7.46159 18.8488 8.24264V8.24264L17.5 9.59142M14.6716 6.763L17.5 9.59142"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </g>
+      </svg>
+      Editar datos
+    </button>
+    <button class="btn plan"><span>📄</span> Ir al plan</button>
+    <button class="btn historial">Historial consultas</button>
+  </div>
+</div>
+}

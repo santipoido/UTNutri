@@ -1,1 +1,30 @@
-<p>form-consultas works!</p>
+<div class="container">
+  <div class="texto-container">
+    <h1>Agregar Nueva Consulta</h1>
+    <p>Paciente: {{ pacienteNombre || '...' }}</p>
+  </div>
+
+  <div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+      <label for="peso">Peso (kg)</label>
+      <input type="number" formControlName="peso" id="peso" placeholder="Ej. 65" />
+
+      <label for="altura">Altura (cm)</label>
+      <input type="number" formControlName="altura" id="altura" placeholder="Ej. 170" />
+
+      <label for="grasa-corporal">Grasa Corporal (%)</label>
+      <input type="number" formControlName="grasa" id="grasa" placeholder="Ej. 22.5" />
+
+      <label for="masa-muscular">Masa Muscular (%)</label>
+      <input type="number" formControlName="masa" id="masa" placeholder="Ej. 35" />
+
+      <label for="observaciones">Observaciones</label>
+      <input type="text" formControlName="observaciones" id="observaciones" placeholder="Ej. Se observó leve mejora...">
+
+      <div class="btn-container">
+        <button class="btn-cancelar">Cancelar</button>
+        <button class="btn-enviar">Guardar Consulta</button>
+      </div>
+    </form>
+  </div>
+</div>

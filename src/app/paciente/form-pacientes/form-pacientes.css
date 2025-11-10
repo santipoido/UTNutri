@@ -1,11 +1,12 @@
-:host {
+¿:host {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
   background-color: #F9FCF8;
   font-family: 'Inter', sans-serif;
-  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 
@@ -14,9 +15,11 @@
   padding: 40px 50px;
   border-radius: 5%;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   text-align: left;
-  scale: 0.9;
+  margin: auto;
+  box-sizing: border-box;
 }
 
 
@@ -63,6 +66,7 @@ select {
   border-radius: 8px;
   font-size: 14px;
   transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
 
@@ -73,19 +77,23 @@ input:focus, select:focus{
 
 .grupo-genero {
   display: flex;
-  gap: 15px;
+  flex-direction: column;
+  gap: 8px;
   margin-top: 5px;
 }
 
-.grupo-genero label {
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.grupo-genero select {
+  width: 100%;
 }
 
 input[type="radio"] {
   accent-color: #20DF6C;
+}
+
+span {
+  display: block;
+  color: #dc3545;
+  font-size: 13px;
 }
 
 .btn-enviar {
@@ -97,12 +105,56 @@ input[type="radio"] {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
-    transition: transform 0.2s ease;
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
 .btn-enviar:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
   background-color: #1ac45a;
 }
 
+/*Movil*/
+@media (max-width: 480px) {
+  :host {
+    padding: 15px;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .container {
+    padding: 25px 20px;
+    border-radius: 15px;
+  }
+
+  .texto-container h1 {
+    font-size: 20px;
+  }
+
+  .texto-container p {
+    font-size: 12px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="date"],
+  input[type="tel"],
+  select {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .btn-enviar {
+    padding: 12px 0;
+    font-size: 14px;
+  }
+
+  .form-container form {
+    gap: 15px;
+  }
+}

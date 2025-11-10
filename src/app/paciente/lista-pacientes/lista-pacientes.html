@@ -1,9 +1,9 @@
-<!--@let pacientes = this.pacientes();-->
+@let pacientes = this.pacientes();
 
 <div class="container">
   <div class="container-superior">
     <h1>Lista de Pacientes</h1>
-    <button class="btn-agregar">Agregar Paciente</button>
+    <button class="btn-agregar" (click)="irAgregarPacientes()">Agregar Paciente</button>
   </div>
   <div class="container-tabla">
     <table>
@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <!--@for (paciente of pacientes; track paciente.id) {
+        @for (paciente of pacientes; track paciente.id) {
         <tr>
           <td>{{paciente.nombre}}</td>
           <td>{{paciente.genero}}</td>
@@ -58,7 +58,7 @@
             </button>
           </td>
         </tr>
-    }-->
+        }
       </tbody>
     </table>
   </div>
