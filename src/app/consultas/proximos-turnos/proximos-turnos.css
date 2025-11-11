@@ -1,0 +1,36 @@
+.contenedor-principal{
+    margin: 20px;
+    font-family: 'Inter';
+}
+
+.contenido-cabecera{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contenido-cabecera button{
+    padding: 10px 20px;
+    background-color: #20DF6C;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.turno{
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+}
+
+.verde{
+    color: rgb(65, 120, 65);
+}

@@ -7,10 +7,12 @@ import { HistorialConsultas } from './consultas/historial-consultas/historial-co
 import { DetallePlan } from './plan-nutricional/detalle-plan/detalle-plan';
 import { FormPlan } from './plan-nutricional/form-plan/form-plan';
 import { Login } from './auth/login/login';
+import { ProximosTurnos } from './consultas/proximos-turnos/proximos-turnos';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'pacientes', pathMatch: 'full'},
     {path: 'login', component: Login},
+    {path: 'turnos', component: ProximosTurnos},
     {path: 'pacientes', component: ListaPacientes},
     {path: 'pacientes/:id/ficha', component: FichaPaciente},
     {path: 'pacientes/nuevo', component: FormPacientes},
