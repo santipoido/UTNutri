@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private readonly KEY = 'logged_in';
 
-    private readonly USER = 'nutri2025';
+  private readonly USER = 'nutri2025';
   private readonly PASS = 'utnutri123';
 
   private router = inject(Router);

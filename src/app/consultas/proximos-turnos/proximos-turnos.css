@@ -34,3 +34,8 @@
 .verde{
     color: rgb(65, 120, 65);
 }
+
+.contenedor-btn {
+    display: flex;
+    gap: 1rem;
+}

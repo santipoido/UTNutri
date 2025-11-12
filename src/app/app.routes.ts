@@ -18,7 +18,7 @@ export const routes: Routes = [
         path: '',
         canMatch: [authGuard],
         children: [
-            { path: '', redirectTo: 'pacientes', pathMatch: 'full' },
+            { path: '', redirectTo: 'turnos', pathMatch: 'full' },
 
             { path: 'turnos', component: ProximosTurnos },
 
@@ -33,5 +33,5 @@ export const routes: Routes = [
         ],
     },
 
-    { path: '**', redirectTo: 'pacientes' },
+    { path: '**', redirectTo: 'turnos' },
 ];

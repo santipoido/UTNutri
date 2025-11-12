@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { ClienteTurnos } from '../cliente-turnos';
 import { toSignal } from '@angular/core/rxjs-interop'
-import { PacienteClient
+import {
+  PacienteClient
 
- } from '../../paciente/paciente-client';
+} from '../../paciente/paciente-client';
 @Component({
   selector: 'app-proximos-turnos',
   imports: [],
@@ -20,12 +21,22 @@ export class ProximosTurnos {
   protected readonly pacientes = toSignal(this.pacienteClient.getPacientes());
 
   obtenerPaciente(id: string | number) {
-    const listaPacientes = this.pacientes(); 
+    const listaPacientes = this.pacientes();
 
-    if(!listaPacientes) return 'Cargando...'
+    if (!listaPacientes) return 'Cargando...'
 
     const paciente = listaPacientes.find(paciente => paciente.id === id);
     return paciente ? paciente.nombre : 'Paciente desconocido';
+  }
+
+  editarTurno(id: string | number) {
+    
+  }
+
+  eliminarTurno(id: string | number) {
+    if (window.confirm('¿Desea eliminar el turno?')) {
+      this.client.deleteTurno(id);
+    }
   }
 
 }

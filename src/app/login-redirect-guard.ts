@@ -5,5 +5,5 @@ import { AuthService } from './auth/auth-service';
 export const loginRedirectGuard: CanMatchFn = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
-  return auth.isLoggedIn() ? router.createUrlTree(['/pacientes']) : true;
+  return auth.isLoggedIn() ? router.createUrlTree(['/turnos']) : true;
 };
