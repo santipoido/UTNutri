@@ -25,8 +25,8 @@ form {
 }
 
 label {
-    text-align: start;
-    font-size: 0.9em;
+  text-align: start;
+  font-size: 0.9em;
 }
 
 .mi-input {
@@ -37,36 +37,54 @@ label {
 }
 
 .mi-input:focus {
-    border-color: #20DF6C;
+  border-color: #20DF6C;
 }
 
 button {
-    margin-top: 20px;
-    border-radius: 10px;
-    background-color: #20DF6C;
-    color: #FFFFFF;
-    border: none;
-    padding: 5px 0px;
-    cursor: pointer;
-    transition: background-color 0.5s;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: #20DF6C;
+  color: #FFFFFF;
+  border: none;
+  padding: 5px 0px;
+  cursor: pointer;
+  transition: background-color 0.5s;
 }
 
 button:hover {
-    background-color: #18b356;
+  background-color: #18b356;
 }
 
-h1, p, label, input, button {
-    font-family: 'Inter';
+h1,
+p,
+label,
+input,
+button {
+  font-family: 'Inter';
 }
 
 h1 {
-    font-weight: 900;
+  font-weight: 900;
 }
 
 
 p {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    color: #333333;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #333333;
 }
 
+.alert-error {
+  font-family: 'Inter';
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 6px;
+  background: #fdecea;
+  color: #b00020;
+}
+
+.field-error {
+  display: flex;
+  font-size: 12px;
+  color: #b00020;
+}

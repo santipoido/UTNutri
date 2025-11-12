@@ -1,10 +1,10 @@
-¿:host {
+:host {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 60px);
   background-color: #F9FCF8;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   padding: 20px;
   box-sizing: border-box;
 }
