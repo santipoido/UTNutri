@@ -12,7 +12,7 @@ import { authGuard } from './auth-guard';
 import { loginRedirectGuard } from './login-redirect-guard';
 
 export const routes: Routes = [
-    { path: 'login', canMatch: [loginRedirectGuard], component: Login },
+    { path: 'login', canMatch: [loginRedirectGuard], component: Login, data: {hideHeader: true} },
 
     {
         path: '',

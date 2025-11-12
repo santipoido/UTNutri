@@ -41,6 +41,7 @@ export class Login {
 
   onSubmit() {
     if (this.form.invalid) {
+      alert('Las credenciales son obligatorias')
       this.form.markAllAsTouched();
       return;
     }

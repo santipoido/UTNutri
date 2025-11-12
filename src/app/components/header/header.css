@@ -36,3 +36,7 @@ nav{
 .contenedor-links a:hover{
     color: rgb(32,223,108);
 }
+
+.contenedor-links a.active {
+    color: rgb(32,223,108);
+}
