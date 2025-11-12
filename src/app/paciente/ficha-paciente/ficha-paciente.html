@@ -62,8 +62,8 @@
       </svg>
       Editar datos
     </button>
-    <button class="btn plan"><span>📄</span> Ir al plan</button>
-    <button class="btn historial">Historial consultas</button>
+    <button class="btn plan" (click)="irAlPlanNutricional(paciente.id!)"><span>📄</span> Ir al plan</button>
+    <button class="btn historial" (click)="irAlHistorial(paciente.id!)">Historial consultas</button>
   </div>
 </div>
 }

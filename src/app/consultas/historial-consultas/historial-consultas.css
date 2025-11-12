@@ -1,0 +1,65 @@
+.contenedor-principal {
+    margin: 20px 6rem;
+    font-family: "Inter";
+}
+
+.contenedor-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.titulo-nombre p{
+    color: rgb(102,154,76);
+}
+
+
+.contenedor-cabecera button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    background-color: rgb(32,223,108);
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    align-self: center;
+}
+
+.contenedor-tabla{
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0 , 0.1);
+    
+}
+
+table{
+    padding: 10px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td{
+    padding: 10px;
+}
+table thead tr td{
+    color: rgb(102,154,76);
+    font-size: 14px;
+}
+
+table thead{
+    background-color: rgb(235,243,231);
+}
+
+table tbody tr{
+    margin: 10px;
+    background-color: white;
+    border-bottom: 2px solid rgb(246,248,246);
+    height: 15px;
+}
+
+table tbody tr td{
+    font-size: 12px;
+}

@@ -1,1 +1,45 @@
-<p>historial-consultas works!</p>
+@let paciente = this.paciente();
+
+@if(paciente){
+
+
+<div class="contenedor-principal">
+    <div class="contenedor-cabecera">
+        <div class="titulo-nombre">
+            <h1>Historial de Consultas</h1>
+            <p>{{paciente.nombre}}</p>
+        </div>
+        <button  (click)="irAgregarConsulta(paciente.id!)">+ Nueva consulta</button>
+    </div>
+    <div class="contenedor-tabla">
+        <table>
+            <thead>
+                <tr>
+                    <td>FECHA</td>
+                    <td>PESO</td>
+                    <td>ALTURA</td>
+                    <td>% <br>GRASA</td>
+                    <td>% <br>MUSCULO</td>
+                    <td>OBSERVACIONES</td>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for(consulta of paciente.consultas; track consulta){
+                    <tr>
+                        <td>{{consulta.fecha}}</td>
+                        <td>{{consulta.peso}}kg</td>
+                        <td>{{consulta.altura}} cm</td>
+                        <td>{{consulta.grasa}}%</td>
+                        <td>{{consulta.masa}}%</td>
+                        <td>{{consulta.observaciones}}</td>
+
+                    </tr>
+                }
+            
+            </tbody>
+        </table>
+    </div>
+</div>
+
+}

@@ -78,7 +78,8 @@ export class PacienteClient {
       almuerzo: string,
       merienda: string,
       cena: string,
-      snacks: string
+      snacks: string,
+      notas: string
     }
   ) {
     return this.getPacienteById(pacienteId).pipe(
@@ -90,7 +91,8 @@ export class PacienteClient {
             almuerzo: dto.almuerzo,
             merienda: dto.merienda,
             cena: dto.cena,
-            snacks: dto.snacks
+            snacks: dto.snacks,
+            notas: dto.notas
           }
         };
 

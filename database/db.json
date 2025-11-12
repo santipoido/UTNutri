@@ -15,8 +15,40 @@
           "grasa": 22.5,
           "masa": 35,
           "observaciones": "Se observó leve mejora."
+        },
+        {
+          "fecha": "2025-12-05",
+          "peso": 70,
+          "altura": 170,
+          "grasa": 26,
+          "masa": 33,
+          "observaciones": "Se observó leve mejora."
+        },
+        {
+          "fecha": "2026-01-01",
+          "peso": 75,
+          "altura": 171,
+          "grasa": 22,
+          "masa": 38,
+          "observaciones": "Tiene que tomar mas agua. Cuerpo deshidratado"
+        },
+        {
+          "fecha": "2025-11-12",
+          "peso": 80,
+          "altura": 172,
+          "grasa": 20,
+          "masa": 35.6,
+          "observaciones": "Cumplio con el plan al 80%. Debe aumentar su compromiso aun mas. Falta desayuno mas potente"
         }
-      ]
+      ],
+      "planNutricional": {
+        "desayuno": "Avena(1 taza), Platano (1), Almendras (1/4 taza)",
+        "almuerzo": "Proba con alimentos altos en proteina, como puede ser el filet de pescado. En caso de no tener escado, intercambiar con una pechuga de pollo o algun corte de carne magra como puede ser el lomo. Acompañar con una porcion de ensalada.",
+        "merienda": "Avena(1 taza), Platano (1), Almendras (1/4 taza)",
+        "cena": "Avena(1 taza), Platano (1), Almendras (1/4 taza)",
+        "snacks": "Avena(1 taza), Platano (1), Almendras (1/4 taza)",
+        "notas": "Recuerda beber al menos 8 vasos de agua al dia. Puedes intercambiar el platano por otra fruta de temporada. Evita bebidas azucaradas"
+      }
     },
     {
       "id": "08c1",
@@ -34,10 +66,17 @@
           "masa": 30,
           "observaciones": "test"
         }
-      ]
+      ],
+      "plan": {
+        "desayuno": "Avena(1 taza), Platano (1), Almendras (1/4 taza)",
+        "almuerzo": "Avena(1 taza), Platano (1), Almendras (1/4 taza)",
+        "merienda": "Avena(1 taza), Platano (1), Almendras (1/4 taza)",
+        "cena": "Avena(1 taza), Platano (1), Almendras (1/4 taza)",
+        "snacks": "Avena(1 taza), Platano (1), Almendras (1/4 taza)",
+        "notas": "Recuerda beber al menos 8 vasos de agua al dia. Puedes intercambiar el platano por otra fruta de temporada. Evita bebidas azucaradas"
+      }
     }
   ],
-
   "turnos": [
     {
       "id": "3d4c",
@@ -56,7 +95,6 @@
       "observaciones": "Revisar el estado"
     }
   ],
-
   "usuario": [
     {
       "id": "s6c8",

@@ -59,5 +59,12 @@ export class FichaPaciente {
     this.router.navigateByUrl(`/pacientes/${id}/consultas/nueva`);
   }
 
+  irAlHistorial(id: string | number){
+    this.router.navigateByUrl(`pacientes/${id}/consultas`);
+  }
+
+  irAlPlanNutricional(id: string | number){
+    this.router.navigateByUrl(`pacientes/${id}/plan`)
+  }
 
 }

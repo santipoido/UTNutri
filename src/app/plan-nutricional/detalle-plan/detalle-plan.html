@@ -1,1 +1,61 @@
-<p>detalle-plan works!</p>
+@let paciente = this.paciente();
+
+@if (paciente) {
+  <section>
+    <div class="titulos">
+      <h1>Plan nutricional de {{ paciente.nombre }}</h1>
+      <p>Plan nutricional con déficit de 300kcal</p>
+    </div>
+
+    <div class="informacion">
+      <div class="tarjeta">
+        <div class="englobar-icono">
+          <span class="material-symbols-outlined">coffee</span>
+          <h3>Desayuno</h3>
+        </div>
+        <p>{{ paciente.planNutricional?.desayuno }}</p>
+      </div>
+
+      <div class="tarjeta">
+        <div class="englobar-icono">
+          <span class="material-symbols-outlined">restaurant</span>
+          <h3>Almuerzo</h3>
+        </div>
+        <p>{{ paciente.planNutricional?.almuerzo }}</p>
+      </div>
+
+      <div class="tarjeta">
+        <div class="englobar-icono">
+          <span class="material-symbols-outlined">egg_alt</span>
+          <h3>Merienda</h3>
+        </div>
+        <p>{{ paciente.planNutricional?.merienda }}</p>
+      </div>
+
+      <div class="tarjeta">
+        <div class="englobar-icono">
+          <span class="material-symbols-outlined">dinner_dining</span>
+          <h3>Cena</h3>
+        </div>
+        <p>{{ paciente.planNutricional?.cena }}</p>
+      </div>
+
+      <div class="tarjeta">
+        <div class="englobar-icono">
+          <span class="material-symbols-outlined">icecream</span>
+          <h3>Snacks</h3>
+        </div>
+        <p>{{ paciente.planNutricional?.snacks }}</p>
+      </div>
+
+      <div class="tarjeta">
+        <h3>Notas adicionales</h3>
+        <p>{{ paciente.planNutricional?.notas }}</p>
+      </div>
+    </div>
+    <div class="botones">
+        <button id="editar">Editar plan nutricional</button>
+        <button id="exportar">Exportar plan nutricional</button>
+    </div>
+  </section>
+}

@@ -23,5 +23,6 @@ export interface PlanNutricional {
     almuerzo: string,
     merienda: string,
     cena: string,
-    snacks: string
+    snacks: string,
+    notas: string
 }
