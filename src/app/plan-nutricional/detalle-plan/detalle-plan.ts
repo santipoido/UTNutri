@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteClient } from '../../paciente/paciente-client';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Paciente } from '../../paciente/paciente';
@@ -14,6 +14,7 @@ export class DetallePlan {
 
   private readonly route = inject(ActivatedRoute);
   private readonly client = inject(PacienteClient);
+  private readonly router = inject(Router);
 
    private readonly id = this.route.snapshot.paramMap.get('id')!;
 
@@ -22,4 +23,7 @@ export class DetallePlan {
     { initialValue: null }
   );
 
+  editarPlan(id: string | number){
+    this.router.navigateByUrl(`/pacientes/${id}/plan/editar`);
+  }
 }

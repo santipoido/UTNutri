@@ -13,7 +13,7 @@ section{
     background-color: rgb(255,255,255);
     border: 1px solid rgb(215,231,207);
     border-radius: 5px;
-    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.22);
+    box-shadow: 0 1px 10px rgba(16, 185, 129, 0.22);
 
 }
 
@@ -42,10 +42,21 @@ section{
 
 #editar{
     background-color:rgb(32,223,108) ;
+    cursor: pointer;
     
+}
+
+#editar:hover {
+    background-color: rgb(25, 190, 91);
+    transform: scale(1.05);
 }
 
 #exportar{
     background-color: rgb(255,117,117);
+    cursor: pointer;
+}
 
+#exportar:hover {
+    background-color: rgb(224, 102, 102);
+    transform: scale(1.05);
 }

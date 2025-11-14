@@ -22,10 +22,6 @@ export class HistorialConsultas {
     this.client.getPacienteById(this.id),
     { initialValue: null }
   );
-
-    irAgregarConsulta(id: string | number) {
-    this.router.navigateByUrl(`/pacientes/${id}/consultas/nueva`);
-  }
 }
 
 

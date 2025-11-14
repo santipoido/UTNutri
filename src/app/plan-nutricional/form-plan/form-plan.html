@@ -1,1 +1,88 @@
-<p>form-plan works!</p>
+<section class="plan-section">
+  <div class="titulos">
+    <h1>Plan nutricional de </h1>
+    <p>Editar plan nutricional.</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="handleSubmit()" class="informacion">
+    <div class="tarjeta">
+      <div class="englobar-icono">
+        <span class="material-symbols-outlined">coffee</span>
+        <h3>Desayuno</h3>
+      </div>
+      <textarea
+        formControlName="desayuno"
+        rows="3"
+        placeholder="Ej: 2 huevos revueltos + tostadas integrales"
+      ></textarea>
+    </div>
+
+    <div class="tarjeta">
+      <div class="englobar-icono">
+        <span class="material-symbols-outlined">restaurant</span>
+        <h3>Almuerzo</h3>
+      </div>
+      <textarea
+        formControlName="almuerzo"
+        rows="3"
+        placeholder="Ej: Ensalada + pechuga de pollo"
+      ></textarea>
+    </div>
+
+    <div class="tarjeta">
+      <div class="englobar-icono">
+        <span class="material-symbols-outlined">egg_alt</span>
+        <h3>Merienda</h3>
+      </div>
+      <textarea
+        formControlName="merienda"
+        rows="2"
+        placeholder="Ej: Yogur natural + fruta"
+      ></textarea>
+    </div>
+
+    <div class="tarjeta">
+      <div class="englobar-icono">
+        <span class="material-symbols-outlined">dinner_dining</span>
+        <h3>Cena</h3>
+      </div>
+      <textarea
+        formControlName="cena"
+        rows="3"
+        placeholder="Ej: Verduras salteadas + pescado (si corresponde)"
+      ></textarea>
+    </div>
+
+    <div class="tarjeta">
+      <div class="englobar-icono">
+        <span class="material-symbols-outlined">icecream</span>
+        <h3>Snacks</h3>
+      </div>
+      <input
+        type="text"
+        formControlName="snacks"
+        placeholder="Ej: Frutos secos, barras proteicas"
+      />
+    </div>
+
+    <div class="tarjeta">
+      <h3>Notas adicionales</h3>
+      <textarea
+        formControlName="notas"
+        rows="4"
+        placeholder="Restricciones, calorías objetivo, observaciones..."
+      ></textarea>
+    </div>
+
+    <div class="botones">
+      <button id="editar" type="submit" [disabled]="form.pristine || form.invalid">
+        Guardar cambios
+      </button>
+
+      <div style="display: flex; gap: 10px">
+        <button id="exportar" type="button">Exportar (JSON)</button>
+        <button id="exportarPDF" type="button">Exportar (PDF)</button>
+      </div>
+    </div>
+  </form>
+</section>

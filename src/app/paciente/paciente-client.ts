@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { switchMap } from 'rxjs';
-import { Consulta, Paciente } from './paciente';
+import { Observable, switchMap } from 'rxjs';
+import { Consulta, Paciente, PlanNutricional } from './paciente';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,14 @@ export class PacienteClient {
 
   private readonly http = inject(HttpClient);
   private readonly baseUrl= 'http://localhost:3000/pacientes'; // token
+  private readonly planVacio: PlanNutricional = {
+    desayuno: '',
+    almuerzo: '',
+    merienda: '',
+    cena: '',
+    snacks: '',
+    notas: ''
+  }
 
   getPacientes() {
     return this.http.get<Paciente[]>(this.baseUrl);
@@ -18,6 +26,7 @@ export class PacienteClient {
   getPacienteById(id: string | number) {
     return this.http.get<Paciente>(`${this.baseUrl}/${id}`);
   }
+
 
   addPaciente(dto: {
     nombre: string,
@@ -33,7 +42,7 @@ export class PacienteClient {
       correo: dto.correo,
       telefono: dto.telefono,
       consultas: [],
-      //plannutricional se añade  desde otra pantalla
+      planNutricional: this.planVacio 
     };
 
     return this.http.post<Paciente>(this.baseUrl, nuevoPaciente);
@@ -71,34 +80,9 @@ export class PacienteClient {
     );
   }
 
-  addPlanNutricional(
-    pacienteId: string | number,
-    dto: {
-      desayuno: string,
-      almuerzo: string,
-      merienda: string,
-      cena: string,
-      snacks: string,
-      notas: string
-    }
-  ) {
-    return this.getPacienteById(pacienteId).pipe(
-      switchMap((pacienteActual) => {
-        const actualizado: Paciente = {
-          ...pacienteActual,
-          planNutricional: {
-            desayuno: dto.desayuno,
-            almuerzo: dto.almuerzo,
-            merienda: dto.merienda,
-            cena: dto.cena,
-            snacks: dto.snacks,
-            notas: dto.notas
-          }
-        };
-
-        return this.http.put<Paciente>(`${this.baseUrl}/${pacienteId}`, actualizado);
-      })
-    );
+  updatePacientePlan(id: string | number, plan: PlanNutricional) {
+    const propiedad = { planNutricional: plan };
+    return this.http.patch<Paciente>(`${this.baseUrl}/${id}`, propiedad);
   }
 
   updatePaciente(paciente: Paciente, id: string | number) {
