@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PacienteClient } from '../paciente-client';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UpdatePacienteDto } from '../paciente';
 
 @Component({
   selector: 'app-form-pacientes',
@@ -9,10 +10,15 @@ import { Router } from '@angular/router';
   templateUrl: './form-pacientes.html',
   styleUrl: './form-pacientes.css'
 })
-export class FormPacientes {
+export class FormPacientes implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly client = inject(PacienteClient);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+
+
+  protected readonly isEditing = signal(false);
+  protected readonly id = this.route.snapshot.paramMap.get('id');
 
   protected readonly generos = [
     'Masculino', 'Femenino', 'Otro'
@@ -44,6 +50,26 @@ export class FormPacientes {
     return this.form.controls.telefono;
   }
 
+  ngOnInit(): void {
+    if(this.id){
+      this.isEditing.set(true);
+
+      this.client.getPacienteById(this.id).subscribe({
+        next: (paciente) => {
+          this.form.patchValue(
+            {
+              nombre: paciente.nombre ?? '',
+              genero: paciente.genero ?? '',
+              fechaNacimiento: paciente.fechaNacimiento ?? '',
+              correo: paciente.correo ?? '',
+              telefono: paciente.telefono ?? '',
+            }
+          )
+        }
+      })
+    }
+  }
+
   handleSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -52,7 +78,24 @@ export class FormPacientes {
     }
 
     if (confirm('¿Desea confirmar los datos?')) {
-      const dto = this.form.getRawValue();
+
+    const dto = this.form.getRawValue();
+
+
+    if(this.isEditing()){
+      
+
+      this.client.updatePaciente(dto, this.id!).subscribe({
+        next: () => {
+          alert('Paciente modificado con exito');
+          this.router.navigateByUrl(`pacientes/${this.id}/ficha`);
+        }, error: () => {
+          alert('No se pudo modificar el paciente');
+          this.router.navigateByUrl(`pacientes/${this.id}/ficha`);
+        }
+      })
+    } else{
+
       this.client.addPaciente(dto).subscribe({
         next: (pacienteCreado) => {
           alert(`Paciente "${pacienteCreado.nombre}" agregado con éxito (ID: ${pacienteCreado.id})`);
@@ -63,6 +106,8 @@ export class FormPacientes {
           alert('Error al guardar el paciente en el servidor.');
         }
       });
+    }
+
     }
   }
 }

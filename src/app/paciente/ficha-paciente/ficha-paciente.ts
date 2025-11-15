@@ -67,4 +67,13 @@ export class FichaPaciente {
     this.router.navigateByUrl(`pacientes/${id}/plan`)
   }
 
+  irAEditar(id: string | number){
+    this.router.navigateByUrl(`pacientes/${id}/editar`);
+  }
+  
+
+  irAgregarTurno(id: string | number){
+    this.router.navigateByUrl(`turnos/${id}/nuevo`);
+    
+  }
 }

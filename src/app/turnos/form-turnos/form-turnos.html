@@ -1,0 +1,44 @@
+@let paciente = this.paciente();
+
+@if (paciente) {
+<div class="container">
+  <div class="texto-container">
+    <h1>Agenda un turno para {{paciente.nombre}}</h1>
+    <p>Complete el formulario para agendar un nuevo turno</p>
+  </div>
+
+  <div class="form-container">
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+      
+      <label for="fecha">Fecha</label>
+      <input
+        type="date"
+        name="fecha"
+        id="fecha"
+        placeholder="ej. Juan Pérez"
+        formControlName="fecha"
+      />
+
+
+      <label for="hora">Hora</label>
+      <input
+        type="time"
+        name="hora"
+        id="hora"
+        formControlName="hora"
+      />
+     
+      <label for="obser">Observaciones</label>
+      <input
+        type="text"
+        name="obser"
+        id="obser"
+        placeholder="ej. Realizar mediciones estandar"
+        formControlName="observaciones"
+      />
+
+      <button class="btn-enviar">Agendar turno para {{paciente.nombre}}</button>
+    </form>
+  </div>
+</div>
+}

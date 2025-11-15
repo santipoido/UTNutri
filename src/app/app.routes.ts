@@ -7,9 +7,10 @@ import { HistorialConsultas } from './consultas/historial-consultas/historial-co
 import { DetallePlan } from './plan-nutricional/detalle-plan/detalle-plan';
 import { FormPlan } from './plan-nutricional/form-plan/form-plan';
 import { Login } from './auth/login/login';
-import { ProximosTurnos } from './consultas/proximos-turnos/proximos-turnos';
+import { ProximosTurnos } from './turnos/proximos-turnos/proximos-turnos';
 import { authGuard } from './auth-guard';
 import { loginRedirectGuard } from './login-redirect-guard';
+import { FormTurnos } from './turnos/form-turnos/form-turnos';
 
 export const routes: Routes = [
     { path: 'login', canMatch: [loginRedirectGuard], component: Login, data: {hideHeader: true} },
@@ -21,6 +22,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'turnos', pathMatch: 'full' },
 
             { path: 'turnos', component: ProximosTurnos },
+            { path: 'turnos/:id/nuevo', component: FormTurnos },
 
             { path: 'pacientes', component: ListaPacientes },
             { path: 'pacientes/nuevo', component: FormPacientes },

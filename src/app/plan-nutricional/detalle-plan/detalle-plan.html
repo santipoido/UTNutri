@@ -1,7 +1,11 @@
 @let paciente = this.paciente();
 
 @if (paciente) {
+
+
+
   <section>
+    <div id="planNutricionalExportar">
     <div class="titulos">
       <h1>Plan nutricional de {{ paciente.nombre }}</h1>
       <p>Detalle del plan nutricional.</p>
@@ -53,9 +57,10 @@
         <p>{{ paciente.planNutricional?.notas }}</p>
       </div>
     </div>
+    </div>
     <div class="botones">
-        <button id="editar" (click)="editarPlan(paciente.id!)">Editar plan nutricional</button>
-        <button id="exportar">Exportar plan nutricional</button>
+      <button id="editar" (click)="editarPlan(paciente.id!)">Editar plan nutricional</button>
+      <button id="exportar" (click)="exportarPDF()">Exportar plan nutricional</button>
     </div>
   </section>
 }

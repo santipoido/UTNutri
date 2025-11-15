@@ -9,6 +9,14 @@ export interface Paciente {
     planNutricional?: PlanNutricional
 }
 
+export interface UpdatePacienteDto {
+  nombre: string;
+  genero: string;
+  fechaNacimiento: string;
+  correo: string;
+  telefono: string;
+}
+
 export interface Consulta {
     fecha: string,
     peso: number,

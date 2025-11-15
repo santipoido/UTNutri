@@ -1,0 +1,50 @@
+@let turnos = this.turnosFiltrados();
+
+<div class="contenedor-principal">
+  <div class="contenido-cabecera">
+    <div class="contenedor-titulo">
+      <h1>Proximas consultas</h1>
+      <p class="verde">Aqui tienes un resumen de tus proximas citas</p>
+    </div>
+
+    <div class="filtro">
+      <p>Filtrar por:</p>
+      <select class="filtros" (change)="onFiltroChange($event)">
+        <option value="Todos">Todos</option>
+        <option value="Pendiente">Pendiente</option>
+        <option value="Realizado">Realizado</option>
+        <option value="Cancelado">Cancelado</option>
+      </select>
+
+    </div>
+
+
+    <!--
+  Esta sección la comento temporalmente
+  porque quiero probar otra cosa
+
+    <div class="filtros">
+      <button (click)="filtroEstado.set('Todos')">Todos</button>
+      <button (click)="filtroEstado.set('Pendiente')">Pendientes</button>
+      <button (click)="filtroEstado.set('Realizado')">Realizados</button>
+      <button (click)="filtroEstado.set('Cancelado')">Cancelados</button>
+    </div>
+    -->
+  </div>
+  <div class="contenedor-turnos">
+    @for (turno of turnos; track turno.id) {
+    <div class="turno">
+      <div class="contenedor-nombre">
+        <p>{{ obtenerPaciente(turno.idPaciente!) }}</p>
+        <p class="verde">{{ turno.fecha | date:'dd-MM-yyyy' }} - {{ turno.hora }}</p>
+
+      </div>
+      <span class="estado" [ngClass]="turno.estado"> {{ turno.estado }} </span>
+      <div class="contenedor-btn">
+        <p>Reprogramar</p>
+        <p (click)="cancelarTurno(turno.id!)">Cancelar turno</p>
+      </div>
+    </div>
+    }
+  </div>
+</div>

@@ -39,3 +39,39 @@
     display: flex;
     gap: 1rem;
 }
+
+.estado {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.estado.Pendiente {
+  background-color: #fff9c4;
+  color: #8a6d00;
+}
+
+.estado.Cancelado {
+  background: #ffdddd;
+  color: #a30000;
+}
+
+.estado.Realizado {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+
+.filtro{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.filtro select{
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid #1e9b50;
+  color: #1e9b50;
+}

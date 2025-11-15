@@ -29,6 +29,12 @@ export class ClienteTurnos {
     return this.http.delete<Turno>(`${this.urlProximosTurnos}/${id}`)
   }
 
+  cancelarTurno(id: string | number) {
+  return this.http.patch<Turno>(`${this.urlProximosTurnos}/${id}`, {
+    estado: 'Cancelado'
+  });
+}
+
 
   
 }

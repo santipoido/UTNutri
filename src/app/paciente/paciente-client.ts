@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
-import { Consulta, Paciente, PlanNutricional } from './paciente';
+import { Consulta, Paciente, PlanNutricional, UpdatePacienteDto } from './paciente';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { Consulta, Paciente, PlanNutricional } from './paciente';
 export class PacienteClient {
 
   private readonly http = inject(HttpClient);
-  private readonly baseUrl= 'http://localhost:3000/pacientes'; // token
+  private readonly baseUrl = 'http://localhost:3000/pacientes'; // token
   private readonly planVacio: PlanNutricional = {
     desayuno: '',
     almuerzo: '',
@@ -42,7 +42,7 @@ export class PacienteClient {
       correo: dto.correo,
       telefono: dto.telefono,
       consultas: [],
-      planNutricional: this.planVacio 
+      planNutricional: this.planVacio
     };
 
     return this.http.post<Paciente>(this.baseUrl, nuevoPaciente);
@@ -58,9 +58,9 @@ export class PacienteClient {
       masa?: number,
       observaciones?: string
     }
-  ){
+  ) {
     const consulta: Consulta = {
-      fecha: dto.fecha ?? new Date().toISOString().slice(0,10),
+      fecha: dto.fecha ?? new Date().toISOString().slice(0, 10),
       peso: dto.peso,
       altura: dto.altura,
       grasa: dto.grasa,
@@ -85,10 +85,10 @@ export class PacienteClient {
     return this.http.patch<Paciente>(`${this.baseUrl}/${id}`, propiedad);
   }
 
-  updatePaciente(paciente: Paciente, id: string | number) {
-    return this.http.put<Paciente>(`${this.baseUrl}/${id}`, paciente);
+  updatePaciente(dto: Partial<Paciente>, id: string | number) {
+    return this.http.patch(`${this.baseUrl}/${id}`, dto);
   }
-  
+
   deletePaciente(id: string | number) {
     return this.http.delete<Paciente>(`${this.baseUrl}/${id}`);
   }

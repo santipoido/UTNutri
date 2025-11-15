@@ -1,7 +1,7 @@
 <div class="container">
   <div class="texto-container">
-    <h1>Agregar Nuevo Paciente</h1>
-    <p>Complete el formulario para agregar un nuevo paciente.</p>
+    <h1>{{isEditing() ? 'Editar paciente' : 'Agrega un nuevo paciente'}}</h1>
+    <p> {{isEditing() ? 'Modifique los datos que desee cambiar' : 'Complete el formulario para agregar un nuevo paciente.'}}</p>
   </div>
 
   <div class="form-container">
@@ -74,7 +74,7 @@
         <span>❌La fecha de nacimiento es obligatoria.</span>
       }
 
-      <button class="btn-enviar">Agregar Paciente</button>
+      <button class="btn-enviar"> {{isEditing() ? 'Editar paciente' : 'Agregar paciente'}}</button>
     </form>
   </div>
 </div>
