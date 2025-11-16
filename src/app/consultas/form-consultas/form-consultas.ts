@@ -28,6 +28,12 @@ export class FormConsultas implements OnInit{
     observaciones: ['']
   });
 
+  get peso(){return this.form.controls.peso}
+  get altura(){return this.form.controls.altura}
+  get grasa(){return this.form.controls.grasa}
+  get masa(){return this.form.controls.masa}
+  get observaciones(){return this.form.controls.observaciones}
+
   ngOnInit(): void {
     this.pacienteId = this.route.snapshot.paramMap.get('id')!;
 

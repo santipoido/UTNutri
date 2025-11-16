@@ -41,7 +41,7 @@
       </div>
       <span class="estado" [ngClass]="turno.estado"> {{ turno.estado }} </span>
       <div class="contenedor-btn">
-        <p>Reprogramar</p>
+        <p (click)="editarTurno(turno.id!)">Reprogramar</p>
         <p (click)="cancelarTurno(turno.id!)">Cancelar turno</p>
       </div>
     </div>

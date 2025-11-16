@@ -8,12 +8,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
     padding: 20px 20px;
 }
 
 .container-superior h1 {
     font-weight: 900;
     font-size: 44px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .container-superior .btn-agregar {
@@ -26,6 +29,8 @@
     cursor: pointer;
     transition: background-color 0.3s;
     transition: transform 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .container-superior .btn-agregar:hover {
@@ -34,9 +39,75 @@
 }
 
 
+.container-busqueda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px 20px 20px;
+}
 
+.busqueda-box {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 8px 12px;
+    transition: border-color 0.3s ease;
+    flex: 1;
+    min-width: 200px;
+}
 
-/* LISTADO DE PACIENTES */
+.busqueda-box:focus-within {
+    border-color: #20DF6C;
+    box-shadow: 0 0 0 3px rgba(32, 223, 108, 0.1);
+}
+
+.busqueda-box svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.input-busqueda {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #374151;
+    font-family: 'Inter', sans-serif;
+    background-color: transparent;
+}
+
+.input-busqueda::placeholder {
+    color: #9ca3af;
+}
+
+.btn-limpiar {
+    border: none;
+    background: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 4px;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.btn-limpiar:hover {
+    color: #374151;
+}
+
+.info-busqueda {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+}
 
 .container-tabla {
     display: flex;

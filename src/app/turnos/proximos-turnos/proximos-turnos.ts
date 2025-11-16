@@ -84,7 +84,13 @@ protected readonly turnos = toSignal(
   }
 
   editarTurno(id: string | number) {
-
+    // Obtener el turno para extraer el idPaciente
+    const turno = this.turnos()?.find(t => t.id === id);
+    if (turno) {
+      this.router.navigateByUrl(`/turnos/${turno.idPaciente}/editar/${id}`);
+    } else {
+      alert('No se pudo encontrar el turno');
+    }
   }
 
   /*

@@ -1,10 +1,16 @@
 @let paciente = this.paciente();
+@let esEdicion = this.esEdicion();
 
 @if (paciente) {
 <div class="container">
   <div class="texto-container">
-    <h1>Agenda un turno para {{paciente.nombre}}</h1>
-    <p>Complete el formulario para agendar un nuevo turno</p>
+    @if (esEdicion) {
+      <h1>Editar turno para {{paciente.nombre}}</h1>
+      <p>Modifique los detalles del turno</p>
+    } @else {
+      <h1>Agenda un turno para {{paciente.nombre}}</h1>
+      <p>Complete el formulario para agendar un nuevo turno</p>
+    }
   </div>
 
   <div class="form-container">
@@ -37,7 +43,11 @@
         formControlName="observaciones"
       />
 
-      <button class="btn-enviar">Agendar turno para {{paciente.nombre}}</button>
+      @if (esEdicion) {
+        <button class="btn-enviar">Actualizar turno para {{paciente.nombre}}</button>
+      } @else {
+        <button class="btn-enviar">Agendar turno para {{paciente.nombre}}</button>
+      }
     </form>
   </div>
 </div>

@@ -23,6 +23,7 @@ export const routes: Routes = [
 
             { path: 'turnos', component: ProximosTurnos },
             { path: 'turnos/:id/nuevo', component: FormTurnos },
+            { path: 'turnos/:pacienteId/editar/:turnoId', component: FormTurnos },
 
             { path: 'pacientes', component: ListaPacientes },
             { path: 'pacientes/nuevo', component: FormPacientes },
