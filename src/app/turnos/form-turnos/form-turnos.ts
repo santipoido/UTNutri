@@ -29,6 +29,12 @@ export class FormTurnos {
     this.turnoId ? this.client.getTurnoById(this.turnoId) : of(null as any)
   );
 
+  private readonly turnosSource = toSignal(
+  this.client.getProximosTurnos(),
+  { initialValue: [] }
+);
+
+
 
   protected readonly form = this.formBuilder.nonNullable.group({
     fecha: ['', Validators.required],
@@ -68,7 +74,34 @@ export class FormTurnos {
     return fechaTurno.getTime() <= ahora.getTime();
   }
 
-  private horaFueraDeRango(hora: string): boolean {
+private turnosOcupados(fecha: string, hora: string): boolean {
+  const turnos = this.turnosSource();
+
+  const [year, month, day] = fecha.split('-').map(Number);
+  const [h, m] = hora.split(':').map(Number);
+
+  const fechaNueva = new Date(year, month - 1, day, h, m);
+
+  const MEDIA_HORA = 30 * 60 * 1000;
+
+  return turnos.some((t: Turno) => {
+    const fechaTurno = new Date(t.fecha);
+    const [h2, m2] = t.hora.split(':').map(Number);
+    fechaTurno.setHours(h2, m2, 0, 0);
+
+    const esMismoTurnoEnEdicion =
+      this.esEdicion() && t.id === this.turnoId;
+    if (esMismoTurnoEnEdicion) return false;
+
+    const diferencia = Math.abs(fechaTurno.getTime() - fechaNueva.getTime());
+
+    return diferencia < MEDIA_HORA;
+  });
+}
+
+
+
+  protected horaFueraDeRango(hora: string): boolean {
     const [horaIngresada, minutosIngresados] = hora.split(':').map(Number);
 
     const HORA_MINIMA = 7;   // 07:00
@@ -90,6 +123,13 @@ export class FormTurnos {
 
     const raw = this.form.getRawValue();
     const { fecha, hora, observaciones } = raw;
+
+    const existeTurnoIgual = this.turnosOcupados(fecha, hora);
+
+    if (existeTurnoIgual) {
+      alert("Ya existe un turno programado para esa fecha y hora.");
+      return;
+    }
 
     // El turno NO puede ser en el pasado
     if (this.turnoEsEnElPasado(fecha, hora)) {

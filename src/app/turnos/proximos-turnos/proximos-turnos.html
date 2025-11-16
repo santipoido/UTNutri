@@ -18,31 +18,29 @@
 
     </div>
 
-
-    <!--
-  Esta sección la comento temporalmente
-  porque quiero probar otra cosa
-
-    <div class="filtros">
-      <button (click)="filtroEstado.set('Todos')">Todos</button>
-      <button (click)="filtroEstado.set('Pendiente')">Pendientes</button>
-      <button (click)="filtroEstado.set('Realizado')">Realizados</button>
-      <button (click)="filtroEstado.set('Cancelado')">Cancelados</button>
-    </div>
-    -->
   </div>
   <div class="contenedor-turnos">
     @for (turno of turnos; track turno.id) {
     <div class="turno">
       <div class="contenedor-nombre">
-        <p>{{ obtenerPaciente(turno.idPaciente!) }}</p>
+        <p class="nombre-paciente">{{ obtenerPaciente(turno.idPaciente!) }}</p>
         <p class="verde">{{ turno.fecha | date:'dd-MM-yyyy' }} - {{ turno.hora }}</p>
+        <div class="contenedor-observaciones">
+          <p><strong>Observaciones</strong></p>
+          <p>{{turno.observaciones}}</p>
 
+        </div>
       </div>
+
       <span class="estado" [ngClass]="turno.estado"> {{ turno.estado }} </span>
       <div class="contenedor-btn">
+
+        @if(turno.estado === 'Cancelado' || turno.estado === 'Realizado'){
+        <p (click)="eliminarTurno(turno.id!)">Eliminar turno</p>
+        } @else if(turno.estado === 'Pendiente'){
         <p (click)="editarTurno(turno.id!)">Reprogramar</p>
         <p (click)="cancelarTurno(turno.id!)">Cancelar turno</p>
+        }
       </div>
     </div>
     }

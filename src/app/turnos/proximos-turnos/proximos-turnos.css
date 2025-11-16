@@ -1,77 +1,158 @@
-.contenedor-principal{
-    margin: 20px;
-    font-family: 'Inter';
+.contenedor-principal {
+  margin: 20px;
+  font-family: 'Inter';
 }
 
-.contenido-cabecera{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.contenido-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.contenido-cabecera button{
-    padding: 10px 20px;
-    background-color: #20DF6C;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-}
-
-.turno{
-    margin: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 10vh;
-    border: 1px solid rgb(204, 204, 204);
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-}
-
-.verde{
-    color: rgb(65, 120, 65);
-}
-
-.contenedor-btn {
-    display: flex;
-    gap: 1rem;
-}
-
-.estado {
-  padding: 4px 10px;
-  border-radius: 10px;
-  font-weight: 600;
-}
-
-.estado.Pendiente {
-  background-color: #fff9c4;
-  color: #8a6d00;
-}
-
-.estado.Cancelado {
-  background: #ffdddd;
-  color: #a30000;
-}
-
-.estado.Realizado {
-  background-color: #c8e6c9;
-  color: #2e7d32;
-}
-
-
-.filtro{
+.filtro { 
   display: flex;
   gap: 5px;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 10px; 
+} 
+     
+.filtro select { 
+  padding: 5px;
+   border-radius: 5px;
+    border: 2px solid #1e9b50;
+     color: #1e9b50;
 }
 
-.filtro select{
+.contenedor-turnos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.turno {
+  width: 360px;
+  min-height: 240px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: .2s ease;
+box-shadow: 0 1px 10px rgba(16, 185, 129, 0.22);
+}
+
+.turno:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.contenedor-nombre {
+  gap: 4px;
+}
+
+.nombre-paciente {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+
+.fecha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.observaciones-titulo {
+  font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.observaciones-box {
+  background: #f3f4f6;
+  padding: 12px;
+  border-radius: 6px;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+.contenedor-observaciones{
   padding: 5px;
+  margin-top: 5px;
+  background-color: rgb(185, 239, 185);
   border-radius: 5px;
-  border: 2px solid #1e9b50;
-  color: #1e9b50;
+}
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.estado::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.estado.Realizado {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.estado.Realizado::before {
+  background: #10b981;
+}
+
+.estado.Cancelado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.estado.Cancelado::before {
+  background: #ef4444;
+}
+
+.estado.Pendiente {
+  background: #fef9c3;
+  color: #92400e;
+}
+
+.estado.Pendiente::before {
+  background: #fbbf24;
+}
+
+.contenedor-btn {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  font-size: 0.9rem;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.contenedor-btn p {
+  cursor: pointer;
+  color: #374151;
+}
+
+.contenedor-btn p:hover {
+  text-decoration: underline;
+}
+
+.turno.pasado {
+  opacity: 0.6;
 }

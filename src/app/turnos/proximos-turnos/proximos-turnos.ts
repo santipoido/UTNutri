@@ -10,6 +10,7 @@ import {
 
 } from '../../paciente/paciente-client';
 import { Router } from '@angular/router';
+import { Turno } from '../turno';
 @Component({
   selector: 'app-proximos-turnos',
   imports: [NgClass, DatePipe],
@@ -65,15 +66,18 @@ protected readonly turnos = toSignal(
   protected readonly filtroEstado = signal<'Todos' | 'Pendiente' | 'Realizado' | 'Cancelado'>('Todos');
 
 
-  protected readonly turnosFiltrados = linkedSignal(() => {
-    const filtro = this.filtroEstado();
-    const lista = this.turnos() ?? [];
+protected readonly turnosFiltrados = linkedSignal(() => {
+  const filtro = this.filtroEstado();
+  const lista = this.turnos() ?? [];
 
-    if (filtro === 'Todos') return lista;
+  let filtrados = filtro === 'Todos'
+    ? lista
+    : lista.filter(t => t.estado === filtro);
 
-    // Filtrar por estado exacto
-    return lista.filter(t => t.estado === filtro);
-  });
+  return this.ordenarTurnosPorFecha(filtrados);
+});
+
+
   obtenerPaciente(id: string | number) {
     const listaPacientes = this.pacientes();
 
@@ -93,7 +97,7 @@ protected readonly turnos = toSignal(
     }
   }
 
-  /*
+  
 
   eliminarTurno(id: string | number) {
     if (window.confirm('¿Desea eliminar el turno?')) {
@@ -107,7 +111,7 @@ protected readonly turnos = toSignal(
       })
     }
   }
-*/
+
 
   cancelarTurno(id: string | number) {
     if (!confirm('¿Desea cancelar este turno?')) return;
@@ -132,7 +136,6 @@ protected readonly turnos = toSignal(
         }))
       )
     ).subscribe(nuevaLista => {
-      //actualizamos el signal usando writeSignal
       (this.turnos as any).write(nuevaLista);
     });
   }
@@ -141,4 +144,22 @@ protected readonly turnos = toSignal(
     const select = event.target as HTMLSelectElement;
     this.filtroEstado.set(select.value as any);
   }
+
+  ordenarTurnosPorFecha(turnos: Turno[]) {
+  const hoy = new Date();
+
+  return turnos.sort((a, b) => {
+    const fechaA = new Date(a.fecha);
+    const fechaB = new Date(b.fecha);
+
+    const esPasadoA = fechaA < hoy;
+    const esPasadoB = fechaB < hoy;
+
+    if (esPasadoA && !esPasadoB) return 1;
+    if (!esPasadoA && esPasadoB) return -1;
+
+
+    return fechaA.getTime() - fechaB.getTime();
+  });
+}
 }

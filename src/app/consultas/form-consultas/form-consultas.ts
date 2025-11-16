@@ -21,10 +21,10 @@ export class FormConsultas implements OnInit{
 
   form = this.fb.nonNullable.group({
     fecha: [new Date().toISOString().slice(0, 10), [Validators.required]],
-    peso: [null as unknown as number, [Validators.required, Validators.min(1)]],
-    altura: [null as unknown as number, [Validators.required, Validators.min(50)]],
-    grasa: [null as unknown as number],
-    masa: [null as unknown as number],
+    peso: [null as unknown as number, [Validators.required, Validators.min(1), Validators.max(300)]],
+    altura: [null as unknown as number, [Validators.required, Validators.min(50), Validators.max(220)]],
+    grasa: [null as unknown as number,   [Validators.min(0), Validators.max(100)]],
+    masa: [null as unknown as number,   [Validators.min(0), Validators.max(100)]],
     observaciones: ['']
   });
 
@@ -49,6 +49,9 @@ export class FormConsultas implements OnInit{
     });
   }
 
+  irAFicha(id: string | number){
+    this.router.navigateByUrl(`pacientes/${id}/ficha`)
+  }
   handleSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();

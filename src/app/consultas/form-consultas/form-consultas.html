@@ -1,4 +1,5 @@
 <div class="container">
+  
   <div class="texto-container">
     <h1>Agregar Nueva Consulta</h1>
     <p>Paciente: {{ pacienteNombre || '...' }}</p>
@@ -8,21 +9,37 @@
     <form [formGroup]="form" (ngSubmit)="handleSubmit()">
       <label for="peso">Peso (kg) (*)</label>
       <input type="number" formControlName="peso" id="peso" placeholder="Ej. 65" />
+      @if (peso.hasError("required") && (peso.touched || peso.dirty)) {
+      <span>❌El peso es obligatorio.</span>
+      } @else if ((peso.hasError('min')) || (peso.hasError('max'))) {
+      <span>❌El peso debe ser coherente y real</span>
+      }
 
       <label for="altura">Altura (cm) (*)</label>
       <input type="number" formControlName="altura" id="altura" placeholder="Ej. 170" />
+      @if (altura.hasError("required") && (altura.touched || altura.dirty)) {
+      <span>❌La altura es obligatoria.</span>
+      } @else if ((altura.hasError('min'))|| (altura.hasError('max'))) {
+      <span>❌La altura debe ser coherente y real</span>
+      }
 
       <label for="grasa-corporal">Grasa Corporal (%)</label>
       <input type="number" formControlName="grasa" id="grasa" placeholder="Ej. 22.5" />
+      @if((grasa.hasError('min') || grasa.hasError('max'))){
+      <span>❌El porcentaje graso debe ser coherente y real</span>
+      }
 
       <label for="masa-muscular">Masa Muscular (%)</label>
       <input type="number" formControlName="masa" id="masa" placeholder="Ej. 35" />
+      @if((masa.hasError('min') || masa.hasError('max'))){
+      <span>❌El porcentaje de masa muscular debe ser coherente y real</span>
+      }
 
       <label for="observaciones">Observaciones</label>
       <input type="text" formControlName="observaciones" id="observaciones" placeholder="Ej. Se observó leve mejora...">
 
       <div class="btn-container">
-        <button class="btn-cancelar">Cancelar</button>
+        <button class="btn-cancelar" (click)="irAFicha(pacienteId!)">Cancelar</button>
         <button class="btn-enviar">Guardar Consulta</button>
       </div>
     </form>

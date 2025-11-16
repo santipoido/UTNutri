@@ -46,7 +46,7 @@
         "almuerzo": "Porcion de ensalada + pechuga o lomo",
         "merienda": "Fruta y yogurt",
         "cena": "Verduras y pescado",
-        "snacks": "Barrita CRUDDA, furtos secos.",
+        "snacks": "Barrita CRUDDA, furtos secos",
         "notas": "Evita condimentar demasiado las ensaladas. Mucho aceite no es sano. \nLa hidratacion es clave"
       }
     },
@@ -58,6 +58,32 @@
       "correo": "matecami@gmail.com",
       "telefono": "2236933159",
       "consultas": [],
+      "planNutricional": {
+        "desayuno": "",
+        "almuerzo": "",
+        "merienda": "",
+        "cena": "",
+        "snacks": "",
+        "notas": ""
+      }
+    },
+    {
+      "id": "47a9",
+      "nombre": "Joaquin Tapia",
+      "genero": "Masculino",
+      "fechaNacimiento": "2005-11-11",
+      "correo": "joaco@gmail.com",
+      "telefono": "223444555",
+      "consultas": [
+        {
+          "fecha": "2025-11-16",
+          "peso": 60,
+          "altura": 165,
+          "grasa": 22.5,
+          "masa": 37.5,
+          "observaciones": "Realizamos plan para aumentar masa muscular"
+        }
+      ],
       "planNutricional": {
         "desayuno": "",
         "almuerzo": "",
@@ -78,36 +104,20 @@
       "id": "3d6c"
     },
     {
-      "id": "3d8c",
       "idPaciente": "437b",
-      "fecha": "2025-11-14T00:00:00.000Z",
-      "hora": "22:45",
+      "fecha": "2025-12-04T03:00:00.000Z",
+      "hora": "12:40",
+      "observaciones": "Realizar mediciones estandar",
       "estado": "Pendiente",
-      "observaciones": "Revisar el estado"
+      "id": "7975"
     },
     {
-      "id": "3181",
       "idPaciente": "23f7",
-      "fecha": "2025-11-22T00:00:00.000Z",
-      "hora": "10:30",
+      "fecha": "2025-12-04T03:00:00.000Z",
+      "hora": "11:40",
       "observaciones": "Realizar mediciones estandar",
-      "estado": "Cancelado"
-    },
-    {
-      "id": "7975",
-      "idPaciente": "437b",
-      "fecha": "2025-11-30T00:00:00.000Z",
-      "hora": "10:30",
-      "observaciones": "Realizar mediciones estandar",
-      "estado": "Pendiente"
-    },
-    {
-      "id": "3d42",
-      "idPaciente": "23f7",
-      "fecha": "2026-01-22T00:00:00.000Z",
-      "hora": "10:40",
-      "observaciones": "Realizar mediciones estandar",
-      "estado": "Pendiente"
+      "estado": "Pendiente",
+      "id": "3d42"
     },
     {
       "id": "304a",
