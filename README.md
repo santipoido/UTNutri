@@ -211,7 +211,6 @@ Dashboard / Turnos
 |----------|----------|
 | Puerto 4200 en uso | Usa `ng serve --port 4200 --disable-host-check` o cierra otras instancias |
 | JSON Server no inicia | Verifica que `database/db.json` existe y tiene formato válido |
-| No puedo logearme | Usuario: `admin`, Contraseña: `admin` |
 | Datos no se guardan | Asegúrate de que JSON Server esté en `http://localhost:3000` |
 
 ---
