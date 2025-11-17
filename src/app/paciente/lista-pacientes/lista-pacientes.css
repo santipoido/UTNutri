@@ -221,3 +221,86 @@ svg {
     scale: 0.7;
 }
 
+
+@media (max-width: 1100px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    .container-superior h1 {
+        font-size: 36px;
+    }
+
+    table {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 900px) {
+    .container-superior {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .busqueda-box {
+        max-width: none;
+        width: 100%;
+    }
+
+    .container-superior .btn-agregar {
+        align-self: flex-end;
+    }
+
+    
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+
+@media (max-width: 760px) {
+    .container-superior h1 { font-size: 28px; }
+
+    thead { display: none; }
+
+    table { border: none; box-shadow: none; }
+
+    tbody tr {
+        display: block;
+        margin: 12px 0;
+        background: white;
+        border-radius: 10px;
+        padding: 12px;
+        box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+    }
+
+    tbody td {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; 
+        padding: 8px 12px;
+        border-bottom: 1px dashed #f1f5f9;
+        font-size: 14px;
+        text-align: left;
+    }
+
+    tbody td:last-child { border-bottom: 0; }
+
+    tbody td[data-label]::before {
+        content: attr(data-label);
+        color: #6b7280;
+        font-weight: 600;
+        margin-right: 12px;
+        flex: 0 0 110px;
+    }
+
+    td.acciones { justify-content: flex-end; }
+    td.acciones .btn-ver,
+    td.acciones .btn-eliminar { width: 36px; height: 36px; }
+
+    .btn-ver, .btn-eliminar { flex-shrink: 0; }
+}
+
+

@@ -10,14 +10,6 @@
       "consultas": [
         {
           "fecha": "2025-11-14",
-          "peso": 31,
-          "altura": 344,
-          "grasa": 3434,
-          "masa": 45,
-          "observaciones": "Cumplio con el plan al 80%. Debe aumentar su compromiso aun mas. Falta desayuno mas potente"
-        },
-        {
-          "fecha": "2025-11-14",
           "peso": 48,
           "altura": 150,
           "grasa": 22.4,
@@ -39,10 +31,18 @@
           "grasa": 22.5,
           "masa": 35,
           "observaciones": "Mejora"
+        },
+        {
+          "fecha": "2025-11-17",
+          "peso": 62,
+          "altura": 180,
+          "grasa": 22.5,
+          "masa": 35,
+          "observaciones": "Mejora"
         }
       ],
       "planNutricional": {
-        "desayuno": "2 huevos + un pan integral",
+        "desayuno": "2 huevos + un pan integral + cafe",
         "almuerzo": "Porcion de ensalada + pechuga o lomo",
         "merienda": "Fruta y yogurt",
         "cena": "Verduras y pescado",
@@ -92,21 +92,201 @@
         "snacks": "",
         "notas": ""
       }
+    },
+    {
+      "id": "7579",
+      "nombre": "Bautista Ruggiero",
+      "genero": "Masculino",
+      "fechaNacimiento": "2006-10-10",
+      "correo": "bautir88@gmail.com",
+      "telefono": "223849574",
+      "consultas": [
+        {
+          "fecha": "2025-11-17",
+          "peso": 82,
+          "altura": 170,
+          "grasa": 50,
+          "masa": 10,
+          "observaciones": "Mucho por mejorar."
+        }
+      ],
+      "planNutricional": {
+        "desayuno": "Huevo revuelto + caf",
+        "almuerzo": "Pollo y arroz",
+        "merienda": "Yogur",
+        "cena": "Pescado y ensalada",
+        "snacks": "Barra proteica",
+        "notas": "Mucha agua"
+      }
+    },
+    {
+      "id": "a12c",
+      "nombre": "María Fernanda López",
+      "genero": "Femenino",
+      "fechaNacimiento": "1998-03-22",
+      "correo": "mfernanda.lopez98@gmail.com",
+      "telefono": "2235551122",
+      "consultas": [
+        {
+          "fecha": "2025-10-05",
+          "peso": 68,
+          "altura": 165,
+          "grasa": 31,
+          "masa": 40,
+          "observaciones": "Consulta por fatiga y retención. Se indicó registro hídrico y reducción de sodio."
+        },
+        {
+          "fecha": "2025-11-10",
+          "peso": 66,
+          "altura": 165,
+          "grasa": 30.2,
+          "masa": 40.5,
+          "observaciones": "Leve descenso de peso, mejor cumplimiento del plan. Mantener seguimiento."
+        }
+      ],
+      "planNutricional": {
+        "desayuno": "Avena con leche descremada, 1 banana, te verde",
+        "almuerzo": "Ensalada mixta + 120g pechuga a la plancha + 1 porción de quinoa",
+        "merienda": "1 manzana + 10 almendras",
+        "cena": "Verduras al vapor + 1 porción mediana de salmón",
+        "snacks": "Hummus con palitos de zanahoria",
+        "notas": "Reducir sal en las comidas; incrementar ingesta de agua a 2.5 L/día."
+      }
+    },
+    {
+      "id": "b9d4",
+      "nombre": "Lucas Martín García",
+      "genero": "Masculino",
+      "fechaNacimiento": "1985-12-01",
+      "correo": "lmartin.garcia85@hotmail.com",
+      "telefono": "2237773344",
+      "consultas": [
+        {
+          "fecha": "2025-09-20",
+          "peso": 92,
+          "altura": 178,
+          "grasa": 28.7,
+          "masa": 62,
+          "observaciones": "Hipertensión controlada con medicación. Quiere perder 10 kg en 4 meses."
+        },
+        {
+          "fecha": "2025-11-12",
+          "peso": 89,
+          "altura": 178,
+          "grasa": 27.9,
+          "masa": 62.5,
+          "observaciones": "Pérdida de peso progresiva, tolera programa. Ajuste calórico -300 kcal."
+        }
+      ],
+      "planNutricional": {
+        "desayuno": "2 rebanadas de pan integral, 1 huevo sancochado, café",
+        "almuerzo": "200g ensalada + 150g lomo magro + 1 papa hervida pequeña",
+        "merienda": "Pan integral con ricota",
+        "cena": "Sopa de verduras + 100g pollo desmenuzado",
+        "snacks": "Yogur natural sin azúcar",
+        "notas": "Controlar raciones de carbohidratos; respetar medicación y chequeos médicos."
+      }
+    },
+    {
+      "id": "c3e7",
+      "nombre": "Valentina Rossi",
+      "genero": "Femenino",
+      "fechaNacimiento": "2002-07-14",
+      "correo": "valentina.rossi02@gmail.com",
+      "telefono": "2236669988",
+      "consultas": [
+        {
+          "fecha": "2025-08-30",
+          "peso": 54,
+          "altura": 162,
+          "grasa": 24,
+          "masa": 38,
+          "observaciones": "Busca definición muscular. Entrena 4 veces/semana."
+        },
+        {
+          "fecha": "2025-11-02",
+          "peso": 55,
+          "altura": 162,
+          "grasa": 22.8,
+          "masa": 39,
+          "observaciones": "Ganancia de masa magra leve, seguir aumento proteico."
+        }
+      ],
+      "planNutricional": {
+        "desayuno": "Batido de proteína (leche + 1 scoop) + 2 tostadas integrales",
+        "almuerzo": "Ensalada grande + 150g pechuga + porción de arroz integral",
+        "merienda": "Yogur griego + frutos rojos",
+        "cena": "Verduras salteadas + 120g pescado blanco",
+        "snacks": "Mix de frutos secos (porción pequeña)",
+        "notas": "Aumentar ingesta proteica en torno a entrenamientos; suplementación opcional."
+      }
+    },
+    {
+      "id": "d5f2",
+      "nombre": "Federico Núñez",
+      "genero": "Masculino",
+      "fechaNacimiento": "1974-04-03",
+      "correo": "fed.nunez74@gmail.com",
+      "telefono": "2238882211",
+      "consultas": [
+        {
+          "fecha": "2025-07-15",
+          "peso": 105,
+          "altura": 185,
+          "grasa": 34,
+          "masa": 70,
+          "observaciones": "Diabetes tipo 2. Requiere control glucémico y plan hipocalórico."
+        },
+        {
+          "fecha": "2025-11-01",
+          "peso": 100,
+          "altura": 185,
+          "grasa": 32.5,
+          "masa": 69.5,
+          "observaciones": "Mejoras en glicemia preprandial. Mantener plan y seguimiento trimestral."
+        }
+      ],
+      "planNutricional": {
+        "desayuno": "Yogur natural sin azúcar + 30g avena + 1 fruta pequeña",
+        "almuerzo": "Ensalada + 120g pescado + porción pequeña de legumbres",
+        "merienda": "1 mandarina + 1 puñado de nueces",
+        "cena": "Sopa de verduras + 1 porción pequeña de pollo",
+        "snacks": "Palitos de apio con hummus (porción controlada)",
+        "notas": "Controlar carbohidratos simples; seguimiento con profesional de diabetes."
+      }
+    },
+    {
+      "id": "e8b6",
+      "nombre": "Ana Belén Ortega",
+      "genero": "Femenino",
+      "fechaNacimiento": "2010-06-05",
+      "correo": "anabelen.or15@gmail.com",
+      "telefono": "2233347700",
+      "consultas": [
+        {
+          "fecha": "2025-11-05",
+          "peso": 44,
+          "altura": 152,
+          "grasa": 18,
+          "masa": 33,
+          "observaciones": "Consulta de control pediátrico. Desarrollo acorde a la edad."
+        }
+      ],
+      "planNutricional": {
+        "desayuno": "Cereal integral + leche + 1/2 banana",
+        "almuerzo": "Verduras + 80g pollo + 1 porción de fideos",
+        "merienda": "Yogur bebible",
+        "cena": "Verduras + 1 porción de pescado",
+        "snacks": "Fruta fresca",
+        "notas": "Fomentar actividad física diaria; mantener horarios regulares de comida."
+      }
     }
   ],
   "turnos": [
     {
       "idPaciente": "437b",
-      "fecha": "2026-09-17T03:00:00.000Z",
-      "hora": "11:30",
-      "observaciones": "Revisar el estado",
-      "estado": "Cancelado",
-      "id": "3d6c"
-    },
-    {
-      "idPaciente": "437b",
       "fecha": "2025-12-04T03:00:00.000Z",
-      "hora": "12:40",
+      "hora": "09:30",
       "observaciones": "Realizar mediciones estandar",
       "estado": "Pendiente",
       "id": "7975"
@@ -142,6 +322,14 @@
       "hora": "19:00",
       "observaciones": "Revisar el estado",
       "estado": "Cancelado"
+    },
+    {
+      "id": "5719",
+      "idPaciente": "e8b6",
+      "fecha": "2026-01-07T03:00:00.000Z",
+      "hora": "19:00",
+      "observaciones": "Realizar mediciones estandar",
+      "estado": "Pendiente"
     }
   ],
   "usuario": [

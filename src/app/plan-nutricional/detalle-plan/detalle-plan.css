@@ -4,21 +4,19 @@ section {
 }
 
 .informacion {
-    margin-top: 10px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
-.tarjeta {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 20px;
-  margin: 0;
-  background-color: rgb(255,255,255);
-  border: 1px solid rgb(215,231,207);
-  border-radius: 5px;
-  box-shadow: 0 1px 10px rgba(16, 185, 129, 0.22);
+.tarjeta{
+    padding: 20px;
+    margin-top: 20px;
+    background-color: rgb(255,255,255);
+    border: 1px solid rgb(215,231,207);
+    border-radius: 5px;
+    box-shadow: 0 1px 10px rgba(16, 185, 129, 0.22);
 }
 
 .englobar-icono {
@@ -30,12 +28,13 @@ section {
 .botones {
   margin-top: 25px;
   display: flex;
-  gap: 20px;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .botones button {
-  flex: 1;
-  padding: 12px 20px;
+  display: flex;
+  padding: 12px 12px;
   border: none;
   border-radius: 5px;
   color: white;
@@ -62,17 +61,17 @@ section {
   transform: scale(1.03);
 }
 
-/* móvil */
 @media (max-width: 768px) {
   section {
     margin: 20px 16px;
   }
 
   .botones {
-    flex-direction: column;
+    flex-direction: row;
+    gap: 30px;
   }
 
   .botones button {
-    width: 100%;
+    width: 50%;
   }
 }

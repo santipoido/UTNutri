@@ -27,10 +27,14 @@ export const routes: Routes = [
 
             { path: 'pacientes', component: ListaPacientes },
             { path: 'pacientes/nuevo', component: FormPacientes },
+
             { path: 'pacientes/:id/editar', component: FormPacientes },
+
             { path: 'pacientes/:id/ficha', component: FichaPaciente },
+
             { path: 'pacientes/:id/consultas', component: HistorialConsultas },
             { path: 'pacientes/:id/consultas/nueva', component: FormConsultas },
+            
             { path: 'pacientes/:id/plan', component: DetallePlan },
             { path: 'pacientes/:id/plan/editar', component: FormPlan },
         ],

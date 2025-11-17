@@ -8,7 +8,7 @@
   margin: 0;
 }
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -145,11 +145,11 @@ hr {
   color: white;
 }
 
-.btn-agendar{
+.btn-agendar {
   width: 70%;
   text-align: center;
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 10px;
   border: none;
   background-color: #2e7d32;
   color: white;
@@ -162,6 +162,111 @@ hr {
   opacity: 0.9;
 }
 
+.btn-agendar {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-agendar:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
 #svg-editar {
   width: 1.3rem;
+}
+
+@media (max-width: 900px) {
+  :host {
+    height: auto;
+    padding: 24px 12px;
+  }
+
+  .paciente-card {
+    padding: 20px;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 720px;
+  }
+
+  .paciente-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .peso-box {
+    align-self: stretch;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 12px;
+  }
+
+  .peso-valor {
+    font-size: 22px;
+  }
+
+  .paciente-nombre {
+    font-size: 22px;
+  }
+
+  .paciente-datos {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .dato-titulo {
+    font-size: 12px;
+  }
+
+  .dato-valor {
+    font-size: 14px;
+  }
+
+  .acciones {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .btn.agregar,
+  .btn.historial {
+    padding: 12px;
+  }
+
+  .btn.editar,
+  .btn.plan {
+    background-color: #f3f4f3;
+  }
+
+  .btn-agendar {
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .paciente-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .paciente-nombre {
+    font-size: 20px;
+  }
+
+  .peso-valor {
+    font-size: 20px;
+  }
+
+  .dato-valor {
+    font-size: 13px;
+  }
 }

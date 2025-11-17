@@ -5,7 +5,8 @@
         </div>
         <div class="contenedor-links">
             <a routerLink="/turnos" routerLinkActive="active">Inicio</a>
-            <a routerLink="/pacientes" routerLinkActive="active">Pacientes</a>
+            <a routerLink="/pacientes" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Pacientes</a>
+            <a routerLink="/pacientes/nuevo" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Nuevo paciente</a>
         </div>
         
     </nav>

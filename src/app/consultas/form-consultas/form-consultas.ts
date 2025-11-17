@@ -9,7 +9,7 @@ import { PacienteClient } from '../../paciente/paciente-client';
   templateUrl: './form-consultas.html',
   styleUrl: './form-consultas.css'
 })
-export class FormConsultas implements OnInit{
+export class FormConsultas implements OnInit {
 
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
@@ -23,16 +23,16 @@ export class FormConsultas implements OnInit{
     fecha: [new Date().toISOString().slice(0, 10), [Validators.required]],
     peso: [null as unknown as number, [Validators.required, Validators.min(1), Validators.max(300)]],
     altura: [null as unknown as number, [Validators.required, Validators.min(50), Validators.max(220)]],
-    grasa: [null as unknown as number,   [Validators.min(0), Validators.max(100)]],
-    masa: [null as unknown as number,   [Validators.min(0), Validators.max(100)]],
+    grasa: [null as unknown as number, [Validators.min(0), Validators.max(100)]],
+    masa: [null as unknown as number, [Validators.min(0), Validators.max(100)]],
     observaciones: ['']
   });
 
-  get peso(){return this.form.controls.peso}
-  get altura(){return this.form.controls.altura}
-  get grasa(){return this.form.controls.grasa}
-  get masa(){return this.form.controls.masa}
-  get observaciones(){return this.form.controls.observaciones}
+  get peso() { return this.form.controls.peso }
+  get altura() { return this.form.controls.altura }
+  get grasa() { return this.form.controls.grasa }
+  get masa() { return this.form.controls.masa }
+  get observaciones() { return this.form.controls.observaciones }
 
   ngOnInit(): void {
     this.pacienteId = this.route.snapshot.paramMap.get('id')!;
@@ -49,7 +49,7 @@ export class FormConsultas implements OnInit{
     });
   }
 
-  irAFicha(id: string | number){
+  irAFicha(id: string | number) {
     this.router.navigateByUrl(`pacientes/${id}/ficha`)
   }
   handleSubmit(): void {
@@ -59,17 +59,19 @@ export class FormConsultas implements OnInit{
       return;
     }
 
-    const dto = this.form.getRawValue();
+    if (window.confirm('¿Desea agregar la consulta?')) {
+      const dto = this.form.getRawValue();
 
-    this.client.addConsulta(this.pacienteId, dto).subscribe({
-      next: () => {
-        alert('Consulta guardada con éxito');
-        this.router.navigateByUrl(`/pacientes/${this.pacienteId}/ficha`);
-      },
-      error: () => {
-        alert('Error al guardar la consulta.');
-      }
-    });
+      this.client.addConsulta(this.pacienteId, dto).subscribe({
+        next: () => {
+          alert('Consulta guardada con éxito');
+          this.router.navigateByUrl(`/pacientes/${this.pacienteId}/ficha`);
+        },
+        error: () => {
+          alert('Error al guardar la consulta.');
+        }
+      });
+    }
   }
 
   cancelar(): void {

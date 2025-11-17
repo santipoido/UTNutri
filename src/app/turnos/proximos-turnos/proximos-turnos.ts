@@ -36,7 +36,7 @@ protected readonly turnos = toSignal(
           hoy.setHours(0, 0, 0, 0);
           fechaTurno.setHours(0, 0, 0, 0);
 
-          // Determinar si el turno ya pasó
+          // Ver si el turno ya pasó
           const estaVencido = fechaTurno < hoy;
 
           // Actualizar estado automáticamente

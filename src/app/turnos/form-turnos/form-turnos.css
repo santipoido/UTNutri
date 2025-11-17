@@ -97,7 +97,6 @@ span {
   background-color: #1ac45a;
 }
 
-/*Movil*/
 @media (max-width: 480px) {
   :host {
     padding: 15px;
