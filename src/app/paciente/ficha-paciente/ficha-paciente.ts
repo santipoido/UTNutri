@@ -14,66 +14,58 @@ export class FichaPaciente {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  // estado como signal
   paciente = signal<Paciente | null>(null);
+  consultas = signal<Consulta[]>([]);
 
-  // última consulta calculada (ordena por fecha desc)
   ultimaConsulta = computed<Consulta | null>(() => {
-    const p = this.paciente();
-    if (!p || !p.consultas?.length) return null;
-
-    const ordenadas = [...p.consultas].sort(
+    const ordenadas = [...this.consultas()].sort(
       (a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
     );
     return ordenadas[0] ?? null;
   });
 
-  // valores derivados para el template
   ultimoPesoKg = computed<number | null>(() => this.ultimaConsulta()?.peso ?? null);
   ultimaFecha = computed<string | null>(() => this.ultimaConsulta()?.fecha ?? null);
 
-
   pacienteDesde = computed<string | null>(() => {
-    const p = this.paciente();
-    if (!p || !p.consultas?.length) return null;
-
-    const ordenadasAsc = [...p.consultas].sort(
+    if (!this.consultas().length) return null;
+    const ordenadasAsc = [...this.consultas()].sort(
       (a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()
     );
-
-    const primera = ordenadasAsc[0];
-    return primera?.fecha ?? null;
-  })
+    return ordenadasAsc[0]?.fecha ?? null;
+  });
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
+    const id = Number(this.route.snapshot.paramMap.get('id')!);
+
     this.client.getPacienteById(id).subscribe({
       next: p => this.paciente.set(p),
-      error: () => {
-        alert('Paciente no encontrado');
-      }
+      error: () => alert('Paciente no encontrado')
+    });
+
+    this.client.getConsultas(id).subscribe({
+      next: c => this.consultas.set(c),
+      error: () => this.consultas.set([])
     });
   }
 
-  irAgregarConsulta(id: string | number) {
+  irAgregarConsulta(id: number) {
     this.router.navigateByUrl(`/pacientes/${id}/consultas/nueva`);
   }
 
-  irAlHistorial(id: string | number){
+  irAlHistorial(id: number) {
     this.router.navigateByUrl(`pacientes/${id}/consultas`);
   }
 
-  irAlPlanNutricional(id: string | number){
-    this.router.navigateByUrl(`pacientes/${id}/plan`)
+  irAlPlanNutricional(id: number) {
+    this.router.navigateByUrl(`pacientes/${id}/plan`);
   }
 
-  irAEditar(id: string | number){
+  irAEditar(id: number) {
     this.router.navigateByUrl(`pacientes/${id}/editar`);
   }
-  
 
-  irAgregarTurno(id: string | number){
+  irAgregarTurno(id: number) {
     this.router.navigateByUrl(`turnos/${id}/nuevo`);
-    
   }
 }

@@ -1,8 +1,7 @@
-import { Component, inject, linkedSignal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteClient } from '../../paciente/paciente-client';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { Paciente } from '../../paciente/paciente';
+import { Consulta, Paciente } from '../../paciente/paciente';
 
 @Component({
   selector: 'app-historial-consultas',
@@ -16,12 +15,24 @@ export class HistorialConsultas {
   private readonly client = inject(PacienteClient);
   private readonly router = inject(Router);
 
- private readonly id = this.route.snapshot.paramMap.get('id')!;
+  private readonly id = Number(this.route.snapshot.paramMap.get('id')!);
 
-  protected readonly paciente = toSignal<Paciente | null>(
-    this.client.getPacienteById(this.id),
-    { initialValue: null }
-  );
+  paciente = signal<Paciente | null>(null);
+  consultas = signal<Consulta[]>([]);
+
+  ngOnInit(): void {
+    this.client.getPacienteById(this.id).subscribe({
+      next: p => this.paciente.set(p),
+      error: () => alert('Paciente no encontrado')
+    });
+
+    this.client.getConsultas(this.id).subscribe({
+      next: c => this.consultas.set(c),
+      error: () => this.consultas.set([])
+    });
+  }
+
+  irANuevaConsulta() {
+    this.router.navigateByUrl(`/pacientes/${this.id}/consultas/nueva`);
+  }
 }
-
-

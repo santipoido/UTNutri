@@ -17,7 +17,7 @@
           <span class="material-symbols-outlined">coffee</span>
           <h3>Desayuno</h3>
         </div>
-        <p>{{ paciente.planNutricional?.desayuno }}</p>
+        <p>{{ plan()?.desayuno }}</p>
       </div>
 
       <div class="tarjeta">
@@ -25,7 +25,7 @@
           <span class="material-symbols-outlined">restaurant</span>
           <h3>Almuerzo</h3>
         </div>
-        <p>{{ paciente.planNutricional?.almuerzo }}</p>
+        <p>{{ plan()?.almuerzo }}</p>
       </div>
 
       <div class="tarjeta">
@@ -33,7 +33,7 @@
           <span class="material-symbols-outlined">egg_alt</span>
           <h3>Merienda</h3>
         </div>
-        <p>{{ paciente.planNutricional?.merienda }}</p>
+        <p>{{ plan()?.merienda }}</p>
       </div>
 
       <div class="tarjeta">
@@ -41,7 +41,7 @@
           <span class="material-symbols-outlined">dinner_dining</span>
           <h3>Cena</h3>
         </div>
-        <p>{{ paciente.planNutricional?.cena }}</p>
+        <p>{{ plan()?.cena }}</p>
       </div>
 
       <div class="tarjeta">
@@ -49,17 +49,17 @@
           <span class="material-symbols-outlined">icecream</span>
           <h3>Snacks</h3>
         </div>
-        <p>{{ paciente.planNutricional?.snacks }}</p>
+        <p>{{ plan()?.snacks }}</p>
       </div>
 
       <div class="tarjeta">
         <h3>Notas adicionales</h3>
-        <p>{{ paciente.planNutricional?.notas }}</p>
+        <p>{{ plan()?.notas }}</p>
       </div>
     </div>
     </div>
     <div class="botones">
-      <button id="editar" (click)="editarPlan(paciente.id!)">Editar plan nutricional</button>
+      <button id="editar" (click)="editarPlan()">Editar plan nutricional</button>
       <button id="exportar" (click)="exportarPDF()">Exportar plan nutricional</button>
     </div>
   </section>

@@ -22,7 +22,7 @@
             </thead>
             <tbody>
 
-                @for(consulta of paciente.consultas; track consulta){
+                @for(consulta of consultas(); track consulta){
                     <tr>
                         <td>{{consulta.fecha}}</td>
                         <td>{{consulta.peso}}kg</td>

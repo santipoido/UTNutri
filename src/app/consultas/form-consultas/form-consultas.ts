@@ -16,7 +16,7 @@ export class FormConsultas implements OnInit {
   private readonly router = inject(Router);
   private readonly client = inject(PacienteClient);
 
-  pacienteId!: string;
+  pacienteId!: number;
   pacienteNombre: string | null = null;
 
   form = this.fb.nonNullable.group({
@@ -28,30 +28,28 @@ export class FormConsultas implements OnInit {
     observaciones: ['']
   });
 
-  get peso() { return this.form.controls.peso }
-  get altura() { return this.form.controls.altura }
-  get grasa() { return this.form.controls.grasa }
-  get masa() { return this.form.controls.masa }
-  get observaciones() { return this.form.controls.observaciones }
+  get peso() { return this.form.controls.peso; }
+  get altura() { return this.form.controls.altura; }
+  get grasa() { return this.form.controls.grasa; }
+  get masa() { return this.form.controls.masa; }
+  get observaciones() { return this.form.controls.observaciones; }
 
   ngOnInit(): void {
-    this.pacienteId = this.route.snapshot.paramMap.get('id')!;
+    this.pacienteId = Number(this.route.snapshot.paramMap.get('id')!);
 
-    // traemos datos del paciente para mostrar el nombre arriba
     this.client.getPacienteById(this.pacienteId).subscribe({
-      next: (p) => {
-        this.pacienteNombre = p.nombre;
-      },
+      next: (p) => { this.pacienteNombre = p.nombre; },
       error: () => {
         alert('Paciente no encontrado');
-        this.router.navigateByUrl('/pacientes/nuevo');
+        this.router.navigateByUrl('/pacientes');
       }
     });
   }
 
-  irAFicha(id: string | number) {
-    this.router.navigateByUrl(`pacientes/${id}/ficha`)
+  irAFicha() {
+    this.router.navigateByUrl(`pacientes/${this.pacienteId}/ficha`);
   }
+
   handleSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -61,7 +59,6 @@ export class FormConsultas implements OnInit {
 
     if (window.confirm('¿Desea agregar la consulta?')) {
       const dto = this.form.getRawValue();
-
       this.client.addConsulta(this.pacienteId, dto).subscribe({
         next: () => {
           alert('Consulta guardada con éxito');
@@ -75,6 +72,6 @@ export class FormConsultas implements OnInit {
   }
 
   cancelar(): void {
-    this.router.navigateByUrl(`/pacientes/${this.pacienteId}`);
+    this.router.navigateByUrl(`/pacientes/${this.pacienteId}/ficha`);
   }
 }

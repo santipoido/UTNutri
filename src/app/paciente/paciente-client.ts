@@ -1,95 +1,65 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
-import { Consulta, Paciente, PlanNutricional, UpdatePacienteDto } from './paciente';
+import { Consulta, Paciente, PacienteCreateRequest, PacienteUpdateRequest, PlanNutricional } from './paciente';
+import { environment } from '../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class PacienteClient {
 
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:3000/pacientes'; // token
-  private readonly planVacio: PlanNutricional = {
-    desayuno: '',
-    almuerzo: '',
-    merienda: '',
-    cena: '',
-    snacks: '',
-    notas: ''
-  }
+  private readonly baseUrl = `${environment.apiUrl}/pacientes`;
+
+  // ─── Pacientes ───────────────────────────────────────────────────────────
 
   getPacientes() {
     return this.http.get<Paciente[]>(this.baseUrl);
   }
 
-  getPacienteById(id: string | number) {
+  getPacienteById(id: number) {
     return this.http.get<Paciente>(`${this.baseUrl}/${id}`);
   }
 
-
-  addPaciente(dto: {
-    nombre: string,
-    genero: string,
-    fechaNacimiento: string,
-    correo: string,
-    telefono: string
-  }) {
-    const nuevoPaciente: Paciente = {
-      nombre: dto.nombre,
-      genero: dto.genero,
-      fechaNacimiento: dto.fechaNacimiento,
-      correo: dto.correo,
-      telefono: dto.telefono,
-      consultas: [],
-      planNutricional: this.planVacio
-    };
-
-    return this.http.post<Paciente>(this.baseUrl, nuevoPaciente);
+  addPaciente(dto: PacienteCreateRequest) {
+    return this.http.post<Paciente>(this.baseUrl, dto);
   }
 
-  addConsulta(
-    pacienteId: string,
-    dto: {
-      fecha: string;
-      peso: number,
-      altura: number,
-      grasa?: number,
-      masa?: number,
-      observaciones?: string
-    }
-  ) {
-    const consulta: Consulta = {
-      fecha: dto.fecha ?? new Date().toISOString().slice(0, 10),
-      peso: dto.peso,
-      altura: dto.altura,
-      grasa: dto.grasa,
-      masa: dto.masa,
-      observaciones: dto.observaciones
-    };
-
-    return this.getPacienteById(pacienteId).pipe(
-      switchMap((pacienteActual) => {
-        const actualizado: Paciente = {
-          ...pacienteActual,
-          consultas: [...(pacienteActual.consultas ?? []), consulta]
-        };
-
-        return this.http.put<Paciente>(`${this.baseUrl}/${pacienteId}`, actualizado);
-      })
-    );
+  updatePaciente(id: number, dto: PacienteUpdateRequest) {
+    return this.http.put<Paciente>(`${this.baseUrl}/${id}`, dto);
   }
 
-  updatePacientePlan(id: string | number, plan: PlanNutricional) {
-    const propiedad = { planNutricional: plan };
-    return this.http.patch<Paciente>(`${this.baseUrl}/${id}`, propiedad);
+  deletePaciente(id: number) {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  updatePaciente(dto: Partial<Paciente>, id: string | number) {
-    return this.http.patch(`${this.baseUrl}/${id}`, dto);
+  // ─── Consultas ───────────────────────────────────────────────────────────
+
+  getConsultas(pacienteId: number) {
+    return this.http.get<Consulta[]>(`${this.baseUrl}/${pacienteId}/consultas`);
   }
 
-  deletePaciente(id: string | number) {
-    return this.http.delete<Paciente>(`${this.baseUrl}/${id}`);
+  addConsulta(pacienteId: number, dto: Omit<Consulta, 'id'>) {
+    return this.http.post<Consulta>(`${this.baseUrl}/${pacienteId}/consultas`, dto);
+  }
+
+  updateConsulta(pacienteId: number, consultaId: number, dto: Omit<Consulta, 'id'>) {
+    return this.http.put<Consulta>(`${this.baseUrl}/${pacienteId}/consultas/${consultaId}`, dto);
+  }
+
+  deleteConsulta(pacienteId: number, consultaId: number) {
+    return this.http.delete<void>(`${this.baseUrl}/${pacienteId}/consultas/${consultaId}`);
+  }
+
+  // ─── Plan Nutricional ─────────────────────────────────────────────────────
+
+  getPlan(pacienteId: number) {
+    return this.http.get<PlanNutricional>(`${this.baseUrl}/${pacienteId}/plan`);
+  }
+
+  upsertPlan(pacienteId: number, dto: Omit<PlanNutricional, 'id'>) {
+    return this.http.put<PlanNutricional>(`${this.baseUrl}/${pacienteId}/plan`, dto);
+  }
+
+  deletePlan(pacienteId: number) {
+    return this.http.delete<void>(`${this.baseUrl}/${pacienteId}/plan`);
   }
 }

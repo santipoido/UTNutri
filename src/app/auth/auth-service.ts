@@ -1,30 +1,55 @@
-// src/app/auth.service.ts
 import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs';
+import { environment } from '../environments/environment';
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  username: string;
+  password: string;
+  email: string;
+  nombre: string;
+}
+
+export interface AuthResponse {
+  token: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly KEY = 'logged_in';
+  private readonly TOKEN_KEY = 'auth_token';
+  private readonly baseUrl = `${environment.apiUrl}/auth`;
 
-  private readonly USER = 'nutri2025';
-  private readonly PASS = 'utnutri123';
-
+  private http = inject(HttpClient);
   private router = inject(Router);
 
-  login(user: string, pass: string): boolean {
-    if (user === this.USER && pass === this.PASS) {
-      sessionStorage.setItem(this.KEY, 'true');
-      return true;
-    }
-    return false;
+  login(request: LoginRequest) {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/login`, request).pipe(
+      tap(response => sessionStorage.setItem(this.TOKEN_KEY, response.token))
+    );
+  }
+
+  register(request: RegisterRequest) {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/register`, request).pipe(
+      tap(response => sessionStorage.setItem(this.TOKEN_KEY, response.token))
+    );
   }
 
   logout(): void {
-    sessionStorage.removeItem(this.KEY);
+    sessionStorage.removeItem(this.TOKEN_KEY);
     this.router.navigateByUrl('/login');
   }
 
+  getToken(): string | null {
+    return sessionStorage.getItem(this.TOKEN_KEY);
+  }
+
   isLoggedIn(): boolean {
-    return sessionStorage.getItem(this.KEY) === 'true';
+    return this.getToken() !== null;
   }
 }
