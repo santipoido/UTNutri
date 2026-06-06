@@ -66,11 +66,11 @@ export class FormPacientes implements OnInit {
         this.client.updatePaciente(this.id!, dto).subscribe({
           next: () => {
             alert('Paciente modificado con éxito');
-            this.router.navigateByUrl(`pacientes/${this.id}/ficha`);
+            this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
           },
           error: () => {
             alert('No se pudo modificar el paciente');
-            this.router.navigateByUrl(`pacientes/${this.id}/ficha`);
+            this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
           }
         });
       } else {

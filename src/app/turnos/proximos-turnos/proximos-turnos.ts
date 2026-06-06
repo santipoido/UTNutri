@@ -3,7 +3,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DatePipe, NgClass } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { ClienteTurnos } from '../cliente-turnos';
-import { PacienteClient } from '../../paciente/paciente-client';
 import { Router } from '@angular/router';
 import { Turno } from '../turno';
 
@@ -15,11 +14,10 @@ import { Turno } from '../turno';
 })
 export class ProximosTurnos {
   private readonly client = inject(ClienteTurnos);
-  private readonly pacienteClient = inject(PacienteClient);
   private readonly router = inject(Router);
 
   protected readonly turnos = toSignal(
-    this.client.getTurnos().pipe(
+    this.client.getProximosTurnos().pipe(
       map((turnos: Turno[]) =>
         turnos
           .map(t => {
@@ -36,7 +34,6 @@ export class ProximosTurnos {
     )
   );
 
-  protected readonly pacientes = toSignal(this.pacienteClient.getPacientes());
   protected readonly filtroEstado = signal<'Todos' | 'Pendiente' | 'Realizado' | 'Cancelado'>('Todos');
 
   protected readonly turnosFiltrados = linkedSignal(() => {
@@ -45,13 +42,6 @@ export class ProximosTurnos {
     const filtrados = filtro === 'Todos' ? lista : lista.filter(t => t.estado === filtro);
     return this.ordenarTurnosPorFecha(filtrados);
   });
-
-  obtenerPaciente(id: number) {
-    const listaPacientes = this.pacientes();
-    if (!listaPacientes) return 'Cargando...';
-    const paciente = listaPacientes.find(p => p.id === id);
-    return paciente ? paciente.nombre : 'Paciente desconocido';
-  }
 
   editarTurno(id: number) {
     const turno = this.turnos()?.find(t => t.id === id);

@@ -23,7 +23,7 @@
     @for (turno of turnos; track turno.id) {
     <div class="turno">
       <div class="contenedor-nombre">
-        <p class="nombre-paciente">{{ obtenerPaciente(turno.idPaciente!) }}</p>
+        <p class="nombre-paciente">{{ turno.nombrePaciente }}</p>
         <p class="verde">{{ turno.fecha | date:'dd-MM-yyyy' }} - {{ turno.hora }}</p>
         <div class="contenedor-observaciones">
           <p><strong>Observaciones</strong></p>

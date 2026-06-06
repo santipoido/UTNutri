@@ -7,6 +7,7 @@ import { HistorialConsultas } from './consultas/historial-consultas/historial-co
 import { DetallePlan } from './plan-nutricional/detalle-plan/detalle-plan';
 import { FormPlan } from './plan-nutricional/form-plan/form-plan';
 import { Login } from './auth/login/login';
+import { Register } from './auth/register/register';
 import { ProximosTurnos } from './turnos/proximos-turnos/proximos-turnos';
 import { authGuard } from './auth-guard';
 import { loginRedirectGuard } from './login-redirect-guard';
@@ -14,6 +15,7 @@ import { FormTurnos } from './turnos/form-turnos/form-turnos';
 
 export const routes: Routes = [
     { path: 'login', canMatch: [loginRedirectGuard], component: Login, data: {hideHeader: true} },
+    { path: 'register', canMatch: [loginRedirectGuard], component: Register, data: {hideHeader: true} },
 
     {
         path: '',

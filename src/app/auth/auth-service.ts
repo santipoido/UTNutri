@@ -18,11 +18,15 @@ export interface RegisterRequest {
 
 export interface AuthResponse {
   token: string;
+  username: string;
+  nombre: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
+  private readonly NOMBRE_KEY = 'auth_nombre';
+  private readonly USERNAME_KEY = 'auth_username';
   private readonly baseUrl = `${environment.apiUrl}/auth`;
 
   private http = inject(HttpClient);
@@ -30,23 +34,41 @@ export class AuthService {
 
   login(request: LoginRequest) {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, request).pipe(
-      tap(response => sessionStorage.setItem(this.TOKEN_KEY, response.token))
+      tap(response => {
+        localStorage.setItem(this.TOKEN_KEY, response.token);
+        localStorage.setItem(this.NOMBRE_KEY, response.nombre);
+        localStorage.setItem(this.USERNAME_KEY, response.username);
+      })
     );
   }
 
   register(request: RegisterRequest) {
     return this.http.post<AuthResponse>(`${this.baseUrl}/register`, request).pipe(
-      tap(response => sessionStorage.setItem(this.TOKEN_KEY, response.token))
+      tap(response => {
+        localStorage.setItem(this.TOKEN_KEY, response.token);
+        localStorage.setItem(this.NOMBRE_KEY, response.nombre);
+        localStorage.setItem(this.USERNAME_KEY, response.username);
+      })
     );
   }
 
   logout(): void {
-    sessionStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.NOMBRE_KEY);
+    localStorage.removeItem(this.USERNAME_KEY);
     this.router.navigateByUrl('/login');
   }
 
   getToken(): string | null {
-    return sessionStorage.getItem(this.TOKEN_KEY);
+    return localStorage.getItem(this.TOKEN_KEY);
+  }
+
+  getNombre(): string | null {
+    return localStorage.getItem(this.NOMBRE_KEY);
+  }
+
+  getUsername(): string | null {
+    return localStorage.getItem(this.USERNAME_KEY);
   }
 
   isLoggedIn(): boolean {

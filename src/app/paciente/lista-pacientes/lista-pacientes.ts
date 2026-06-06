@@ -38,9 +38,9 @@ export class ListaPacientes {
 
   eliminarPaciente(id: number) {
     if (confirm('¿Desea eliminar al paciente?')) {
-      this.client.deletePaciente(id).subscribe(() => {
-        alert('Paciente borrado con éxito');
-        location.reload();
+      this.client.deletePaciente(id).subscribe({
+        next: () => { alert('Paciente borrado con éxito'); location.reload(); },
+        error: () => alert('No se pudo eliminar el paciente. Intentalo más tarde.')
       });
     }
   }

@@ -47,7 +47,7 @@ export class FormConsultas implements OnInit {
   }
 
   irAFicha() {
-    this.router.navigateByUrl(`pacientes/${this.pacienteId}/ficha`);
+    this.router.navigateByUrl(`/pacientes/${this.pacienteId}/ficha`);
   }
 
   handleSubmit(): void {

@@ -2,10 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f8f8f8;
 }
-
 
 .form-container {
   background-color: #fff;
@@ -15,7 +14,6 @@
   width: 450px;
   text-align: center;
 }
-
 
 form {
   display: flex;
@@ -44,7 +42,7 @@ button {
   margin-top: 20px;
   border-radius: 10px;
   background-color: #20DF6C;
-  color: #FFFFFF;
+  color: #ffffff;
   border: none;
   padding: 10px 0px;
   cursor: pointer;
@@ -66,7 +64,6 @@ button {
 h1 {
   font-weight: 900;
 }
-
 
 p {
   padding-top: 10px;

@@ -8,6 +8,11 @@
             <a routerLink="/pacientes" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Pacientes</a>
             <a routerLink="/pacientes/nuevo" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Nuevo paciente</a>
         </div>
-        
+        <div class="contenedor-usuario">
+            @if (auth.getNombre()) {
+                <span class="nombre-usuario">{{ auth.getNombre() }}</span>
+            }
+            <button class="btn-logout" (click)="auth.logout()">Cerrar sesión</button>
+        </div>
     </nav>
 </header>

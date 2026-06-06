@@ -54,18 +54,18 @@ export class FichaPaciente {
   }
 
   irAlHistorial(id: number) {
-    this.router.navigateByUrl(`pacientes/${id}/consultas`);
+    this.router.navigateByUrl(`/pacientes/${id}/consultas`);
   }
 
   irAlPlanNutricional(id: number) {
-    this.router.navigateByUrl(`pacientes/${id}/plan`);
+    this.router.navigateByUrl(`/pacientes/${id}/plan`);
   }
 
   irAEditar(id: number) {
-    this.router.navigateByUrl(`pacientes/${id}/editar`);
+    this.router.navigateByUrl(`/pacientes/${id}/editar`);
   }
 
   irAgregarTurno(id: number) {
-    this.router.navigateByUrl(`turnos/${id}/nuevo`);
+    this.router.navigateByUrl(`/turnos/${id}/nuevo`);
   }
 }
