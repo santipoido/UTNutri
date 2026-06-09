@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteClient } from '../../paciente/paciente-client';
+import { AppModalComponent } from '../../components/modal/modal';
 
 @Component({
   selector: 'app-form-consultas',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AppModalComponent],
   templateUrl: './form-consultas.html',
   styleUrl: './form-consultas.css'
 })
@@ -28,6 +29,45 @@ export class FormConsultas implements OnInit {
     observaciones: ['']
   });
 
+  // ── Modal state ──────────────────────────────────────────────────────────
+  modalVisible = false;
+  modalTitle = '';
+  modalMessage = '';
+  modalConfirmLabel = 'Aceptar';
+  modalType: 'info' | 'confirm' | 'danger' = 'info';
+  private pendingAction: (() => void) | null = null;
+
+  private openInfoModal(title: string, message: string, onAccept?: () => void): void {
+    this.modalTitle        = title;
+    this.modalMessage      = message;
+    this.modalConfirmLabel = 'Aceptar';
+    this.modalType         = 'info';
+    this.pendingAction     = onAccept ?? null;
+    this.modalVisible      = true;
+  }
+
+  private openConfirmModal(title: string, message: string, action: () => void): void {
+    this.modalTitle        = title;
+    this.modalMessage      = message;
+    this.modalConfirmLabel = 'Confirmar';
+    this.modalType         = 'confirm';
+    this.pendingAction     = action;
+    this.modalVisible      = true;
+  }
+
+  onModalConfirmado(): void {
+    const action = this.pendingAction;
+    this.pendingAction = null;
+    this.modalVisible  = false;
+    action?.();
+  }
+
+  onModalCancelado(): void {
+    this.pendingAction = null;
+    this.modalVisible  = false;
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
   get peso() { return this.form.controls.peso; }
   get altura() { return this.form.controls.altura; }
   get grasa() { return this.form.controls.grasa; }
@@ -39,10 +79,9 @@ export class FormConsultas implements OnInit {
 
     this.client.getPacienteById(this.pacienteId).subscribe({
       next: (p) => { this.pacienteNombre = p.nombre; },
-      error: () => {
-        alert('Paciente no encontrado');
+      error: () => this.openInfoModal('Paciente no encontrado', 'No se pudo cargar el paciente.', () => {
         this.router.navigateByUrl('/pacientes');
-      }
+      })
     });
   }
 
@@ -50,25 +89,27 @@ export class FormConsultas implements OnInit {
     this.router.navigateByUrl(`/pacientes/${this.pacienteId}/ficha`);
   }
 
+  irAHistorial() {
+    this.router.navigateByUrl(`/pacientes/${this.pacienteId}/consultas`);
+  }
+
   handleSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      alert('Formulario de consulta inválido.');
+      this.openInfoModal('Formulario inválido', 'Completá todos los campos obligatorios correctamente.');
       return;
     }
 
-    if (window.confirm('¿Desea agregar la consulta?')) {
-      const dto = this.form.getRawValue();
+    const dto = this.form.getRawValue();
+
+    this.openConfirmModal('Agregar consulta', '¿Querés registrar esta consulta?', () => {
       this.client.addConsulta(this.pacienteId, dto).subscribe({
-        next: () => {
-          alert('Consulta guardada con éxito');
+        next: () => this.openInfoModal('¡Listo!', 'Consulta guardada con éxito.', () => {
           this.router.navigateByUrl(`/pacientes/${this.pacienteId}/ficha`);
-        },
-        error: () => {
-          alert('Error al guardar la consulta.');
-        }
+        }),
+        error: () => this.openInfoModal('Error', 'No se pudo guardar la consulta. Intentá más tarde.')
       });
-    }
+    });
   }
 
   cancelar(): void {

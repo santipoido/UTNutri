@@ -7,7 +7,9 @@
       </div>
       <p class="modal-body">{{ message }}</p>
       <div class="modal-actions">
-        <button class="btn btn-ghost btn-sm" (click)="cancelled.emit()">{{ cancelLabel }}</button>
+        @if (type !== 'info') {
+          <button class="btn btn-ghost btn-sm" (click)="cancelled.emit()">{{ cancelLabel }}</button>
+        }
         <button
           class="btn btn-sm"
           [class.btn-danger]="type === 'danger'"

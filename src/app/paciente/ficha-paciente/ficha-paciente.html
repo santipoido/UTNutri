@@ -1,7 +1,21 @@
 @let paciente = this.paciente();
 
+<app-modal
+  [visible]="modalVisible"
+  [title]="modalTitle"
+  [message]="modalMessage"
+  [confirmLabel]="modalConfirmLabel"
+  [type]="modalType"
+  (confirmed)="onModalConfirmado()"
+  (cancelled)="onModalCancelado()"
+/>
+
 @if (paciente) {
   <div class="ficha-page">
+    <button class="btn-back" (click)="volver()">
+      <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Volver a pacientes
+    </button>
     <div class="ficha-layout">
 
       <!-- Columna izquierda: datos del paciente -->
@@ -62,11 +76,25 @@
         </div>
       </div>
 
-      <!-- Columna derecha: agendar turno -->
+      <!-- Columna derecha: turnos del paciente -->
       <div class="ficha-side">
         <div class="side-card">
-          <p class="side-card-title"><span class="side-dot"></span>Turnos del paciente</p>
-          <p class="side-empty-hint">Los turnos se gestionan desde el dashboard.</p>
+          <p class="side-card-title"><span class="side-dot"></span>Próximos turnos</p>
+          @if (proximosTurnos().length === 0) {
+            <p class="side-empty-hint">No hay turnos pendientes agendados.</p>
+          } @else {
+            <ul class="turno-list">
+              @for (turno of proximosTurnos(); track turno.id) {
+                <li class="turno-item">
+                  <div class="turno-fecha">{{ turno.fecha | date:'dd/MM/yyyy' }}</div>
+                  <div class="turno-hora">{{ turno.hora }}hs</div>
+                  @if (turno.observaciones) {
+                    <div class="turno-obs">{{ turno.observaciones }}</div>
+                  }
+                </li>
+              }
+            </ul>
+          }
         </div>
         <button class="btn-agendar" (click)="irAgregarTurno(paciente.id!)">
           + Agendar turno para {{ paciente.nombre }}

@@ -6,10 +6,11 @@ import { PacienteClient } from '../../paciente/paciente-client';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Turno } from '../turno';
 import { of } from 'rxjs';
+import { AppModalComponent } from '../../components/modal/modal';
 
 @Component({
   selector: 'app-form-turnos',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AppModalComponent],
   templateUrl: './form-turnos.html',
   styleUrl: './form-turnos.css',
 })
@@ -47,6 +48,45 @@ export class FormTurnos {
     observaciones: ['', Validators.required],
   });
 
+  // ── Modal state ──────────────────────────────────────────────────────────
+  modalVisible = false;
+  modalTitle = '';
+  modalMessage = '';
+  modalConfirmLabel = 'Aceptar';
+  modalType: 'info' | 'confirm' | 'danger' = 'info';
+  private pendingAction: (() => void) | null = null;
+
+  private openInfoModal(title: string, message: string, onAccept?: () => void): void {
+    this.modalTitle        = title;
+    this.modalMessage      = message;
+    this.modalConfirmLabel = 'Aceptar';
+    this.modalType         = 'info';
+    this.pendingAction     = onAccept ?? null;
+    this.modalVisible      = true;
+  }
+
+  private openConfirmModal(title: string, message: string, action: () => void): void {
+    this.modalTitle        = title;
+    this.modalMessage      = message;
+    this.modalConfirmLabel = 'Confirmar';
+    this.modalType         = 'confirm';
+    this.pendingAction     = action;
+    this.modalVisible      = true;
+  }
+
+  onModalConfirmado(): void {
+    const action = this.pendingAction;
+    this.pendingAction = null;
+    this.modalVisible  = false;
+    action?.();
+  }
+
+  onModalCancelado(): void {
+    this.pendingAction = null;
+    this.modalVisible  = false;
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
   constructor() {
     effect(() => {
       const turno = this.turnoSource();
@@ -65,6 +105,14 @@ export class FormTurnos {
   get fecha() { return this.form.controls.fecha; }
   get hora() { return this.form.controls.hora; }
   get observaciones() { return this.form.controls.observaciones; }
+
+  volver() {
+    if (this.esEdicion()) {
+      this.router.navigateByUrl('/turnos');
+    } else {
+      this.router.navigateByUrl(`/pacientes/${this.idPaciente}/ficha`);
+    }
+  }
 
   private turnoEsEnElPasado(fecha: string, hora: string): boolean {
     const [year, month, day] = fecha.split('-').map(Number);
@@ -97,56 +145,58 @@ export class FormTurnos {
   handleSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      alert('El formulario es inválido.');
+      this.openInfoModal('Formulario inválido', 'Completá todos los campos antes de continuar.');
       return;
     }
 
     const { fecha, hora, observaciones } = this.form.getRawValue();
 
     if (this.turnosOcupados(fecha, hora)) {
-      alert('Ya existe un turno programado para esa fecha y hora.');
+      this.openInfoModal('Horario no disponible', 'Ya existe un turno programado para esa fecha y hora.');
       return;
     }
     if (this.turnoEsEnElPasado(fecha, hora)) {
-      alert('La fecha y hora del turno deben ser futuras.');
+      this.openInfoModal('Fecha inválida', 'La fecha y hora del turno deben ser futuras.');
       return;
     }
     if (this.horaFueraDeRango(hora)) {
-      alert('El horario debe estar entre las 07:00 y las 19:00.');
+      this.openInfoModal('Hora fuera de rango', 'El horario debe estar entre las 07:00 y las 19:00.');
       return;
     }
 
-    if (confirm('¿Desea confirmar los datos?')) {
-      const [year, month, day] = fecha.split('-').map(Number);
-      const fechaLocal = new Date(year, month - 1, day, 0, 0, 0, 0);
+    const [year, month, day] = fecha.split('-').map(Number);
+    const fechaLocal = new Date(year, month - 1, day, 0, 0, 0, 0);
 
-      const dto: Omit<Turno, 'id'> = {
-        idPaciente: this.idPaciente!,
-        fecha: fechaLocal,
-        hora,
-        observaciones,
-        estado: this.esEdicion() ? this.turnoSource()?.estado ?? 'Pendiente' : 'Pendiente'
-      };
+    const dto: Omit<Turno, 'id'> = {
+      idPaciente: this.idPaciente!,
+      fecha: fechaLocal,
+      hora,
+      observaciones,
+      estado: this.esEdicion() ? this.turnoSource()?.estado ?? 'Pendiente' : 'Pendiente'
+    };
 
-      if (this.esEdicion()) {
-        this.client.updateTurno(this.turnoId!, dto).subscribe({
-          next: (turnoActualizado: Turno) => {
-            alert(`El turno del ${turnoActualizado.fecha} fue actualizado con éxito`);
-            this.form.reset();
-            this.router.navigateByUrl('/turnos');
-          },
-          error: () => alert('Error al actualizar el turno en el servidor.')
-        });
-      } else {
-        this.client.addTurno(dto).subscribe({
-          next: (turnoCreado: Turno) => {
-            alert(`El turno en la fecha "${turnoCreado.fecha}" fue agregado con éxito`);
-            this.form.reset();
-            this.router.navigateByUrl('/pacientes');
-          },
-          error: () => alert('Error al guardar el turno en el servidor.')
-        });
+    this.openConfirmModal(
+      this.esEdicion() ? 'Reprogramar turno' : 'Agendar turno',
+      '¿Querés confirmar los datos del turno?',
+      () => {
+        if (this.esEdicion()) {
+          this.client.updateTurno(this.turnoId!, dto).subscribe({
+            next: () => this.openInfoModal('¡Listo!', 'El turno fue actualizado con éxito.', () => {
+              this.form.reset();
+              this.router.navigateByUrl('/turnos');
+            }),
+            error: () => this.openInfoModal('Error', 'No se pudo actualizar el turno. Intentá más tarde.')
+          });
+        } else {
+          this.client.addTurno(dto).subscribe({
+            next: () => this.openInfoModal('¡Listo!', 'El turno fue agendado con éxito.', () => {
+              this.form.reset();
+              this.router.navigateByUrl('/pacientes');
+            }),
+            error: () => this.openInfoModal('Error', 'No se pudo guardar el turno. Intentá más tarde.')
+          });
+        }
       }
-    }
+    );
   }
 }

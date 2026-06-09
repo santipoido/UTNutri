@@ -156,6 +156,41 @@
   color: var(--color-text-muted);
 }
 
+.turno-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.turno-item {
+  background: var(--color-primary-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
+
+.turno-fecha {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+.turno-hora {
+  font-size: 12px;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.turno-obs {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .btn-agendar {
   width: 100%;
   padding: 12px;

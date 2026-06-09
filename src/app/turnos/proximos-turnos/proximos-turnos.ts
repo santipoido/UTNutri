@@ -19,7 +19,7 @@ export class ProximosTurnos {
   private readonly router = inject(Router);
 
   protected readonly turnos = toSignal(
-    this.client.getProximosTurnos().pipe(
+    this.client.getTurnos().pipe(
       map((turnos: Turno[]) =>
         turnos
           .map(t => {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../auth-service';
@@ -20,6 +20,9 @@ export class Register {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
+
+  protected readonly showPassword = signal(false);
+  togglePassword() { this.showPassword.update(v => !v); }
 
   get nombre() { return this.form.controls.nombre; }
   get username() { return this.form.controls.username; }

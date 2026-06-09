@@ -94,6 +94,32 @@
   margin-top: 8px;
 }
 
+.pass-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pass-wrap .form-input {
+  padding-right: 42px;
+}
+
+.pass-toggle {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+  line-height: 0;
+}
+
+.pass-toggle:hover { color: var(--color-primary); }
+
 .auth-footer-link {
   text-align: center;
   margin-top: 20px;

@@ -137,6 +137,26 @@ body {
 .icon-btn-del  { background: rgba(220,38,38,0.08); color: var(--color-danger); }
 .icon-btn-del:hover  { background: rgba(220,38,38,0.15); }
 
+/* ── Botón volver atrás ── */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 0;
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s;
+}
+.btn-back:hover { color: var(--color-primary); }
+.btn-back svg { flex-shrink: 0; }
+
 /* ── Alert de error global ── */
 .alert-error {
   padding: 10px 14px;

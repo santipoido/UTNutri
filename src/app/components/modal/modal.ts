@@ -12,7 +12,7 @@ export class AppModalComponent {
   @Input() message = '';
   @Input() confirmLabel = 'Confirmar';
   @Input() cancelLabel = 'Cancelar';
-  @Input() type: 'confirm' | 'danger' = 'confirm';
+  @Input() type: 'confirm' | 'danger' | 'info' = 'confirm';
   @Input() visible = false;
   @Output() confirmed = new EventEmitter<void>();
   @Output() cancelled = new EventEmitter<void>();

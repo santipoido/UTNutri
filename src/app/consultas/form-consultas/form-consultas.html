@@ -1,5 +1,19 @@
+<app-modal
+  [visible]="modalVisible"
+  [title]="modalTitle"
+  [message]="modalMessage"
+  [confirmLabel]="modalConfirmLabel"
+  [type]="modalType"
+  (confirmed)="onModalConfirmado()"
+  (cancelled)="onModalCancelado()"
+/>
+
 <div class="form-page">
   <div class="form-card">
+    <button class="btn-back" (click)="irAFicha()">
+      <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Volver a la ficha
+    </button>
     <h1 class="form-title">Nueva consulta</h1>
     <p class="form-sub">Paciente: <strong>{{ pacienteNombre || '…' }}</strong></p>
 

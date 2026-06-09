@@ -37,4 +37,8 @@ export class HistorialConsultas {
   irANuevaConsulta() {
     this.router.navigateByUrl(`/pacientes/${this.id}/consultas/nueva`);
   }
+
+  volver() {
+    this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
+  }
 }

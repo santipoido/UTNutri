@@ -40,6 +40,10 @@ export class DetallePlan {
     this.router.navigateByUrl(`/pacientes/${this.id}/plan/editar`);
   }
 
+  volver() {
+    this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
+  }
+
   exportarPDF() {
     const elemento = document.getElementById('planNutricionalExportar');
     if (!elemento) return;

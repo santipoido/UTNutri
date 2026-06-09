@@ -2,10 +2,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PacienteClient } from '../paciente-client';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppModalComponent } from '../../components/modal/modal';
 
 @Component({
   selector: 'app-form-pacientes',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AppModalComponent],
   templateUrl: './form-pacientes.html',
   styleUrl: './form-pacientes.css'
 })
@@ -28,6 +29,45 @@ export class FormPacientes implements OnInit {
     correo: ['', [Validators.required, Validators.email]],
     telefono: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(15), Validators.pattern(/^[0-9]+$/)]]
   });
+
+  // ── Modal state ──────────────────────────────────────────────────────────
+  modalVisible = false;
+  modalTitle = '';
+  modalMessage = '';
+  modalConfirmLabel = 'Aceptar';
+  modalType: 'info' | 'confirm' | 'danger' = 'info';
+  private pendingAction: (() => void) | null = null;
+
+  private openInfoModal(title: string, message: string, onAccept?: () => void): void {
+    this.modalTitle        = title;
+    this.modalMessage      = message;
+    this.modalConfirmLabel = 'Aceptar';
+    this.modalType         = 'info';
+    this.pendingAction     = onAccept ?? null;
+    this.modalVisible      = true;
+  }
+
+  private openConfirmModal(title: string, message: string, action: () => void): void {
+    this.modalTitle        = title;
+    this.modalMessage      = message;
+    this.modalConfirmLabel = 'Confirmar';
+    this.modalType         = 'confirm';
+    this.pendingAction     = action;
+    this.modalVisible      = true;
+  }
+
+  onModalConfirmado(): void {
+    const action = this.pendingAction;
+    this.pendingAction = null;
+    this.modalVisible  = false;
+    action?.();
+  }
+
+  onModalCancelado(): void {
+    this.pendingAction = null;
+    this.modalVisible  = false;
+  }
+  // ─────────────────────────────────────────────────────────────────────────
 
   get nombre() { return this.form.controls.nombre; }
   get genero() { return this.form.controls.genero; }
@@ -52,39 +92,47 @@ export class FormPacientes implements OnInit {
     }
   }
 
+  volver() {
+    if (this.isEditing()) {
+      this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
+    } else {
+      this.router.navigateByUrl('/pacientes');
+    }
+  }
+
   handleSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      alert('El formulario es inválido.');
+      this.openInfoModal('Formulario inválido', 'Completá todos los campos correctamente antes de guardar.');
       return;
     }
 
-    if (confirm('¿Desea confirmar los datos?')) {
-      const dto = this.form.getRawValue();
+    const dto = this.form.getRawValue();
 
-      if (this.isEditing()) {
-        this.client.updatePaciente(this.id!, dto).subscribe({
-          next: () => {
-            alert('Paciente modificado con éxito');
-            this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
-          },
-          error: () => {
-            alert('No se pudo modificar el paciente');
-            this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
-          }
-        });
-      } else {
-        this.client.addPaciente(dto).subscribe({
-          next: (pacienteCreado) => {
-            alert(`Paciente "${pacienteCreado.nombre}" agregado con éxito (ID: ${pacienteCreado.id})`);
-            this.form.reset();
-            this.router.navigateByUrl('/pacientes');
-          },
-          error: () => {
-            alert('Error al guardar el paciente en el servidor.');
-          }
-        });
+    this.openConfirmModal(
+      this.isEditing() ? 'Guardar cambios' : 'Agregar paciente',
+      '¿Querés confirmar los datos del paciente?',
+      () => {
+        if (this.isEditing()) {
+          this.client.updatePaciente(this.id!, dto).subscribe({
+            next: () => this.openInfoModal('¡Listo!', 'Paciente modificado con éxito.', () => {
+              this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
+            }),
+            error: () => this.openInfoModal('Error', 'No se pudo modificar el paciente. Intentá más tarde.', () => {
+              this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
+            })
+          });
+        } else {
+          this.client.addPaciente(dto).subscribe({
+            next: (pacienteCreado) => this.openInfoModal(
+              '¡Listo!',
+              `Paciente "${pacienteCreado.nombre}" agregado con éxito.`,
+              () => { this.form.reset(); this.router.navigateByUrl('/pacientes'); }
+            ),
+            error: () => this.openInfoModal('Error', 'No se pudo guardar el paciente. Intentá más tarde.')
+          });
+        }
       }
-    }
+    );
   }
 }

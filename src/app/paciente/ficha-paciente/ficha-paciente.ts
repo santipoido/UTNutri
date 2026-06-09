@@ -2,20 +2,56 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { PacienteClient } from '../paciente-client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Consulta, Paciente } from '../paciente';
+import { ClienteTurnos } from '../../turnos/cliente-turnos';
+import { Turno } from '../../turnos/turno';
+import { DatePipe } from '@angular/common';
+import { AppModalComponent } from '../../components/modal/modal';
 
 @Component({
   selector: 'app-ficha-paciente',
-  imports: [],
+  imports: [DatePipe, AppModalComponent],
   templateUrl: './ficha-paciente.html',
   styleUrl: './ficha-paciente.css'
 })
 export class FichaPaciente {
   protected readonly client = inject(PacienteClient);
+  private readonly clienteTurnos = inject(ClienteTurnos);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
   paciente = signal<Paciente | null>(null);
   consultas = signal<Consulta[]>([]);
+  proximosTurnos = signal<Turno[]>([]);
+
+  // ── Modal state ──────────────────────────────────────────────────────────
+  modalVisible = false;
+  modalTitle = '';
+  modalMessage = '';
+  modalConfirmLabel = 'Aceptar';
+  modalType: 'info' | 'confirm' | 'danger' = 'info';
+  private pendingAction: (() => void) | null = null;
+
+  openInfoModal(title: string, message: string, onAccept?: () => void): void {
+    this.modalTitle        = title;
+    this.modalMessage      = message;
+    this.modalConfirmLabel = 'Aceptar';
+    this.modalType         = 'info';
+    this.pendingAction     = onAccept ?? null;
+    this.modalVisible      = true;
+  }
+
+  onModalConfirmado(): void {
+    const action = this.pendingAction;
+    this.pendingAction = null;
+    this.modalVisible  = false;
+    action?.();
+  }
+
+  onModalCancelado(): void {
+    this.pendingAction = null;
+    this.modalVisible  = false;
+  }
+  // ─────────────────────────────────────────────────────────────────────────
 
   ultimaConsulta = computed<Consulta | null>(() => {
     const ordenadas = [...this.consultas()].sort(
@@ -40,12 +76,26 @@ export class FichaPaciente {
 
     this.client.getPacienteById(id).subscribe({
       next: p => this.paciente.set(p),
-      error: () => alert('Paciente no encontrado')
+      error: () => this.openInfoModal('Paciente no encontrado', 'No se pudo cargar el paciente.', () => {
+        this.router.navigateByUrl('/pacientes');
+      })
     });
 
     this.client.getConsultas(id).subscribe({
       next: c => this.consultas.set(c),
       error: () => this.consultas.set([])
+    });
+
+    this.clienteTurnos.getTurnosPorPaciente(id).subscribe({
+      next: turnos => {
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        const proximos = turnos
+          .filter(t => t.estado === 'Pendiente' && new Date(t.fecha) >= hoy)
+          .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
+        this.proximosTurnos.set(proximos);
+      },
+      error: () => this.proximosTurnos.set([])
     });
   }
 
@@ -67,5 +117,9 @@ export class FichaPaciente {
 
   irAgregarTurno(id: number) {
     this.router.navigateByUrl(`/turnos/${id}/nuevo`);
+  }
+
+  volver() {
+    this.router.navigateByUrl('/pacientes');
   }
 }

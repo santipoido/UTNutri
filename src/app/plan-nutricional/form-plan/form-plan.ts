@@ -81,6 +81,13 @@ export class FormPlan implements OnInit {
     });
   }
 
+  volver() {
+    const id = this.pacienteId();
+    if (id) {
+      this.router.navigate(['/pacientes', id, 'plan']);
+    }
+  }
+
   handleSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
