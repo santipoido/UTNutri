@@ -20,6 +20,8 @@ export class FormConsultas implements OnInit {
   pacienteId!: number;
   pacienteNombre: string | null = null;
 
+  readonly today = new Date().toISOString().slice(0, 10);
+
   form = this.fb.nonNullable.group({
     fecha: [new Date().toISOString().slice(0, 10), [Validators.required]],
     peso: [null as unknown as number, [Validators.required, Validators.min(1), Validators.max(300)]],

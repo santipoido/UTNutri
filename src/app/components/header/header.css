@@ -103,6 +103,14 @@
   font-weight: 800;
   font-size: 13px;
   border: 2px solid var(--color-border);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.user-avatar:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
 .btn-logout {

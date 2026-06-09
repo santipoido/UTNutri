@@ -45,7 +45,7 @@ export class FormTurnos {
   protected readonly form = this.formBuilder.nonNullable.group({
     fecha: ['', Validators.required],
     hora: ['', Validators.required],
-    observaciones: ['', Validators.required],
+    observaciones: [''],
   });
 
   // ── Modal state ──────────────────────────────────────────────────────────
@@ -151,16 +151,16 @@ export class FormTurnos {
 
     const { fecha, hora, observaciones } = this.form.getRawValue();
 
-    if (this.turnosOcupados(fecha, hora)) {
-      this.openInfoModal('Horario no disponible', 'Ya existe un turno programado para esa fecha y hora.');
+    if (this.horaFueraDeRango(hora)) {
+      this.openInfoModal('Hora fuera de rango', 'El horario debe estar entre las 07:00 y las 19:00.');
       return;
     }
     if (this.turnoEsEnElPasado(fecha, hora)) {
       this.openInfoModal('Fecha inválida', 'La fecha y hora del turno deben ser futuras.');
       return;
     }
-    if (this.horaFueraDeRango(hora)) {
-      this.openInfoModal('Hora fuera de rango', 'El horario debe estar entre las 07:00 y las 19:00.');
+    if (this.turnosOcupados(fecha, hora)) {
+      this.openInfoModal('Horario no disponible', 'Ya existe un turno programado para esa fecha y hora.');
       return;
     }
 

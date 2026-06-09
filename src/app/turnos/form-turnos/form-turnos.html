@@ -30,10 +30,16 @@
           <div class="form-group">
             <label class="form-label" for="fecha">Fecha</label>
             <input class="form-input" type="date" id="fecha" formControlName="fecha" />
+            @if (fecha.hasError('required') && fecha.touched) {
+              <span class="form-err">⚠ La fecha es obligatoria.</span>
+            }
           </div>
           <div class="form-group">
             <label class="form-label" for="hora">Hora</label>
             <input class="form-input" type="time" id="hora" formControlName="hora" />
+            @if (hora.hasError('required') && hora.touched) {
+              <span class="form-err">⚠ La hora es obligatoria.</span>
+            }
           </div>
         </div>
 

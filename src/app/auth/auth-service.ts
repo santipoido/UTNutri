@@ -74,4 +74,9 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.getToken() !== null;
   }
+
+  refreshPerfil(nombre: string, username: string): void {
+    localStorage.setItem(this.NOMBRE_KEY, nombre);
+    localStorage.setItem(this.USERNAME_KEY, username);
+  }
 }

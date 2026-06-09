@@ -15,9 +15,9 @@ export class Register {
   private readonly fb = inject(FormBuilder);
 
   protected readonly form = this.fb.nonNullable.group({
-    nombre: ['', [Validators.required]],
-    username: ['', [Validators.required, Validators.minLength(3)]],
-    email: ['', [Validators.required, Validators.email]],
+    nombre: ['', [Validators.required, Validators.maxLength(150)]],
+    username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(150)]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 

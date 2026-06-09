@@ -24,6 +24,8 @@
         <input class="form-input" type="text" id="nombre" formControlName="nombre" placeholder="ej. Juan Pérez" />
         @if (nombre.hasError("required") && (nombre.touched || nombre.dirty)) {
           <span class="form-err">⚠ El nombre es obligatorio.</span>
+        } @else if (nombre.hasError("maxlength") && (nombre.touched || nombre.dirty)) {
+          <span class="form-err">⚠ El nombre no puede superar los 150 caracteres.</span>
         }
       </div>
 
@@ -66,7 +68,7 @@
 
       <div class="form-group">
         <label class="form-label" for="fechaNacimiento">Fecha de nacimiento</label>
-        <input class="form-input" type="date" id="fechaNacimiento" formControlName="fechaNacimiento" />
+        <input class="form-input" type="date" id="fechaNacimiento" formControlName="fechaNacimiento" [max]="today" />
         @if (fechaNacimiento.hasError("required") && (fechaNacimiento.touched || fechaNacimiento.dirty)) {
           <span class="form-err">⚠ La fecha de nacimiento es obligatoria.</span>
         }

@@ -19,7 +19,7 @@
           <span class="user-name">{{ auth.getNombre() }}</span>
           <span class="user-role">Nutricionista</span>
         </div>
-        <div class="user-avatar" [attr.aria-label]="'Avatar de ' + auth.getNombre()">{{ initiales }}</div>
+        <a routerLink="/perfil" class="user-avatar" [attr.aria-label]="'Ir al perfil de ' + auth.getNombre()" title="Mi perfil">{{ initiales }}</a>
       }
       <button class="btn-logout" (click)="auth.logout()">Salir</button>
     </div>

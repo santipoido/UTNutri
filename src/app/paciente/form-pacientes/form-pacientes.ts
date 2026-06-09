@@ -21,13 +21,14 @@ export class FormPacientes implements OnInit {
   protected readonly id = this.rawId ? Number(this.rawId) : null;
 
   protected readonly generos = ['Masculino', 'Femenino', 'Otro'];
+  protected readonly today = new Date().toISOString().slice(0, 10);
 
   protected readonly form = this.formBuilder.nonNullable.group({
-    nombre: ['', [Validators.required]],
+    nombre: ['', [Validators.required, Validators.maxLength(150)]],
     genero: ['', [Validators.required]],
     fechaNacimiento: ['', [Validators.required]],
-    correo: ['', [Validators.required, Validators.email]],
-    telefono: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(15), Validators.pattern(/^[0-9]+$/)]]
+    correo: ['', [Validators.required, Validators.email, Validators.maxLength(150)]],
+    telefono: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(30), Validators.pattern(/^[0-9]+$/)]]
   });
 
   // ── Modal state ──────────────────────────────────────────────────────────

@@ -89,11 +89,6 @@ export class FormPlan implements OnInit {
   }
 
   handleSubmit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
     const id = this.pacienteId();
     if (!id) return;
 

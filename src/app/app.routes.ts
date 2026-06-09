@@ -13,6 +13,7 @@ import { authGuard } from './auth-guard';
 import { loginRedirectGuard } from './login-redirect-guard';
 import { FormTurnos } from './turnos/form-turnos/form-turnos';
 import { CalendarioMensual } from './turnos/calendario-mensual/calendario-mensual';
+import { Perfil } from './nutricionista/perfil/perfil';
 
 export const routes: Routes = [
     { path: 'login', canMatch: [loginRedirectGuard], component: Login, data: {hideHeader: true} },
@@ -41,6 +42,8 @@ export const routes: Routes = [
             
             { path: 'pacientes/:id/plan', component: DetallePlan },
             { path: 'pacientes/:id/plan/editar', component: FormPlan },
+
+            { path: 'perfil', component: Perfil },
         ],
     },
 

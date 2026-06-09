@@ -33,6 +33,8 @@
         <input class="form-input" type="text" id="nombre" placeholder="Ej. María García" formControlName="nombre" />
         @if (nombre.hasError('required') && nombre.touched) {
           <span class="form-err">⚠ El nombre es obligatorio.</span>
+        } @else if (nombre.hasError('maxlength') && nombre.touched) {
+          <span class="form-err">⚠ El nombre no puede superar los 150 caracteres.</span>
         }
       </div>
 
@@ -43,6 +45,8 @@
           <span class="form-err">⚠ El usuario es obligatorio.</span>
         } @else if (username.hasError('minlength') && username.touched) {
           <span class="form-err">⚠ El usuario debe tener al menos 3 caracteres.</span>
+        } @else if (username.hasError('maxlength') && username.touched) {
+          <span class="form-err">⚠ El usuario no puede superar los 50 caracteres.</span>
         }
       </div>
 
