@@ -1,272 +1,186 @@
 :host {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 60px);
-  background-color: #F9FCF8;
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.paciente-card {
-  background-color: #ffffff;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  max-width: 700px;
-  margin: 40px auto;
+  display: block;
   font-family: 'Inter', sans-serif;
 }
 
-.paciente-header {
+.ficha-page {
+  background: var(--color-bg);
+  min-height: calc(100vh - 58px);
+  padding: var(--space-8);
+}
+
+.ficha-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-5);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.ficha-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: var(--shadow-md);
+}
+
+.ficha-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  margin-bottom: var(--space-5);
 }
 
-.paciente-nombre {
-  font-size: 28px;
-  font-weight: 800;
-  margin: 0;
-  color: #202020;
-}
-
-.paciente-fecha {
-  color: #3da35d;
-  font-size: 14px;
-  margin-top: 4px;
-}
-
-.paciente-fecha-sin-fecha {
-  color: #3da35d;
-  font-size: 14px;
-  margin-top: 4px;
-}
-
-.peso-box {
-  background-color: #eaf7ef;
-  border-radius: 10px;
-  text-align: center;
-  padding: 10px 16px;
-}
-
-.peso-titulo {
-  margin: 0;
-  font-size: 13px;
-  color: #5a6b5e;
-}
-
-.peso-valor {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 700;
-  color: #35a64c;
-}
-
-.peso-valor-sin-peso {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 700;
-  color: #35a64c;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid #ebebeb;
-  margin: 20px 0;
-}
-
-.paciente-datos {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.dato-titulo {
-  color: #9a9a9a;
-  font-size: 13px;
+.ficha-name {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--color-text-dark);
+  letter-spacing: -0.3px;
   margin-bottom: 4px;
 }
 
-.dato-valor {
-  font-size: 15px;
-  color: #333;
+.ficha-since {
+  font-size: 13px;
+  color: var(--color-primary);
   font-weight: 500;
 }
 
-.acciones {
+.ficha-right {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
 }
 
-.btn {
+.ficha-avatar {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 18px;
+  border: 2px solid var(--color-border);
+}
+
+.peso-chip {
+  background: var(--color-primary-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 8px 14px;
+  text-align: center;
+}
+
+.peso-label { font-size: 11px; color: var(--color-text-secondary); font-weight: 600; margin-bottom: 2px; }
+.peso-val   { font-size: 22px; font-weight: 800; color: var(--color-primary); letter-spacing: -0.5px; }
+.peso-val-empty { font-size: 12px; color: var(--color-text-muted); }
+
+.ficha-divider {
   border: none;
-  border-radius: 10px;
-  padding: 10px 16px;
-  cursor: pointer;
-  font-weight: 600;
+  border-top: 1px solid var(--color-border-subtle);
+  margin: var(--space-5) 0;
+}
+
+.ficha-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.dato-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  margin-bottom: 3px;
+}
+
+.dato-val {
   font-size: 14px;
-  transition: 0.2s;
+  font-weight: 500;
+  color: var(--color-text-dark);
+}
+
+.acciones-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.ficha-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Columna derecha */
+.ficha-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.side-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  flex: 1;
+}
+
+.side-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: var(--space-3);
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.btn:hover {
-  transform: scale(1.05);
+.side-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
 }
 
-.btn.agregar {
-  background-color: #2ecc71;
-  color: white;
-}
-
-.btn.editar {
-  background-color: #e9ebe9;
-  color: #333;
-}
-
-.btn.plan {
-  background-color: #e9ebe9;
-  color: #333;
-}
-
-.btn.historial {
-  background-color: #2ecc71;
-  color: white;
+.side-empty-hint {
+  font-size: 12px;
+  color: var(--color-text-muted);
 }
 
 .btn-agendar {
-  width: 70%;
-  text-align: center;
-  padding: 15px;
-  border-radius: 10px;
+  width: 100%;
+  padding: 12px;
+  background: var(--color-text-dark);
+  color: white;
   border: none;
-  background-color: #2e7d32;
-  color: white;
-  font-weight: bold;
-  font-size: medium;
-
-}
-
-.btn:hover {
-  opacity: 0.9;
-}
-
-.btn-agendar {
+  border-radius: var(--radius-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.2s;
+  transition: opacity 0.15s;
 }
-
-.btn-agendar:hover {
-  opacity: 0.9;
-  transform: scale(1.05);
-}
-
-#svg-editar {
-  width: 1.3rem;
-}
+.btn-agendar:hover { opacity: 0.85; }
 
 @media (max-width: 900px) {
-  :host {
-    height: auto;
-    padding: 24px 12px;
-  }
-
-  .paciente-card {
-    padding: 20px;
-    margin: 20px auto;
-    width: 100%;
-    max-width: 720px;
-  }
-
-  .paciente-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .peso-box {
-    align-self: stretch;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 12px;
-  }
-
-  .peso-valor {
-    font-size: 22px;
-  }
-
-  .paciente-nombre {
-    font-size: 22px;
-  }
-
-  .paciente-datos {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .dato-titulo {
-    font-size: 12px;
-  }
-
-  .dato-valor {
-    font-size: 14px;
-  }
-
-  .acciones {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .btn {
-    width: 100%;
-    justify-content: center;
-    padding: 12px;
-  }
-
-  .btn.agregar,
-  .btn.historial {
-    padding: 12px;
-  }
-
-  .btn.editar,
-  .btn.plan {
-    background-color: #f3f4f3;
-  }
-
-  .btn-agendar {
-    width: 100%;
-    margin-top: 14px;
-    padding: 12px;
-  }
+  .ficha-page { padding: var(--space-5) var(--space-4); }
+  .ficha-layout { grid-template-columns: 1fr; }
+  .ficha-side { flex-direction: row; flex-wrap: wrap; }
+  .side-card { flex: 1; min-width: 200px; }
+  .btn-agendar { flex: 1; }
 }
 
-@media (max-width: 420px) {
-  .paciente-card {
-    padding: 16px;
-    border-radius: 12px;
-  }
-
-  .paciente-nombre {
-    font-size: 20px;
-  }
-
-  .peso-valor {
-    font-size: 20px;
-  }
-
-  .dato-valor {
-    font-size: 13px;
-  }
+@media (max-width: 480px) {
+  .ficha-header { flex-direction: column; gap: var(--space-3); }
+  .ficha-right  { flex-direction: row; align-items: center; }
+  .ficha-datos  { grid-template-columns: 1fr; }
 }

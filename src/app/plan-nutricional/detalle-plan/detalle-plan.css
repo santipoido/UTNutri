@@ -1,77 +1,100 @@
-section {
-  margin: 40px 60px;
-  font-family: 'Inter';
+.plan-page {
+  background: var(--color-bg);
+  min-height: calc(100vh - 58px);
+  padding: var(--space-8);
+  font-family: 'Inter', sans-serif;
 }
 
-.informacion {
-  margin-top: 10px;
+.plan-top {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.tarjeta{
-    padding: 20px;
-    margin-top: 20px;
-    background-color: rgb(255,255,255);
-    border: 1px solid rgb(215,231,207);
-    border-radius: 5px;
-    box-shadow: 0 1px 10px rgba(16, 185, 129, 0.22);
-}
-
-.englobar-icono {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.botones {
-  margin-top: 25px;
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-6);
 }
 
-.botones button {
+.plan-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--color-text-dark);
+  letter-spacing: -0.5px;
+}
+
+.plan-sub {
+  font-size: 13px;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+.plan-top-actions {
   display: flex;
-  padding: 12px 12px;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-weight: 300;
-  cursor: pointer;
-  transition: .15s ease;
+  gap: var(--space-2);
 }
 
-#editar {
-  background-color: rgb(32,223,108);
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
 }
 
-#editar:hover {
-  background-color: rgb(25, 190, 91);
-  transform: scale(1.03);
+.plan-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
 }
 
-#exportar {
-  background-color: rgb(255,117,117);
+.plan-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
 }
 
-#exportar:hover {
-  background-color: rgb(224, 102, 102);
-  transform: scale(1.03);
+.plan-icon {
+  width: 36px; height: 36px;
+  background: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
 }
 
-@media (max-width: 768px) {
-  section {
-    margin: 20px 16px;
-  }
+.plan-comida {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
 
-  .botones {
-    flex-direction: row;
-    gap: 30px;
-  }
+.plan-text {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
 
-  .botones button {
-    width: 50%;
-  }
+.plan-notas {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.plan-notas-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: var(--space-2);
+}
+
+@media (max-width: 900px) {
+  .plan-page { padding: var(--space-5) var(--space-4); }
+  .plan-grid { grid-template-columns: 1fr 1fr; }
+  .plan-top  { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+}
+
+@media (max-width: 600px) {
+  .plan-grid { grid-template-columns: 1fr; }
 }

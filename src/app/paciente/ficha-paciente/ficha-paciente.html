@@ -1,78 +1,78 @@
-@let paciente = this.paciente(); @if (paciente) {
-  <div class="container">
+@let paciente = this.paciente();
 
-  
-<div class="paciente-card">
-  <div class="paciente-header">
-    <div class="paciente-info">
-      <h2 class="paciente-nombre">{{ paciente.nombre }}</h2>
-      @if (pacienteDesde()) {
-              <p class="paciente-fecha">Paciente desde {{ pacienteDesde() }}</p>
-      } @else {
-        <p class="paciente-fecha-sin-fecha">No hay registros</p>
-      }
-    </div>
-    <div class="peso-box">
-      <p class="peso-titulo">Peso Actual</p>
-      @if (ultimoPesoKg()) {
-      <p class="peso-valor">{{ ultimoPesoKg() }}kg</p>
-      } @else {
-        <p class="peso-valor-sin-peso">No hay registros</p>
-      }
+@if (paciente) {
+  <div class="ficha-page">
+    <div class="ficha-layout">
+
+      <!-- Columna izquierda: datos del paciente -->
+      <div class="ficha-card">
+        <div class="ficha-header">
+          <div>
+            <h2 class="ficha-name">{{ paciente.nombre }}</h2>
+            @if (pacienteDesde()) {
+              <p class="ficha-since">Paciente desde {{ pacienteDesde() }}</p>
+            } @else {
+              <p class="ficha-since">Sin consultas registradas</p>
+            }
+          </div>
+          <div class="ficha-right">
+            <div class="ficha-avatar">
+              {{ paciente.nombre[0]?.toUpperCase() }}
+            </div>
+            <div class="peso-chip">
+              <p class="peso-label">Peso actual</p>
+              @if (ultimoPesoKg()) {
+                <p class="peso-val">{{ ultimoPesoKg() }} kg</p>
+              } @else {
+                <p class="peso-val-empty">Sin registros</p>
+              }
+            </div>
+          </div>
+        </div>
+
+        <hr class="ficha-divider" />
+
+        <div class="ficha-datos">
+          <div class="dato">
+            <p class="dato-label">Nacimiento</p>
+            <p class="dato-val">{{ paciente.fechaNacimiento }}</p>
+          </div>
+          <div class="dato">
+            <p class="dato-label">Género</p>
+            <p class="dato-val">{{ paciente.genero }}</p>
+          </div>
+          <div class="dato">
+            <p class="dato-label">Teléfono</p>
+            <p class="dato-val">{{ paciente.telefono }}</p>
+          </div>
+          <div class="dato">
+            <p class="dato-label">Correo</p>
+            <p class="dato-val">{{ paciente.correo }}</p>
+          </div>
+        </div>
+
+        <hr class="ficha-divider" />
+
+        <p class="acciones-label">Acciones rápidas</p>
+        <div class="ficha-acciones">
+          <button class="btn btn-primary btn-sm" (click)="irAgregarConsulta(paciente.id!)">+ Consulta</button>
+          <button class="btn btn-secondary btn-sm" (click)="irAlPlanNutricional(paciente.id!)">Plan nutricional</button>
+          <button class="btn btn-secondary btn-sm" (click)="irAlHistorial(paciente.id!)">Historial</button>
+          <button class="btn btn-ghost btn-sm" (click)="irAEditar(paciente.id!)">Editar datos</button>
+        </div>
+      </div>
+
+      <!-- Columna derecha: agendar turno -->
+      <div class="ficha-side">
+        <div class="side-card">
+          <p class="side-card-title"><span class="side-dot"></span>Turnos del paciente</p>
+          <p class="side-empty-hint">Los turnos se gestionan desde el dashboard.</p>
+        </div>
+        <button class="btn-agendar" (click)="irAgregarTurno(paciente.id!)">
+          + Agendar turno para {{ paciente.nombre }}
+        </button>
+      </div>
+
     </div>
   </div>
-
-  <hr />
-
-  <div class="paciente-datos">
-    <div class="dato">
-      <p class="dato-titulo">Fecha nacimiento</p>
-      <p class="dato-valor">{{ paciente.fechaNacimiento }}</p>
-    </div>
-    <div class="dato">
-      <p class="dato-titulo">Género</p>
-      <p class="dato-valor">{{ paciente.genero }}</p>
-    </div>
-    <div class="dato">
-      <p class="dato-titulo">Teléfono</p>
-      <p class="dato-valor">{{ paciente.telefono }}</p>
-    </div>
-    <div class="dato">
-      <p class="dato-titulo">Correo Electrónico</p>
-      <p class="dato-valor">{{ paciente.correo }}</p>
-    </div>
-  </div>
-
-  <hr />
-
-  <div class="acciones">
-    <button class="btn agregar" (click)="irAgregarConsulta(paciente.id!)">
-      <span>+</span> Agregar consulta
-    </button>
-    <button class="btn editar" (click)="irAEditar(paciente.id!)">
-      <svg id="svg-editar" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-        <g id="SVGRepo_iconCarrier">
-          <path
-            d="M14.6716 6.763L5.58013 15.8544L5.41376 18.8492L8.40856 18.6829L17.5 9.59142M14.6716 6.763L16.0204 5.41421C16.8014 4.63316 18.0677 4.63316 18.8488 5.41421V5.41421C19.6298 6.19526 19.6298 7.46159 18.8488 8.24264V8.24264L17.5 9.59142M14.6716 6.763L17.5 9.59142"
-            stroke="#000000"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></path>
-        </g>
-      </svg>
-      Editar datos
-    </button>
-    <button class="btn plan" (click)="irAlPlanNutricional(paciente.id!)"><span class="material-symbols-outlined">
-document_search
-</span> Ir al plan</button>
-    <button class="btn historial" (click)="irAlHistorial(paciente.id!)">Historial consultas</button>
-  </div>
-</div>
-
-  <button class="btn-agendar" (click)="irAgregarTurno(paciente.id!)">Agendar un turno para {{paciente.nombre}}</button>
-
-</div>
 }

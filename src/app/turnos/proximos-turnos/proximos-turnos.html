@@ -1,48 +1,79 @@
-@let turnos = this.turnosFiltrados();
+@let turnosList = this.turnosFiltrados();
 
-<div class="contenedor-principal">
-  <div class="contenido-cabecera">
-    <div class="contenedor-titulo">
-      <h1>Proximas consultas</h1>
-      <p class="verde">Aqui tienes un resumen de tus proximas citas</p>
+<div class="dash-page">
+
+  @if (errorMsg) {
+    <div class="alert-error">{{ errorMsg }}</div>
+  }
+
+  <div class="dash-top">
+    <div>
+      <h1 class="dash-title">Próximas consultas</h1>
+      <p class="dash-sub">{{ today | date:'EEEE d \'de\' MMMM, yyyy' : '' : 'es' }}</p>
     </div>
-
-    <div class="filtro">
-      <p>Filtrar por:</p>
-      <select class="filtros" (change)="onFiltroChange($event)">
+    <div class="dash-filter">
+      <span class="filter-label">Filtrar:</span>
+      <select class="filter-select" (change)="onFiltroChange($event)">
         <option value="Todos">Todos</option>
         <option value="Pendiente">Pendiente</option>
         <option value="Realizado">Realizado</option>
         <option value="Cancelado">Cancelado</option>
       </select>
-
     </div>
-
   </div>
-  <div class="contenedor-turnos">
-    @for (turno of turnos; track turno.id) {
-    <div class="turno">
-      <div class="contenedor-nombre">
-        <p class="nombre-paciente">{{ turno.nombrePaciente }}</p>
-        <p class="verde">{{ turno.fecha | date:'dd-MM-yyyy' }} - {{ turno.hora }}</p>
-        <div class="contenedor-observaciones">
-          <p><strong>Observaciones</strong></p>
-          <p>{{turno.observaciones}}</p>
 
+  @if (!turnosList || turnosList.length === 0) {
+    <app-empty-state
+      icon="🗓️"
+      title="No hay consultas próximas"
+      description="Cuando agendes turnos van a aparecer aquí."
+    />
+  } @else {
+    <div class="turnos-grid">
+      @for (turno of turnosList; track turno.id) {
+        <div class="turno-card" [class.turno-pasado]="turno.estado !== 'Pendiente'">
+          <div class="tc-header">
+            <div>
+              <p class="tc-name">{{ turno.nombrePaciente }}</p>
+              <p class="tc-date">{{ turno.fecha | date:'dd/MM/yyyy' }} - {{ turno.hora }}</p>
+            </div>
+            <span
+              class="badge"
+              [class.badge-pending]="turno.estado === 'Pendiente'"
+              [class.badge-done]="turno.estado === 'Realizado'"
+              [class.badge-cancelled]="turno.estado === 'Cancelado'">
+              {{ turno.estado }}
+            </span>
+          </div>
+
+          @if (turno.observaciones) {
+            <div class="tc-obs-wrap">
+              <p class="tc-obs-label">Observaciones</p>
+              <p class="tc-obs">{{ turno.observaciones }}</p>
+            </div>
+          }
+
+          <div class="tc-footer">
+            @if (turno.estado === 'Cancelado' || turno.estado === 'Realizado') {
+              <button class="tc-btn tc-btn-danger" (click)="eliminarTurno(turno.id!)">Eliminar</button>
+            } @else if (turno.estado === 'Pendiente') {
+              <button class="tc-btn" (click)="editarTurno(turno.id!)">Reprogramar</button>
+              <button class="tc-btn tc-btn-danger" (click)="cancelarTurno(turno.id!)">Cancelar turno</button>
+            }
+          </div>
         </div>
-      </div>
-
-      <span class="estado" [ngClass]="turno.estado"> {{ turno.estado }} </span>
-      <div class="contenedor-btn">
-
-        @if(turno.estado === 'Cancelado' || turno.estado === 'Realizado'){
-        <p (click)="eliminarTurno(turno.id!)">Eliminar turno</p>
-        } @else if(turno.estado === 'Pendiente'){
-        <p (click)="editarTurno(turno.id!)">Reprogramar</p>
-        <p (click)="cancelarTurno(turno.id!)">Cancelar turno</p>
-        }
-      </div>
+      }
     </div>
-    }
-  </div>
+  }
+
 </div>
+
+<app-modal
+  [visible]="modalVisible"
+  [title]="modalTitle"
+  [message]="modalMessage"
+  [confirmLabel]="modalConfirmLabel"
+  [type]="modalType"
+  (confirmed)="onModalConfirmado()"
+  (cancelled)="onModalCancelado()"
+/>

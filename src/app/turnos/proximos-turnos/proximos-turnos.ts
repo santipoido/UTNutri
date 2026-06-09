@@ -1,14 +1,16 @@
 import { Component, inject, signal, linkedSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { ClienteTurnos } from '../cliente-turnos';
 import { Router } from '@angular/router';
 import { Turno } from '../turno';
+import { AppModalComponent } from '../../components/modal/modal';
+import { AppEmptyStateComponent } from '../../components/empty-state/empty-state';
 
 @Component({
   selector: 'app-proximos-turnos',
-  imports: [NgClass, DatePipe],
+  imports: [DatePipe, AppModalComponent, AppEmptyStateComponent],
   templateUrl: './proximos-turnos.html',
   styleUrl: './proximos-turnos.css',
 })
@@ -36,6 +38,15 @@ export class ProximosTurnos {
 
   protected readonly filtroEstado = signal<'Todos' | 'Pendiente' | 'Realizado' | 'Cancelado'>('Todos');
 
+  protected today = new Date();
+  modalVisible = false;
+  modalTitle = '';
+  modalMessage = '';
+  modalConfirmLabel = 'Confirmar';
+  modalType: 'confirm' | 'danger' = 'confirm';
+  errorMsg = '';
+  private pendingAction: (() => void) | null = null;
+
   protected readonly turnosFiltrados = linkedSignal(() => {
     const filtro = this.filtroEstado();
     const lista = this.turnos() ?? [];
@@ -43,30 +54,66 @@ export class ProximosTurnos {
     return this.ordenarTurnosPorFecha(filtrados);
   });
 
+  private openModal(
+    config: { title: string; message: string; confirmLabel: string; type: 'confirm' | 'danger' },
+    action: () => void
+  ): void {
+    this.modalTitle        = config.title;
+    this.modalMessage      = config.message;
+    this.modalConfirmLabel = config.confirmLabel;
+    this.modalType         = config.type;
+    this.pendingAction     = action;
+    this.modalVisible      = true;
+  }
+
+  onModalConfirmado(): void {
+    this.pendingAction?.();
+    this.pendingAction = null;
+    this.modalVisible  = false;
+  }
+
+  onModalCancelado(): void {
+    this.pendingAction = null;
+    this.modalVisible  = false;
+  }
+
   editarTurno(id: number) {
     const turno = this.turnos()?.find(t => t.id === id);
     if (turno) {
       this.router.navigateByUrl(`/turnos/${turno.idPaciente}/editar/${id}`);
     } else {
-      alert('No se pudo encontrar el turno');
+      this.errorMsg = 'No se pudo encontrar el turno.';
     }
   }
 
-  eliminarTurno(id: number) {
-    if (window.confirm('¿Desea eliminar el turno?')) {
-      this.client.deleteTurno(id).subscribe({
-        next: () => { alert('Turno eliminado con éxito'); window.location.reload(); },
-        error: () => alert('No pudimos eliminar el turno. Intentalo más tarde.')
-      });
-    }
+  eliminarTurno(id: number): void {
+    this.openModal(
+      {
+        title: 'Eliminar turno',
+        message: '¿Estás seguro que querés eliminar este turno? Esta acción no se puede deshacer.',
+        confirmLabel: 'Sí, eliminar',
+        type: 'danger'
+      },
+      () => this.client.deleteTurno(id).subscribe({
+        next: () => location.reload(),
+        error: () => { this.errorMsg = 'No pudimos eliminar el turno. Intentalo más tarde.'; }
+      })
+    );
   }
 
-  cancelarTurno(id: number) {
-    if (!confirm('¿Desea cancelar este turno?')) return;
-    this.client.cancelarTurno(id).subscribe({
-      next: () => { alert('Turno cancelado con éxito'); window.location.reload(); },
-      error: () => alert('No pudimos cancelar el turno. Intente nuevamente.')
-    });
+  cancelarTurno(id: number): void {
+    this.openModal(
+      {
+        title: 'Cancelar turno',
+        message: '¿Estás seguro que querés cancelar este turno?',
+        confirmLabel: 'Sí, cancelar',
+        type: 'confirm'
+      },
+      () => this.client.cancelarTurno(id).subscribe({
+        next: () => location.reload(),
+        error: () => { this.errorMsg = 'No pudimos cancelar el turno. Intente nuevamente.'; }
+      })
+    );
   }
 
   onFiltroChange(event: Event) {

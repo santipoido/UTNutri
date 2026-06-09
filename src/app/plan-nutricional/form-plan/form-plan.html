@@ -1,83 +1,65 @@
-<section class="plan-section">
-  <div class="titulos">
-    <h1>Plan nutricional</h1>
-    <p>Editar plan nutricional.</p>
+<div class="form-page">
+  <div class="form-header">
+    <h1 class="form-title">Plan nutricional</h1>
+    <p class="form-sub">Completá el plan semanal del paciente.</p>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="handleSubmit()" class="informacion">
-    <div class="tarjeta">
-      <div class="englobar-icono">
-        <span class="material-symbols-outlined">coffee</span>
-        <h3>Desayuno</h3>
+  @if (errorMsg) {
+    <div class="alert-error">{{ errorMsg }}</div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="handleSubmit()" class="plan-form">
+
+    <div class="plan-field-card">
+      <div class="plan-field-header">
+        <div class="plan-icon-sm">☕</div>
+        <label class="plan-field-label" for="desayuno">Desayuno</label>
       </div>
-      <textarea
-        formControlName="desayuno"
-        rows="3"
-        placeholder="Ej: 2 huevos revueltos + tostadas integrales"
-      ></textarea>
+      <textarea class="form-textarea" id="desayuno" formControlName="desayuno" rows="3" placeholder="Ej: 2 huevos revueltos + tostadas integrales"></textarea>
     </div>
 
-    <div class="tarjeta">
-      <div class="englobar-icono">
-        <span class="material-symbols-outlined">restaurant</span>
-        <h3>Almuerzo</h3>
+    <div class="plan-field-card">
+      <div class="plan-field-header">
+        <div class="plan-icon-sm">🍽️</div>
+        <label class="plan-field-label" for="almuerzo">Almuerzo</label>
       </div>
-      <textarea
-        formControlName="almuerzo"
-        rows="3"
-        placeholder="Ej: Ensalada + pechuga de pollo"
-      ></textarea>
+      <textarea class="form-textarea" id="almuerzo" formControlName="almuerzo" rows="3" placeholder="Ej: Ensalada + pechuga de pollo"></textarea>
     </div>
 
-    <div class="tarjeta">
-      <div class="englobar-icono">
-        <span class="material-symbols-outlined">egg_alt</span>
-        <h3>Merienda</h3>
+    <div class="plan-field-card">
+      <div class="plan-field-header">
+        <div class="plan-icon-sm">🥐</div>
+        <label class="plan-field-label" for="merienda">Merienda</label>
       </div>
-      <textarea
-        formControlName="merienda"
-        rows="2"
-        placeholder="Ej: Yogur natural + fruta"
-      ></textarea>
+      <textarea class="form-textarea" id="merienda" formControlName="merienda" rows="2" placeholder="Ej: Yogur natural + fruta"></textarea>
     </div>
 
-    <div class="tarjeta">
-      <div class="englobar-icono">
-        <span class="material-symbols-outlined">dinner_dining</span>
-        <h3>Cena</h3>
+    <div class="plan-field-card">
+      <div class="plan-field-header">
+        <div class="plan-icon-sm">🌙</div>
+        <label class="plan-field-label" for="cena">Cena</label>
       </div>
-      <textarea
-        formControlName="cena"
-        rows="3"
-        placeholder="Ej: Verduras salteadas + pescado (si corresponde)"
-      ></textarea>
+      <textarea class="form-textarea" id="cena" formControlName="cena" rows="3" placeholder="Ej: Verduras salteadas + pescado"></textarea>
     </div>
 
-    <div class="tarjeta">
-      <div class="englobar-icono">
-        <span class="material-symbols-outlined">icecream</span>
-        <h3>Snacks</h3>
+    <div class="plan-field-card">
+      <div class="plan-field-header">
+        <div class="plan-icon-sm">🍎</div>
+        <label class="plan-field-label" for="snacks">Snacks</label>
       </div>
-      <input
-        type="text"
-        formControlName="snacks"
-        placeholder="Ej: Frutos secos, barras proteicas"
-      />
+      <textarea class="form-textarea" id="snacks" formControlName="snacks" rows="2" placeholder="Ej: Frutos secos, barras proteicas"></textarea>
     </div>
 
-    <div class="tarjeta">
-      <h3>Notas adicionales</h3>
-      <textarea
-        formControlName="notas"
-        rows="4"
-        placeholder="Restricciones, calorías objetivo, observaciones..."
-      ></textarea>
+    <div class="plan-field-card">
+      <label class="plan-field-label" for="notas">Notas adicionales</label>
+      <textarea class="form-textarea" id="notas" formControlName="notas" rows="4" placeholder="Restricciones, calorías objetivo, observaciones..."></textarea>
     </div>
 
-    <div class="botones">
-      <button id="editar" type="submit" [disabled]="form.pristine || form.invalid">
+    <div class="form-submit-row">
+      <button class="btn btn-primary" type="submit" [disabled]="form.pristine || form.invalid">
         Guardar cambios
       </button>
     </div>
+
   </form>
-</section>
+</div>

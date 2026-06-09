@@ -1,80 +1,67 @@
-<div class="container">
-  <div class="texto-container">
-    <h1>{{isEditing() ? 'Editar paciente' : 'Agrega un nuevo paciente'}}</h1>
-    <p> {{isEditing() ? 'Modifique los datos que desee cambiar' : 'Complete el formulario para agregar un nuevo paciente.'}}</p>
-  </div>
+<div class="form-page">
+  <div class="form-card">
+    <h1 class="form-title">{{ isEditing() ? 'Editar paciente' : 'Agregar paciente' }}</h1>
+    <p class="form-sub">{{ isEditing() ? 'Modificá los datos del paciente.' : 'Completá el formulario para registrar un nuevo paciente.' }}</p>
 
-  <div class="form-container">
     <form [formGroup]="form" (ngSubmit)="handleSubmit()">
-      <label for="nombre-completo">Nombre completo</label>
-      <input
-        type="text"
-        name="nombre-completo"
-        id="nombre-completo"
-        formControlName="nombre"
-        placeholder="ej. Juan Pérez"
-      />
-      @if (nombre.hasError("required") && (nombre.touched || nombre.dirty)) {
-      <span>❌El nombre es obligatorio.</span>
-      }
 
-      <label for="genero">Género</label>
-      <div class="grupo-genero">
-        <select id="genero" formControlName="genero">
-          <option value="" selected disabled>Seleccione género</option>
-          @for (genero of generos; track $index){
-          <option [value]="genero">{{ genero }}</option>
-          }
-        </select>
-        @if (genero.hasError("required") && (genero.touched || genero.dirty)) {
-        <span>❌El género es obligatorio.</span>
+      <div class="form-group">
+        <label class="form-label" for="nombre">Nombre completo</label>
+        <input class="form-input" type="text" id="nombre" formControlName="nombre" placeholder="ej. Juan Pérez" />
+        @if (nombre.hasError("required") && (nombre.touched || nombre.dirty)) {
+          <span class="form-err">⚠ El nombre es obligatorio.</span>
         }
       </div>
 
-      <label for="correo">Correo electrónico</label>
-      <input
-        type="email"
-        name="correo"
-        id="correo"
-        formControlName="correo"
-        placeholder="ej. juan.perez@correo.com"
-      />
-      @if (correo.hasError("required") && (correo.touched || correo.dirty)) {
-      <span>❌El correo es obligatorio.</span>
-      } @else if (correo.hasError("email") && (correo.touched || correo.dirty)) {
-      <span>❌El correo tiene que tener formato correo.</span>
-      }
+      <div class="form-group">
+        <label class="form-label" for="genero">Género</label>
+        <select class="form-select" id="genero" formControlName="genero">
+          <option value="" selected disabled>Seleccione género</option>
+          @for (genero of generos; track $index) {
+            <option [value]="genero">{{ genero }}</option>
+          }
+        </select>
+        @if (genero.hasError("required") && (genero.touched || genero.dirty)) {
+          <span class="form-err">⚠ El género es obligatorio.</span>
+        }
+      </div>
 
-      <label for="telefono">Número de teléfono</label>
-      <input
-        type="text"
-        name="telefono"
-        id="telefono"
-        formControlName="telefono"
-        placeholder="ej. 555-123-4567"
-      />
-      @if (telefono.hasError("required") && (telefono.touched || telefono.dirty)) {
-      <span>❌El teléfono es obligatorio.</span>
-      } @else if (telefono.hasError("pattern") && (telefono.touched || telefono.dirty)) {
-      <span>❌El teléfono tiene que ser solo numérico.</span>
-      } @else if (telefono.hasError("minlength") && (telefono.touched || telefono.dirty)) {
-      <span>❌El teléfono tiene que tener como mínimo 7 dígitos.</span>
-      } @else if (telefono.hasError("maxlength") && (telefono.touched || telefono.dirty)) {
-      <span>❌El teléfono tiene que tener como máximo 15 dígitos.</span>
-      }
+      <div class="form-group">
+        <label class="form-label" for="correo">Correo electrónico</label>
+        <input class="form-input" type="email" id="correo" formControlName="correo" placeholder="ej. juan.perez@correo.com" />
+        @if (correo.hasError("required") && (correo.touched || correo.dirty)) {
+          <span class="form-err">⚠ El correo es obligatorio.</span>
+        } @else if (correo.hasError("email") && (correo.touched || correo.dirty)) {
+          <span class="form-err">⚠ El correo tiene que tener formato correo.</span>
+        }
+      </div>
 
-      <label for="fecha-nacimiento">Fecha de nacimiento</label>
-      <input
-        type="date"
-        name="fecha-nacimiento"
-        formControlName="fechaNacimiento"
-        id="fecha-nacimiento"
-      />
-      @if (fechaNacimiento.hasError("required") && (fechaNacimiento.touched || fechaNacimiento.dirty)) {
-        <span>❌La fecha de nacimiento es obligatoria.</span>
-      }
+      <div class="form-group">
+        <label class="form-label" for="telefono">Número de teléfono</label>
+        <input class="form-input" type="tel" id="telefono" formControlName="telefono" placeholder="ej. 555-123-4567" />
+        @if (telefono.hasError("required") && (telefono.touched || telefono.dirty)) {
+          <span class="form-err">⚠ El teléfono es obligatorio.</span>
+        } @else if (telefono.hasError("pattern") && (telefono.touched || telefono.dirty)) {
+          <span class="form-err">⚠ El teléfono tiene que ser solo numérico.</span>
+        } @else if (telefono.hasError("minlength") && (telefono.touched || telefono.dirty)) {
+          <span class="form-err">⚠ El teléfono tiene que tener como mínimo 7 dígitos.</span>
+        } @else if (telefono.hasError("maxlength") && (telefono.touched || telefono.dirty)) {
+          <span class="form-err">⚠ El teléfono tiene que tener como máximo 15 dígitos.</span>
+        }
+      </div>
 
-      <button class="btn-enviar"> {{isEditing() ? 'Editar paciente' : 'Agregar paciente'}}</button>
+      <div class="form-group">
+        <label class="form-label" for="fechaNacimiento">Fecha de nacimiento</label>
+        <input class="form-input" type="date" id="fechaNacimiento" formControlName="fechaNacimiento" />
+        @if (fechaNacimiento.hasError("required") && (fechaNacimiento.touched || fechaNacimiento.dirty)) {
+          <span class="form-err">⚠ La fecha de nacimiento es obligatoria.</span>
+        }
+      </div>
+
+      <button class="btn btn-primary btn-full" type="submit">
+        {{ isEditing() ? 'Guardar cambios' : 'Agregar paciente' }}
+      </button>
+
     </form>
   </div>
 </div>

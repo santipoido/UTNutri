@@ -1,7 +1,21 @@
-<div class="container">
-  <div class="form-container">
-    <h1>Crear cuenta</h1>
-    <p>Registrate para gestionar a tus pacientes.</p>
+<div class="auth-bg">
+  <div class="auth-bg-shape auth-bg-shape-1"></div>
+  <div class="auth-bg-shape auth-bg-shape-2"></div>
+
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+          <path d="M12 3C9 3 6 5.5 6 9c0 5 6 12 6 12s6-7 6-12c0-3.5-3-6-6-6z" fill="white"/>
+          <circle cx="12" cy="9" r="2.5" fill="white" opacity="0.7"/>
+        </svg>
+      </div>
+      <span class="auth-logo-text">UTNutri</span>
+    </div>
+    <p class="auth-tagline">Tu herramienta de gestión nutricional</p>
+    <hr class="auth-divider" />
+    <h1 class="auth-title">Crear cuenta</h1>
+    <p class="auth-subtitle">Completá tus datos para comenzar.</p>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       @if (form.errors?.['userExists']) {
@@ -14,63 +28,49 @@
         </div>
       }
 
-      <label for="nombre">Nombre completo</label>
-      <input
-        type="text"
-        id="nombre"
-        placeholder="Ej. María García"
-        class="mi-input"
-        formControlName="nombre"
-      />
-      @if (nombre.hasError('required') && nombre.touched) {
-        <p class="field-error">El nombre es obligatorio.</p>
-      }
+      <div class="form-group">
+        <label class="form-label" for="nombre">Nombre completo</label>
+        <input class="form-input" type="text" id="nombre" placeholder="Ej. María García" formControlName="nombre" />
+        @if (nombre.hasError('required') && nombre.touched) {
+          <span class="form-err">⚠ El nombre es obligatorio.</span>
+        }
+      </div>
 
-      <label for="username">Nombre de usuario</label>
-      <input
-        type="text"
-        id="username"
-        placeholder="Introduce tu nombre de usuario"
-        class="mi-input"
-        formControlName="username"
-      />
-      @if (username.hasError('required') && username.touched) {
-        <p class="field-error">El usuario es obligatorio.</p>
-      } @else if (username.hasError('minlength') && username.touched) {
-        <p class="field-error">El usuario debe tener al menos 3 caracteres.</p>
-      }
+      <div class="form-group">
+        <label class="form-label" for="username">Nombre de usuario</label>
+        <input class="form-input" type="text" id="username" placeholder="Nombre de usuario" formControlName="username" />
+        @if (username.hasError('required') && username.touched) {
+          <span class="form-err">⚠ El usuario es obligatorio.</span>
+        } @else if (username.hasError('minlength') && username.touched) {
+          <span class="form-err">⚠ El usuario debe tener al menos 3 caracteres.</span>
+        }
+      </div>
 
-      <label for="email">Correo electrónico</label>
-      <input
-        type="email"
-        id="email"
-        placeholder="Introduce tu correo"
-        class="mi-input"
-        formControlName="email"
-      />
-      @if (email.hasError('required') && email.touched) {
-        <p class="field-error">El correo es obligatorio.</p>
-      } @else if (email.hasError('email') && email.touched) {
-        <p class="field-error">Ingresá un correo válido.</p>
-      }
+      <div class="form-group">
+        <label class="form-label" for="email">Correo electrónico</label>
+        <input class="form-input" type="email" id="email" placeholder="tu@correo.com" formControlName="email" />
+        @if (email.hasError('required') && email.touched) {
+          <span class="form-err">⚠ El correo es obligatorio.</span>
+        } @else if (email.hasError('email') && email.touched) {
+          <span class="form-err">⚠ Ingresá un correo válido.</span>
+        }
+      </div>
 
-      <label for="password">Contraseña</label>
-      <input
-        type="password"
-        id="password"
-        placeholder="Mínimo 6 caracteres"
-        class="mi-input"
-        formControlName="password"
-      />
-      @if (password.hasError('required') && password.touched) {
-        <p class="field-error">La contraseña es obligatoria.</p>
-      } @else if (password.hasError('minlength') && password.touched) {
-        <p class="field-error">La contraseña debe tener al menos 6 caracteres.</p>
-      }
+      <div class="form-group">
+        <label class="form-label" for="password">Contraseña</label>
+        <input class="form-input" type="password" id="password" placeholder="Mínimo 6 caracteres" formControlName="password" />
+        @if (password.hasError('required') && password.touched) {
+          <span class="form-err">⚠ La contraseña es obligatoria.</span>
+        } @else if (password.hasError('minlength') && password.touched) {
+          <span class="form-err">⚠ La contraseña debe tener al menos 6 caracteres.</span>
+        }
+      </div>
 
-      <button type="submit">Crear cuenta</button>
+      <button type="submit" class="btn btn-primary btn-full auth-submit">Crear cuenta</button>
     </form>
 
-    <p class="link-auth">¿Ya tenés cuenta? <a routerLink="/login">Iniciá sesión</a></p>
+    <p class="auth-footer-link">
+      ¿Ya tenés cuenta? <a routerLink="/login">Iniciá sesión</a>
+    </p>
   </div>
 </div>

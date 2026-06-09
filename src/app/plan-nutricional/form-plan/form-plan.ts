@@ -28,6 +28,7 @@ export class FormPlan implements OnInit {
 
   loading = signal(false);
   pacienteId = signal<number | null>(null);
+  errorMsg = '';
   isLoaded = signal(false);
   isEdit = computed(() => this.pacienteId() !== null && this.isLoaded());
 
@@ -101,7 +102,7 @@ export class FormPlan implements OnInit {
       error: (err) => {
         console.error(err);
         this.loading.set(false);
-        alert('No se pudo guardar el plan.');
+        this.errorMsg = 'No se pudo guardar el plan. Intentalo más tarde.';
       }
     });
   }

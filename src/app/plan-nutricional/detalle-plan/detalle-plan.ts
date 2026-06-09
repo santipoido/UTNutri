@@ -4,10 +4,11 @@ import { PacienteClient } from '../../paciente/paciente-client';
 import { Paciente, PlanNutricional } from '../../paciente/paciente';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { AppEmptyStateComponent } from '../../components/empty-state/empty-state';
 
 @Component({
   selector: 'app-detalle-plan',
-  imports: [],
+  imports: [AppEmptyStateComponent],
   templateUrl: './detalle-plan.html',
   styleUrl: './detalle-plan.css'
 })
@@ -21,11 +22,12 @@ export class DetallePlan {
 
   paciente = signal<Paciente | null>(null);
   plan = signal<PlanNutricional | null>(null);
+  errorMsg = '';
 
   ngOnInit(): void {
     this.client.getPacienteById(this.id).subscribe({
       next: p => this.paciente.set(p),
-      error: () => alert('Paciente no encontrado')
+      error: () => this.errorMsg = 'No se pudo cargar el paciente.'
     });
 
     this.client.getPlan(this.id).subscribe({

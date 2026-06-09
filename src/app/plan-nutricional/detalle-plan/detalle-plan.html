@@ -1,66 +1,76 @@
 @let paciente = this.paciente();
 
+@if (errorMsg) {
+  <div class="plan-page"><div class="alert-error">{{ errorMsg }}</div></div>
+}
+
 @if (paciente) {
-
-
-
-  <section>
-    <div id="planNutricionalExportar">
-    <div class="titulos">
-      <h1>Plan nutricional de {{ paciente.nombre }}</h1>
-      <p>Detalle del plan nutricional.</p>
-    </div>
-
-    <div class="informacion">
-      <div class="tarjeta">
-        <div class="englobar-icono">
-          <span class="material-symbols-outlined">coffee</span>
-          <h3>Desayuno</h3>
-        </div>
-        <p>{{ plan()?.desayuno }}</p>
+  <div class="plan-page">
+    <div class="plan-top">
+      <div>
+        <h1 class="plan-title">Plan nutricional</h1>
+        <p class="plan-sub">{{ paciente.nombre }}</p>
       </div>
-
-      <div class="tarjeta">
-        <div class="englobar-icono">
-          <span class="material-symbols-outlined">restaurant</span>
-          <h3>Almuerzo</h3>
-        </div>
-        <p>{{ plan()?.almuerzo }}</p>
-      </div>
-
-      <div class="tarjeta">
-        <div class="englobar-icono">
-          <span class="material-symbols-outlined">egg_alt</span>
-          <h3>Merienda</h3>
-        </div>
-        <p>{{ plan()?.merienda }}</p>
-      </div>
-
-      <div class="tarjeta">
-        <div class="englobar-icono">
-          <span class="material-symbols-outlined">dinner_dining</span>
-          <h3>Cena</h3>
-        </div>
-        <p>{{ plan()?.cena }}</p>
-      </div>
-
-      <div class="tarjeta">
-        <div class="englobar-icono">
-          <span class="material-symbols-outlined">icecream</span>
-          <h3>Snacks</h3>
-        </div>
-        <p>{{ plan()?.snacks }}</p>
-      </div>
-
-      <div class="tarjeta">
-        <h3>Notas adicionales</h3>
-        <p>{{ plan()?.notas }}</p>
+      <div class="plan-top-actions">
+        <button class="btn btn-secondary" (click)="exportarPDF()">Exportar PDF</button>
+        <button class="btn btn-primary" (click)="editarPlan()">Editar plan</button>
       </div>
     </div>
-    </div>
-    <div class="botones">
-      <button id="editar" (click)="editarPlan()">Editar plan nutricional</button>
-      <button id="exportar" (click)="exportarPDF()">Exportar plan nutricional</button>
-    </div>
-  </section>
+
+    @if (!plan()) {
+      <app-empty-state
+        icon="🥗"
+        title="Sin plan nutricional"
+        description="Todavía no hay un plan asignado para este paciente."
+        actionLabel="Crear plan"
+        (action)="editarPlan()"
+      />
+    } @else {
+      <div id="planNutricionalExportar">
+        <div class="plan-grid">
+          <div class="plan-card">
+            <div class="plan-card-header">
+              <div class="plan-icon">☕</div>
+              <h3 class="plan-comida">Desayuno</h3>
+            </div>
+            <p class="plan-text">{{ plan()?.desayuno }}</p>
+          </div>
+          <div class="plan-card">
+            <div class="plan-card-header">
+              <div class="plan-icon">🍽️</div>
+              <h3 class="plan-comida">Almuerzo</h3>
+            </div>
+            <p class="plan-text">{{ plan()?.almuerzo }}</p>
+          </div>
+          <div class="plan-card">
+            <div class="plan-card-header">
+              <div class="plan-icon">🥐</div>
+              <h3 class="plan-comida">Merienda</h3>
+            </div>
+            <p class="plan-text">{{ plan()?.merienda }}</p>
+          </div>
+          <div class="plan-card">
+            <div class="plan-card-header">
+              <div class="plan-icon">🌙</div>
+              <h3 class="plan-comida">Cena</h3>
+            </div>
+            <p class="plan-text">{{ plan()?.cena }}</p>
+          </div>
+          <div class="plan-card">
+            <div class="plan-card-header">
+              <div class="plan-icon">🍎</div>
+              <h3 class="plan-comida">Snacks</h3>
+            </div>
+            <p class="plan-text">{{ plan()?.snacks }}</p>
+          </div>
+        </div>
+        @if (plan()?.notas) {
+          <div class="plan-notas">
+            <h3 class="plan-notas-title">Notas adicionales</h3>
+            <p class="plan-text">{{ plan()?.notas }}</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
 }

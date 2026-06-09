@@ -1,47 +1,60 @@
-<div class="container">
-  
-  <div class="texto-container">
-    <h1>Agregar Nueva Consulta</h1>
-    <p>Paciente: {{ pacienteNombre || '...' }}</p>
-  </div>
+<div class="form-page">
+  <div class="form-card">
+    <h1 class="form-title">Nueva consulta</h1>
+    <p class="form-sub">Paciente: <strong>{{ pacienteNombre || '…' }}</strong></p>
 
-  <div class="form-container">
     <form [formGroup]="form" (ngSubmit)="handleSubmit()">
-      <label for="peso">Peso (kg) (*)</label>
-      <input type="number" formControlName="peso" id="peso" placeholder="Ej. 65" />
-      @if (peso.hasError("required") && (peso.touched || peso.dirty)) {
-      <span>❌El peso es obligatorio.</span>
-      } @else if ((peso.hasError('min')) || (peso.hasError('max'))) {
-      <span>❌El peso debe ser coherente y real</span>
-      }
 
-      <label for="altura">Altura (cm) (*)</label>
-      <input type="number" formControlName="altura" id="altura" placeholder="Ej. 170" />
-      @if (altura.hasError("required") && (altura.touched || altura.dirty)) {
-      <span>❌La altura es obligatoria.</span>
-      } @else if ((altura.hasError('min'))|| (altura.hasError('max'))) {
-      <span>❌La altura debe ser coherente y real</span>
-      }
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label" for="peso">Peso (kg)</label>
+          <input class="form-input" type="number" id="peso" formControlName="peso" placeholder="ej. 65" />
+          @if (peso.hasError("required") && (peso.touched || peso.dirty)) {
+            <span class="form-err">⚠ El peso es obligatorio.</span>
+          } @else if ((peso.hasError('min') || peso.hasError('max')) && (peso.touched || peso.dirty)) {
+            <span class="form-err">⚠ El peso debe ser coherente y real.</span>
+          }
+        </div>
 
-      <label for="grasa-corporal">Grasa Corporal (%)</label>
-      <input type="number" formControlName="grasa" id="grasa" placeholder="Ej. 22.5" />
-      @if((grasa.hasError('min') || grasa.hasError('max'))){
-      <span>❌El porcentaje graso debe ser coherente y real</span>
-      }
-
-      <label for="masa-muscular">Masa Muscular (%)</label>
-      <input type="number" formControlName="masa" id="masa" placeholder="Ej. 35" />
-      @if((masa.hasError('min') || masa.hasError('max'))){
-      <span>❌El porcentaje de masa muscular debe ser coherente y real</span>
-      }
-
-      <label for="observaciones">Observaciones</label>
-      <input type="text" formControlName="observaciones" id="observaciones" placeholder="Ej. Se observó leve mejora...">
-
-      <div class="btn-container">
-        <button class="btn-cancelar" (click)="irAFicha()">Cancelar</button>
-        <button class="btn-enviar">Guardar Consulta</button>
+        <div class="form-group">
+          <label class="form-label" for="altura">Altura (cm)</label>
+          <input class="form-input" type="number" id="altura" formControlName="altura" placeholder="ej. 170" />
+          @if (altura.hasError("required") && (altura.touched || altura.dirty)) {
+            <span class="form-err">⚠ La altura es obligatoria.</span>
+          } @else if ((altura.hasError('min') || altura.hasError('max')) && (altura.touched || altura.dirty)) {
+            <span class="form-err">⚠ La altura debe ser coherente y real.</span>
+          }
+        </div>
       </div>
+
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label" for="grasa">Grasa Corporal (%)</label>
+          <input class="form-input" type="number" id="grasa" formControlName="grasa" placeholder="ej. 22.5" />
+          @if ((grasa.hasError('min') || grasa.hasError('max')) && (grasa.touched || grasa.dirty)) {
+            <span class="form-err">⚠ El porcentaje graso debe ser coherente y real.</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="masa">Masa Muscular (%)</label>
+          <input class="form-input" type="number" id="masa" formControlName="masa" placeholder="ej. 35" />
+          @if ((masa.hasError('min') || masa.hasError('max')) && (masa.touched || masa.dirty)) {
+            <span class="form-err">⚠ El porcentaje de masa muscular debe ser coherente y real.</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="observaciones">Observaciones</label>
+        <input class="form-input" type="text" id="observaciones" formControlName="observaciones" placeholder="ej. Se observó leve mejora..." />
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-ghost" type="button" (click)="irAFicha()">Cancelar</button>
+        <button class="btn btn-primary" type="submit">Guardar consulta</button>
+      </div>
+
     </form>
   </div>
 </div>

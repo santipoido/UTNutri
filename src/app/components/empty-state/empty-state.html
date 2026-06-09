@@ -1,0 +1,10 @@
+<div class="empty-state">
+  <div class="empty-icon">{{ icon }}</div>
+  <div class="empty-title">{{ title }}</div>
+  @if (description) {
+    <p class="empty-desc">{{ description }}</p>
+  }
+  @if (actionLabel) {
+    <button class="btn btn-primary btn-sm" (click)="action.emit()">{{ actionLabel }}</button>
+  }
+</div>
