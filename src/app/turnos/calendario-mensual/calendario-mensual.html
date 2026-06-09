@@ -1,0 +1,76 @@
+<div class="cal-page">
+
+  <!-- Header del calendario -->
+  <div class="cal-header">
+    <div>
+      <h1 class="cal-title">Calendario</h1>
+      <p class="cal-sub">Turnos de tus pacientes</p>
+    </div>
+    <div class="cal-nav">
+      <button class="cal-nav-btn" (click)="mesPrevio()" aria-label="Mes anterior">
+        <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <span class="cal-mes-titulo">{{ tituloMes() }}</span>
+      <button class="cal-nav-btn" (click)="mesSiguiente()" aria-label="Mes siguiente">
+        <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+          <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="cal-hoy-btn" (click)="irAHoy()">Hoy</button>
+    </div>
+  </div>
+
+  <!-- Grilla del calendario -->
+  <div class="cal-wrap">
+
+    <!-- Cabecera días de la semana -->
+    <div class="cal-grid cal-grid-header">
+      @for (dia of diasSemana; track dia) {
+        <div class="cal-day-name">{{ dia }}</div>
+      }
+    </div>
+
+    <!-- Celdas del mes -->
+    <div class="cal-grid cal-grid-body">
+      @for (celda of celdasMes(); track celda.fecha.getTime()) {
+        <div
+          class="cal-cell"
+          [class.cal-other-month]="!celda.esMesActual"
+          [class.cal-today]="celda.esHoy"
+        >
+          <span class="cal-num">{{ celda.fecha.getDate() }}</span>
+
+          @let visibles = isDayExpanded(celda.fecha) ? celda.turnos : celda.turnos.slice(0, 2);
+
+          @for (turno of visibles; track turno.id) {
+            <div
+              class="cal-event"
+              [class]="estadoClass(turno.estado)"
+              (click)="irAFicha(turno.idPaciente, $event)"
+              [title]="turno.hora + ' - ' + turno.nombrePaciente + ' (' + turno.estado + ')'"
+            >
+              <span class="ev-hora">{{ turno.hora }}</span>
+              <span class="ev-nombre">{{ turno.nombrePaciente }}</span>
+            </div>
+          }
+
+          @if (celda.turnos.length > 2 && !isDayExpanded(celda.fecha)) {
+            <button class="cal-more" (click)="toggleExpand(celda.fecha, $event)">
+              +{{ celda.turnos.length - 2 }} más
+            </button>
+          }
+
+          @if (celda.turnos.length > 2 && isDayExpanded(celda.fecha)) {
+            <button class="cal-more cal-more-collapse" (click)="toggleExpand(celda.fecha, $event)">
+              Ver menos
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+  </div>
+
+</div>

@@ -1,4 +1,4 @@
-import { Component, inject, signal, linkedSignal } from '@angular/core';
+import { Component, computed, inject, signal, linkedSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteClient } from '../paciente-client';
@@ -36,6 +36,18 @@ export class ListaPacientes {
       p.correo.toLowerCase().includes(busqueda) ||
       p.telefono.includes(busqueda)
     );
+  });
+
+  protected readonly ITEMS_POR_PAGINA = 10;
+  protected readonly paginaActual = signal(1);
+
+  protected readonly totalPaginas = computed(() =>
+    Math.max(1, Math.ceil(this.pacientesFiltrados().length / this.ITEMS_POR_PAGINA))
+  );
+
+  protected readonly pacientesPaginados = computed(() => {
+    const inicio = (this.paginaActual() - 1) * this.ITEMS_POR_PAGINA;
+    return this.pacientesFiltrados().slice(inicio, inicio + this.ITEMS_POR_PAGINA);
   });
 
   irAgregarPacientes(): void {
@@ -84,11 +96,21 @@ export class ListaPacientes {
     );
   }
 
+  paginaAnterior(): void {
+    if (this.paginaActual() > 1) this.paginaActual.update(p => p - 1);
+  }
+
+  paginaSiguiente(): void {
+    if (this.paginaActual() < this.totalPaginas()) this.paginaActual.update(p => p + 1);
+  }
+
   limpiarBusqueda(): void {
     this.termino.set('');
+    this.paginaActual.set(1);
   }
 
   actualizarBusqueda(valor: string): void {
     this.termino.set(valor);
+    this.paginaActual.set(1);
   }
 }

@@ -206,12 +206,80 @@
 }
 .btn-agendar:hover { opacity: 0.85; }
 
+/* ── Gráficos evolutivos ── */
+.ficha-graficos {
+  margin-top: var(--space-6);
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.graficos-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+  letter-spacing: -0.3px;
+  margin-bottom: var(--space-4);
+}
+
+.graficos-empty {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.graficos-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.grafico-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.grafico-card-full {
+  width: 100%;
+}
+
+.grafico-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.grafico-wrap {
+  position: relative;
+  height: 180px;
+}
+
+.grafico-wrap-tall {
+  height: 240px;
+}
+
 @media (max-width: 900px) {
   .ficha-page { padding: var(--space-5) var(--space-4); }
   .ficha-layout { grid-template-columns: 1fr; }
   .ficha-side { flex-direction: row; flex-wrap: wrap; }
   .side-card { flex: 1; min-width: 200px; }
   .btn-agendar { flex: 1; }
+  .graficos-grid-3 { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {

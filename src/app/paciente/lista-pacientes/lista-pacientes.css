@@ -114,12 +114,48 @@ tbody td {
   padding: 10px 16px;
 }
 
-.pac-count {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  text-align: right;
-  margin-top: var(--space-3);
+.paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.pag-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.pag-btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+.pag-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pag-info {
+  font-size: 13px;
   font-weight: 500;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.pag-sep {
+  margin: 0 6px;
+  opacity: 0.5;
 }
 
 .alert-error {

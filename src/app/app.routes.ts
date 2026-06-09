@@ -12,6 +12,7 @@ import { ProximosTurnos } from './turnos/proximos-turnos/proximos-turnos';
 import { authGuard } from './auth-guard';
 import { loginRedirectGuard } from './login-redirect-guard';
 import { FormTurnos } from './turnos/form-turnos/form-turnos';
+import { CalendarioMensual } from './turnos/calendario-mensual/calendario-mensual';
 
 export const routes: Routes = [
     { path: 'login', canMatch: [loginRedirectGuard], component: Login, data: {hideHeader: true} },
@@ -26,6 +27,7 @@ export const routes: Routes = [
             { path: 'turnos', component: ProximosTurnos },
             { path: 'turnos/:id/nuevo', component: FormTurnos },
             { path: 'turnos/:pacienteId/editar/:turnoId', component: FormTurnos },
+            { path: 'calendario', component: CalendarioMensual },
 
             { path: 'pacientes', component: ListaPacientes },
             { path: 'pacientes/nuevo', component: FormPacientes },

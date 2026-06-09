@@ -102,5 +102,46 @@
       </div>
 
     </div>
+
+    <!-- Sección de gráficos evolutivos -->
+    <div class="ficha-graficos">
+      <h3 class="graficos-title">Evolución del paciente</h3>
+
+      @if (!hayDatosGraficos()) {
+        <div class="graficos-empty">
+          <p>Se necesitan al menos 2 consultas registradas para ver la evolución.</p>
+          <button class="btn btn-primary btn-sm" (click)="irAgregarConsulta(paciente.id!)">+ Agregar consulta</button>
+        </div>
+      } @else {
+        <div class="graficos-grid-3">
+          <div class="grafico-card">
+            <p class="grafico-label">Peso</p>
+            <div class="grafico-wrap">
+              <canvas #pesoCanvas></canvas>
+            </div>
+          </div>
+          <div class="grafico-card">
+            <p class="grafico-label">% Grasa corporal</p>
+            <div class="grafico-wrap">
+              <canvas #grasaCanvas></canvas>
+            </div>
+          </div>
+          <div class="grafico-card">
+            <p class="grafico-label">% Masa muscular</p>
+            <div class="grafico-wrap">
+              <canvas #masaCanvas></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="grafico-card grafico-card-full">
+          <p class="grafico-label">Vista combinada</p>
+          <div class="grafico-wrap grafico-wrap-tall">
+            <canvas #combinadoCanvas></canvas>
+          </div>
+        </div>
+      }
+    </div>
+
   </div>
 }

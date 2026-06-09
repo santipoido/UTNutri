@@ -51,7 +51,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (paciente of lista; track paciente.id) {
+          @for (paciente of pacientesPaginados(); track paciente.id) {
             <tr>
               <td class="td-name">{{ paciente.nombre }}</td>
               <td>{{ paciente.genero }}</td>
@@ -71,7 +71,19 @@
         </tbody>
       </table>
     </div>
-    <p class="pac-count">{{ lista.length }} paciente{{ lista.length === 1 ? '' : 's' }}</p>
+    <div class="paginacion">
+      <button class="pag-btn" [disabled]="paginaActual() === 1" (click)="paginaAnterior()">
+        <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <span class="pag-info">
+        Página {{ paginaActual() }} de {{ totalPaginas() }}
+        <span class="pag-sep">·</span>
+        {{ pacientesFiltrados().length }} paciente{{ pacientesFiltrados().length === 1 ? '' : 's' }}
+      </span>
+      <button class="pag-btn" [disabled]="paginaActual() === totalPaginas()" (click)="paginaSiguiente()">
+        <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
   }
 
 </div>
