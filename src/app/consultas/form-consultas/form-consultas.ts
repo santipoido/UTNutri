@@ -98,7 +98,6 @@ export class FormConsultas implements OnInit {
   handleSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this.openInfoModal('Formulario inválido', 'Completá todos los campos obligatorios correctamente.');
       return;
     }
 

@@ -3,12 +3,13 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteClient } from '../paciente-client';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 import { AppModalComponent } from '../../components/modal/modal';
 import { AppEmptyStateComponent } from '../../components/empty-state/empty-state';
 
 @Component({
   selector: 'app-lista-pacientes',
-  imports: [FormsModule, AppModalComponent, AppEmptyStateComponent],
+  imports: [FormsModule, AppModalComponent, AppEmptyStateComponent, DatePipe],
   templateUrl: './lista-pacientes.html',
   styleUrl: './lista-pacientes.css'
 })

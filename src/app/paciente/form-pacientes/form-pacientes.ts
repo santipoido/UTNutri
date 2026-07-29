@@ -104,7 +104,6 @@ export class FormPacientes implements OnInit {
   handleSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this.openInfoModal('Formulario inválido', 'Completá todos los campos correctamente antes de guardar.');
       return;
     }
 

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteClient } from '../../paciente/paciente-client';
 import { PlanNutricional } from '../../paciente/paciente';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { AppModalComponent } from '../../components/modal/modal';
 
 const EMPTY_PLAN: PlanNutricional = {
   desayuno: '',
@@ -15,7 +16,7 @@ const EMPTY_PLAN: PlanNutricional = {
 
 @Component({
   selector: 'app-form-plan',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AppModalComponent],
   templateUrl: './form-plan.html',
   styleUrl: './form-plan.css'
 })
@@ -40,6 +41,36 @@ export class FormPlan implements OnInit {
     snacks: [EMPTY_PLAN.snacks],
     notas: [EMPTY_PLAN.notas]
   });
+
+  // ── Modal state ──────────────────────────────────────────────────────────
+  modalVisible = false;
+  modalTitle = '';
+  modalMessage = '';
+  modalConfirmLabel = 'Aceptar';
+  modalType: 'info' | 'confirm' | 'danger' = 'info';
+  private pendingAction: (() => void) | null = null;
+
+  private openInfoModal(title: string, message: string, onAccept?: () => void): void {
+    this.modalTitle        = title;
+    this.modalMessage      = message;
+    this.modalConfirmLabel = 'Aceptar';
+    this.modalType         = 'info';
+    this.pendingAction     = onAccept ?? null;
+    this.modalVisible      = true;
+  }
+
+  onModalConfirmado(): void {
+    const action = this.pendingAction;
+    this.pendingAction = null;
+    this.modalVisible  = false;
+    action?.();
+  }
+
+  onModalCancelado(): void {
+    this.pendingAction = null;
+    this.modalVisible  = false;
+  }
+  // ─────────────────────────────────────────────────────────────────────────
 
   get desayuno() { return this.form.controls.desayuno; }
   get almuerzo() { return this.form.controls.almuerzo; }
@@ -99,7 +130,9 @@ export class FormPlan implements OnInit {
       next: () => {
         this.loading.set(false);
         this.form.markAsPristine();
-        this.router.navigate(['/pacientes', id, 'plan']);
+        this.openInfoModal('¡Listo!', 'Plan nutricional guardado con éxito.', () => {
+          this.router.navigate(['/pacientes', id, 'plan']);
+        });
       },
       error: (err) => {
         console.error(err);

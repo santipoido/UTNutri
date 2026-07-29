@@ -35,6 +35,8 @@
           <span class="form-err">⚠ El nombre es obligatorio.</span>
         } @else if (nombre.hasError('maxlength') && nombre.touched) {
           <span class="form-err">⚠ El nombre no puede superar los 150 caracteres.</span>
+        } @else if (nombre.hasError('pattern') && nombre.touched) {
+          <span class="form-err">⚠ El nombre solo puede tener letras, espacios y guiones.</span>
         }
       </div>
 

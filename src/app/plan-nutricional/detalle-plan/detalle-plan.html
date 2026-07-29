@@ -16,7 +16,7 @@
         <p class="plan-sub">{{ paciente.nombre }}</p>
       </div>
       <div class="plan-top-actions">
-        <button class="btn btn-secondary" (click)="exportarPDF()">Exportar PDF</button>
+        <button class="btn btn-secondary" [disabled]="!plan()" (click)="exportarPDF()">Exportar PDF</button>
         <button class="btn btn-primary" (click)="editarPlan()">Editar plan</button>
       </div>
     </div>

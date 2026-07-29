@@ -55,7 +55,7 @@
             <tr>
               <td class="td-name">{{ paciente.nombre }}</td>
               <td>{{ paciente.genero }}</td>
-              <td>{{ paciente.fechaNacimiento }}</td>
+              <td>{{ paciente.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
               <td>{{ paciente.correo }}</td>
               <td>{{ paciente.telefono }}</td>
               <td class="td-actions">

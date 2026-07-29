@@ -14,8 +14,10 @@ export class Register {
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
 
+  private static readonly NOMBRE_PATTERN = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'.-]+$/;
+
   protected readonly form = this.fb.nonNullable.group({
-    nombre: ['', [Validators.required, Validators.maxLength(150)]],
+    nombre: ['', [Validators.required, Validators.maxLength(150), Validators.pattern(Register.NOMBRE_PATTERN)]],
     username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(150)]],
     password: ['', [Validators.required, Validators.minLength(6)]],
