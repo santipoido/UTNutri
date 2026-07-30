@@ -80,6 +80,9 @@
       <div class="ficha-side">
         <div class="side-card">
           <p class="side-card-title"><span class="side-dot"></span>Próximos turnos</p>
+          @if (errorMsgTurnos) {
+            <div class="alert-error">{{ errorMsgTurnos }}</div>
+          }
           @if (proximosTurnos().length === 0) {
             <p class="side-empty-hint">No hay turnos pendientes agendados.</p>
           } @else {
@@ -88,9 +91,17 @@
                 <li class="turno-item">
                   <div class="turno-fecha">{{ turno.fecha | date:'dd/MM/yyyy' }}</div>
                   <div class="turno-hora">{{ turno.hora }}hs</div>
+                  @if (esVencido(turno)) {
+                    <span class="badge badge-vencido">⚠ Vencido</span>
+                  }
                   @if (turno.observaciones) {
                     <div class="turno-obs">{{ turno.observaciones }}</div>
                   }
+                  <div class="turno-acciones">
+                    <button class="tc-btn tc-btn-success" (click)="aceptarTurno(turno.id!)">✅ Aceptar</button>
+                    <button class="tc-btn" (click)="reprogramarTurno(turno)">↻ Reprogramar</button>
+                    <button class="tc-btn tc-btn-danger" (click)="cancelarTurno(turno.id!)">✖ Cancelar</button>
+                  </div>
                 </li>
               }
             </ul>

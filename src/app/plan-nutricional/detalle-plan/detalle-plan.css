@@ -93,6 +93,7 @@
   .plan-page { padding: var(--space-5) var(--space-4); }
   .plan-grid { grid-template-columns: 1fr 1fr; }
   .plan-top  { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+  .plan-top-actions { flex-wrap: wrap; }
 }
 
 @media (max-width: 600px) {

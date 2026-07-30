@@ -17,6 +17,10 @@
     <h1 class="form-title">{{ isEditing() ? 'Editar paciente' : 'Agregar paciente' }}</h1>
     <p class="form-sub">{{ isEditing() ? 'Modificá los datos del paciente.' : 'Completá el formulario para registrar un nuevo paciente.' }}</p>
 
+    @if (errorMsg) {
+      <div class="alert-error">{{ errorMsg }}</div>
+    }
+
     <form [formGroup]="form" (ngSubmit)="handleSubmit()">
 
       <div class="form-group">
@@ -26,6 +30,8 @@
           <span class="form-err">⚠ El nombre es obligatorio.</span>
         } @else if (nombre.hasError("maxlength") && (nombre.touched || nombre.dirty)) {
           <span class="form-err">⚠ El nombre no puede superar los 150 caracteres.</span>
+        } @else if (nombre.hasError("pattern") && (nombre.touched || nombre.dirty)) {
+          <span class="form-err">⚠ El nombre solo puede contener letras y espacios.</span>
         }
       </div>
 
@@ -47,8 +53,8 @@
         <input class="form-input" type="email" id="correo" formControlName="correo" placeholder="ej. juan.perez@correo.com" />
         @if (correo.hasError("required") && (correo.touched || correo.dirty)) {
           <span class="form-err">⚠ El correo es obligatorio.</span>
-        } @else if (correo.hasError("email") && (correo.touched || correo.dirty)) {
-          <span class="form-err">⚠ El correo tiene que tener formato correo.</span>
+        } @else if (correo.hasError("pattern") && (correo.touched || correo.dirty)) {
+          <span class="form-err">⚠ El correo tiene que tener formato correo (ej. nombre&#64;dominio.com).</span>
         }
       </div>
 
@@ -62,13 +68,13 @@
         } @else if (telefono.hasError("minlength") && (telefono.touched || telefono.dirty)) {
           <span class="form-err">⚠ El teléfono tiene que tener como mínimo 7 dígitos.</span>
         } @else if (telefono.hasError("maxlength") && (telefono.touched || telefono.dirty)) {
-          <span class="form-err">⚠ El teléfono tiene que tener como máximo 15 dígitos.</span>
+          <span class="form-err">⚠ El teléfono tiene que tener como máximo 20 dígitos.</span>
         }
       </div>
 
       <div class="form-group">
         <label class="form-label" for="fechaNacimiento">Fecha de nacimiento</label>
-        <input class="form-input" type="date" id="fechaNacimiento" formControlName="fechaNacimiento" [max]="today" />
+        <input class="form-input" type="date" id="fechaNacimiento" formControlName="fechaNacimiento" [max]="today" [min]="minFechaNacimiento" />
         @if (fechaNacimiento.hasError("required") && (fechaNacimiento.touched || fechaNacimiento.dirty)) {
           <span class="form-err">⚠ La fecha de nacimiento es obligatoria.</span>
         }

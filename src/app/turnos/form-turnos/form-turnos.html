@@ -24,6 +24,10 @@
         Paciente: <strong>{{ paciente.nombre }}</strong>
       </p>
 
+      @if (errorMsg) {
+        <div class="alert-error">{{ errorMsg }}</div>
+      }
+
       <form [formGroup]="form" (ngSubmit)="handleSubmit()">
 
         <div class="form-row-2">

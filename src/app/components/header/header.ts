@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../auth/auth-service';
 
@@ -10,6 +10,15 @@ import { AuthService } from '../../auth/auth-service';
 })
 export class Header {
   protected readonly auth = inject(AuthService);
+  protected readonly menuOpen = signal(false);
+
+  toggleMenu(): void {
+    this.menuOpen.update(v => !v);
+  }
+
+  closeMenu(): void {
+    this.menuOpen.set(false);
+  }
 
   get initiales(): string {
     const nombre = this.auth.getNombre();

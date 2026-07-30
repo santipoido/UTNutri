@@ -106,6 +106,12 @@ export class ClienteTurnos {
     );
   }
 
+  aceptarTurno(id: number) {
+    return this.http.patch<TurnoBackDTO>(`${this.baseUrl}/${id}`, { estado: 'REALIZADO' }).pipe(
+      map(d => this.aTurno(d))
+    );
+  }
+
   // ─── Eliminar ─────────────────────────────────────────────────────────────
 
   deleteTurno(id: number) {

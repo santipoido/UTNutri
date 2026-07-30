@@ -22,15 +22,7 @@ export class ProximosTurnos {
     this.client.getTurnos().pipe(
       map((turnos: Turno[]) =>
         turnos
-          .map(t => {
-            const fechaTurno = new Date(t.fecha);
-            const hoy = new Date();
-            hoy.setHours(0, 0, 0, 0);
-            fechaTurno.setHours(0, 0, 0, 0);
-            const estaVencido = fechaTurno < hoy;
-            const estadoActualizado = t.estado === 'Pendiente' && estaVencido ? 'Realizado' : t.estado;
-            return { ...t, fecha: new Date(t.fecha), estado: estadoActualizado };
-          })
+          .map(t => ({ ...t, fecha: new Date(t.fecha) }))
           .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
       )
     )
@@ -114,6 +106,25 @@ export class ProximosTurnos {
         error: () => { this.errorMsg = 'No pudimos cancelar el turno. Intente nuevamente.'; }
       })
     );
+  }
+
+  aceptarTurno(id: number): void {
+    this.openModal(
+      {
+        title: 'Marcar como realizado',
+        message: '¿Confirmás que esta consulta ya se realizó?',
+        confirmLabel: 'Sí, marcar como realizado',
+        type: 'confirm'
+      },
+      () => this.client.aceptarTurno(id).subscribe({
+        next: () => location.reload(),
+        error: () => { this.errorMsg = 'No pudimos actualizar el turno. Intentá nuevamente.'; }
+      })
+    );
+  }
+
+  esVencido(turno: Turno): boolean {
+    return turno.estado === 'Pendiente' && new Date(turno.fecha).getTime() < Date.now();
   }
 
   onFiltroChange(event: Event) {

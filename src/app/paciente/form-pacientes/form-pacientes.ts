@@ -20,15 +20,23 @@ export class FormPacientes implements OnInit {
   private readonly rawId = this.route.snapshot.paramMap.get('id');
   protected readonly id = this.rawId ? Number(this.rawId) : null;
 
+  private static readonly NOMBRE_PATTERN = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'.-]+$/;
+  private static readonly EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  errorMsg = '';
+
   protected readonly generos = ['Masculino', 'Femenino', 'Otro'];
   protected readonly today = new Date().toISOString().slice(0, 10);
+  protected readonly minFechaNacimiento = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 120)
+  ).toISOString().slice(0, 10);
 
   protected readonly form = this.formBuilder.nonNullable.group({
-    nombre: ['', [Validators.required, Validators.maxLength(150)]],
+    nombre: ['', [Validators.required, Validators.maxLength(150), Validators.pattern(FormPacientes.NOMBRE_PATTERN)]],
     genero: ['', [Validators.required]],
     fechaNacimiento: ['', [Validators.required]],
-    correo: ['', [Validators.required, Validators.email, Validators.maxLength(150)]],
-    telefono: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(30), Validators.pattern(/^[0-9]+$/)]]
+    correo: ['', [Validators.required, Validators.pattern(FormPacientes.EMAIL_PATTERN), Validators.maxLength(150)]],
+    telefono: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(20), Validators.pattern(/^[0-9]+$/)]]
   });
 
   // ── Modal state ──────────────────────────────────────────────────────────
@@ -101,7 +109,19 @@ export class FormPacientes implements OnInit {
     }
   }
 
+  private mensajeDeError(err: any): string | null {
+    if (err.status === 409) {
+      return err.error?.error ?? 'Ya tenés un paciente con ese correo o teléfono.';
+    }
+    if (err.status === 400 && err.error?.detalles) {
+      return Object.values(err.error.detalles).join(' ');
+    }
+    return null;
+  }
+
   handleSubmit() {
+    this.errorMsg = '';
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -118,9 +138,16 @@ export class FormPacientes implements OnInit {
             next: () => this.openInfoModal('¡Listo!', 'Paciente modificado con éxito.', () => {
               this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
             }),
-            error: () => this.openInfoModal('Error', 'No se pudo modificar el paciente. Intentá más tarde.', () => {
-              this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
-            })
+            error: (err) => {
+              const msg = this.mensajeDeError(err);
+              if (msg) {
+                this.errorMsg = msg;
+              } else {
+                this.openInfoModal('Error', 'No se pudo modificar el paciente. Intentá más tarde.', () => {
+                  this.router.navigateByUrl(`/pacientes/${this.id}/ficha`);
+                });
+              }
+            }
           });
         } else {
           this.client.addPaciente(dto).subscribe({
@@ -129,7 +156,14 @@ export class FormPacientes implements OnInit {
               `Paciente "${pacienteCreado.nombre}" agregado con éxito.`,
               () => { this.form.reset(); this.router.navigateByUrl('/pacientes'); }
             ),
-            error: () => this.openInfoModal('Error', 'No se pudo guardar el paciente. Intentá más tarde.')
+            error: (err) => {
+              const msg = this.mensajeDeError(err);
+              if (msg) {
+                this.errorMsg = msg;
+              } else {
+                this.openInfoModal('Error', 'No se pudo guardar el paciente. Intentá más tarde.');
+              }
+            }
           });
         }
       }

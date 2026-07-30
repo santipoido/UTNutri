@@ -4,6 +4,7 @@ import { PacienteClient } from '../../paciente/paciente-client';
 import { Paciente, PlanNutricional } from '../../paciente/paciente';
 import jsPDF from 'jspdf';
 import { AppEmptyStateComponent } from '../../components/empty-state/empty-state';
+import { AuthService } from '../../auth/auth-service';
 
 @Component({
   selector: 'app-detalle-plan',
@@ -16,6 +17,7 @@ export class DetallePlan {
   private readonly route = inject(ActivatedRoute);
   private readonly client = inject(PacienteClient);
   private readonly router = inject(Router);
+  private readonly auth = inject(AuthService);
 
   private readonly id = Number(this.route.snapshot.paramMap.get('id')!);
 
@@ -75,6 +77,11 @@ export class DetallePlan {
 
     pdf.setFontSize(9);
     pdf.setTextColor(110, 110, 110);
+    const nombreNutri = this.auth.getNombre();
+    if (nombreNutri) {
+      pdf.text(`Nutricionista: ${nombreNutri}`, marginLeft, y);
+      y += 4.5;
+    }
     const fecha = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
     pdf.text(`Generado el ${fecha}`, marginLeft, y);
     pdf.setTextColor(0, 0, 0);

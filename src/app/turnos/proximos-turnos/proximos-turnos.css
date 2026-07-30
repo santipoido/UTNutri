@@ -142,6 +142,9 @@
 .tc-btn-danger { color: var(--color-danger); }
 .tc-btn-danger:hover { color: #991b1b; }
 
+.tc-btn-success { color: #166534; }
+.tc-btn-success:hover { color: #14532d; }
+
 .badge {
   font-size: 11px;
   font-weight: 700;
@@ -165,6 +168,13 @@
   color: #991b1b;
 }
 
+.badge-vencido {
+  background: #ffedd5;
+  color: #9a3412;
+  margin-top: -6px;
+  align-self: flex-start;
+}
+
 .alert-error {
   background: #fee2e2;
   color: #991b1b;
@@ -184,4 +194,5 @@
   .dash-page { padding: var(--space-5) var(--space-4); }
   .dash-top  { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
   .turnos-grid { grid-template-columns: 1fr; }
+  .tc-footer { flex-wrap: wrap; row-gap: 8px; }
 }

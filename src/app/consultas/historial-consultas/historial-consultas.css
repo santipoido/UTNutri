@@ -76,6 +76,7 @@ tbody td { padding: 12px 16px; color: var(--color-text); text-align: center; }
 @media (max-width: 768px) {
   .hist-page { padding: var(--space-5) var(--space-4); }
   .hist-top  { flex-direction: column; gap: var(--space-3); align-items: flex-start; }
-  table { font-size: 11px; }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { font-size: 11px; min-width: 560px; }
   thead th, tbody td { padding: 8px 10px; }
 }

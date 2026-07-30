@@ -33,6 +33,8 @@ export class FormTurnos {
   protected readonly paciente = linkedSignal(() => this.pacienteSource());
   protected readonly esEdicion = signal(!!this.turnoId);
 
+  errorMsg = '';
+
   private readonly turnoSource = toSignal(
     this.turnoId ? this.client.getTurnoById(this.turnoId) : of(null as any)
   );
@@ -143,24 +145,26 @@ export class FormTurnos {
   }
 
   handleSubmit() {
+    this.errorMsg = '';
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this.openInfoModal('Formulario inválido', 'Completá todos los campos antes de continuar.');
+      this.errorMsg = 'Completá todos los campos antes de continuar.';
       return;
     }
 
     const { fecha, hora, observaciones } = this.form.getRawValue();
 
     if (this.horaFueraDeRango(hora)) {
-      this.openInfoModal('Hora fuera de rango', 'El horario debe estar entre las 07:00 y las 19:00.');
+      this.errorMsg = 'El horario debe estar entre las 07:00 y las 19:00.';
       return;
     }
     if (this.turnoEsEnElPasado(fecha, hora)) {
-      this.openInfoModal('Fecha inválida', 'La fecha y hora del turno deben ser futuras.');
+      this.errorMsg = 'La fecha y hora del turno deben ser futuras.';
       return;
     }
     if (this.turnosOcupados(fecha, hora)) {
-      this.openInfoModal('Horario no disponible', 'Ya existe un turno programado para esa fecha y hora.');
+      this.errorMsg = 'Ya existe un turno programado para esa fecha y hora.';
       return;
     }
 

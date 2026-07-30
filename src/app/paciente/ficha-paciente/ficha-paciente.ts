@@ -71,12 +71,56 @@ export class FichaPaciente implements AfterViewInit, OnDestroy {
     this.pendingAction = null;
     this.modalVisible  = false;
   }
+
+  private openConfirmModal(title: string, message: string, confirmLabel: string, action: () => void): void {
+    this.modalTitle        = title;
+    this.modalMessage      = message;
+    this.modalConfirmLabel = confirmLabel;
+    this.modalType         = 'confirm';
+    this.pendingAction     = action;
+    this.modalVisible      = true;
+  }
   // ─────────────────────────────────────────────────────────────────────────
 
-  ultimaConsulta = computed<Consulta | null>(() => {
-    const ordenadas = [...this.consultas()].sort(
-      (a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+  errorMsgTurnos = '';
+
+  esVencido(turno: Turno): boolean {
+    return turno.estado === 'Pendiente' && new Date(turno.fecha).getTime() < Date.now();
+  }
+
+  reprogramarTurno(turno: Turno): void {
+    this.router.navigateByUrl(`/turnos/${turno.idPaciente}/editar/${turno.id}`);
+  }
+
+  cancelarTurno(id: number): void {
+    this.openConfirmModal(
+      'Cancelar turno',
+      '¿Estás seguro que querés cancelar este turno?',
+      'Sí, cancelar',
+      () => this.clienteTurnos.cancelarTurno(id).subscribe({
+        next: () => location.reload(),
+        error: () => { this.errorMsgTurnos = 'No pudimos cancelar el turno. Intentá nuevamente.'; }
+      })
     );
+  }
+
+  aceptarTurno(id: number): void {
+    this.openConfirmModal(
+      'Marcar como realizado',
+      '¿Confirmás que esta consulta ya se realizó?',
+      'Sí, marcar como realizado',
+      () => this.clienteTurnos.aceptarTurno(id).subscribe({
+        next: () => location.reload(),
+        error: () => { this.errorMsgTurnos = 'No pudimos actualizar el turno. Intentá nuevamente.'; }
+      })
+    );
+  }
+
+  ultimaConsulta = computed<Consulta | null>(() => {
+    const ordenadas = [...this.consultas()].sort((a, b) => {
+      const diffFecha = new Date(b.fecha).getTime() - new Date(a.fecha).getTime();
+      return diffFecha !== 0 ? diffFecha : (b.id ?? 0) - (a.id ?? 0);
+    });
     return ordenadas[0] ?? null;
   });
 
@@ -123,10 +167,8 @@ export class FichaPaciente implements AfterViewInit, OnDestroy {
 
     this.clienteTurnos.getTurnosPorPaciente(id).subscribe({
       next: turnos => {
-        const hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
         const proximos = turnos
-          .filter(t => t.estado === 'Pendiente' && new Date(t.fecha) >= hoy)
+          .filter(t => t.estado === 'Pendiente')
           .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
         this.proximosTurnos.set(proximos);
       },

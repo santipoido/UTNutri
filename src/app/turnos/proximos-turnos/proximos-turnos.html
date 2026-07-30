@@ -46,6 +46,10 @@
             </span>
           </div>
 
+          @if (esVencido(turno)) {
+            <span class="badge badge-vencido">⚠ Vencido</span>
+          }
+
           @if (turno.observaciones) {
             <div class="tc-obs-wrap">
               <p class="tc-obs-label">Observaciones</p>
@@ -55,10 +59,11 @@
 
           <div class="tc-footer">
             @if (turno.estado === 'Cancelado' || turno.estado === 'Realizado') {
-              <button class="tc-btn tc-btn-danger" (click)="eliminarTurno(turno.id!)">Eliminar</button>
+              <button class="tc-btn tc-btn-danger" (click)="eliminarTurno(turno.id!)">🗑 Eliminar</button>
             } @else if (turno.estado === 'Pendiente') {
-              <button class="tc-btn" (click)="editarTurno(turno.id!)">Reprogramar</button>
-              <button class="tc-btn tc-btn-danger" (click)="cancelarTurno(turno.id!)">Cancelar turno</button>
+              <button class="tc-btn tc-btn-success" (click)="aceptarTurno(turno.id!)">✅ Aceptar</button>
+              <button class="tc-btn" (click)="editarTurno(turno.id!)">↻ Reprogramar</button>
+              <button class="tc-btn tc-btn-danger" (click)="cancelarTurno(turno.id!)">✖ Cancelar</button>
             }
           </div>
         </div>
