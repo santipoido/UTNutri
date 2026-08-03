@@ -139,10 +139,11 @@ export class FormTurnos {
     });
   }
 
-  protected horaFueraDeRango(hora: string): boolean {
-    const [horaIngresada] = hora.split(':').map(Number);
-    return horaIngresada < 7 || horaIngresada > 19;
-  }
+protected horaFueraDeRango(hora: string): boolean {
+  const [h, m] = hora.split(':').map(Number);
+  const minutos = h * 60 + m;
+  return minutos < 7 * 60 || minutos > 19 * 60; // fuera de 07:00–19:00
+}
 
   handleSubmit() {
     this.errorMsg = '';
