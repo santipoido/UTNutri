@@ -129,9 +129,10 @@ export class FichaPaciente implements AfterViewInit, OnDestroy {
 
   pacienteDesde = computed<string | null>(() => {
     if (!this.consultas().length) return null;
-    const ordenadasAsc = [...this.consultas()].sort(
-      (a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()
-    );
+    const ordenadasAsc = [...this.consultas()].sort((a, b) => {
+      const diffFecha = new Date(a.fecha).getTime() - new Date(b.fecha).getTime();
+      return diffFecha !== 0 ? diffFecha : (a.id ?? 0) - (b.id ?? 0);
+    });
     return ordenadasAsc[0]?.fecha ?? null;
   });
 
@@ -190,9 +191,10 @@ export class FichaPaciente implements AfterViewInit, OnDestroy {
   }
 
   private buildCharts(consultas: Consulta[]): void {
-    const sorted = [...consultas].sort(
-      (a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()
-    );
+    const sorted = [...consultas].sort((a, b) => {
+      const diffFecha = new Date(a.fecha).getTime() - new Date(b.fecha).getTime();
+      return diffFecha !== 0 ? diffFecha : (a.id ?? 0) - (b.id ?? 0);
+    });
 
     const labels = sorted.map(c => c.fecha.slice(0, 10));
     const pesos  = sorted.map(c => c.peso);
